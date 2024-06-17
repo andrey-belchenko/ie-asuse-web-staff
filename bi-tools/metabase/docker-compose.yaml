@@ -1,0 +1,11 @@
+version: '3'
+services:
+  metabase:
+    image: metabase/metabase
+    container_name: metabase
+    ports:
+      - "3100:3000"
+    volumes:
+      - C:\Bin\metabase:/metabase-data
+    environment:
+      - MB_DB_FILE=/metabase-data/metabase.db
