@@ -1,0 +1,19 @@
+stages:
+  - Build
+
+build:
+  stage: Build
+  environment: dev
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+      when: on_success
+    - when: manual
+  before_script:
+    - docker login -u $REGISTRY_USER -p $REGISTRY_TOKEN $REGISTRY
+    - export APPLICATION=dpt-query
+    - export REVISION=${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}
+  script:
+    - echo "Build image $REGISTRY/$APPLICATION:$REVISION"
+    - docker buildx build --no-cache -f ./dockerfile -t $REGISTRY/$APPLICATION:$REVISION .
+    - docker push $REGISTRY/$APPLICATION:$REVISION
+    - docker rmi $REGISTRY/$APPLICATION:$REVISION
