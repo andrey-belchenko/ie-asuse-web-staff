@@ -1,4 +1,5 @@
 "use strict";
+console.log("starting...")
 const dotenv = require("dotenv");
 dotenv.config();
 import express from "express";
