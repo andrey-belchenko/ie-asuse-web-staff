@@ -1,0 +1,11 @@
+services:
+  exchange-api:
+    restart: always
+    build:
+      context: .
+      dockerfile: ./dockerfile
+    env_file:
+      - ./.env
+    ports:
+      - 3002:3002
+    image: exchange-api
