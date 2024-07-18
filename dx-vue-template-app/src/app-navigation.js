@@ -15,6 +15,10 @@ export default [
       {
         text: "Tasks",
         path: "/tasks"
+      },
+      {
+        text: "Report",
+        path: "/report"
       }
     ]
   }

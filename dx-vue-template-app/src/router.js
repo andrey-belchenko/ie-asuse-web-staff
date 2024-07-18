@@ -4,6 +4,7 @@ import { createRouter, createWebHashHistory } from "vue-router";
 import Home from "./views/home-page";
 import Profile from "./views/profile-page";
 import Tasks from "./views/tasks-page";
+import Report from "./views/report-page";
 import defaultLayout from "./layouts/side-nav-outer-toolbar";
 import simpleLayout from "./layouts/single-card";
 
@@ -39,6 +40,15 @@ const router = new createRouter({
         layout: defaultLayout
       },
       component: Tasks
+    },
+    {
+      path: "/report",
+      name: "report",
+      meta: {
+        requiresAuth: true,
+        layout: defaultLayout
+      },
+      component: Report
     },
     {
       path: "/login-form",
