@@ -17,7 +17,7 @@ import DxDataGrid, {
   // DxPager,
   // DxPaging
 } from "devextreme-vue/data-grid";
-import { createDataSource } from "../api-client/query/query.ts";
+import { createDataSource } from "../api-client/query/query.js";
 
 const priorities = [
   { name: "High", value: 4 },
@@ -49,8 +49,8 @@ export default {
     // };
 
     const dataSourceConfig = createDataSource({
-      "database": "bav_test_scripts",
-      "collection": "Пример сообщений от СУПА"
+      database: "bav_test_scripts",
+      collectionName: "Пример сообщений от СУПА"
     })
 
     return {

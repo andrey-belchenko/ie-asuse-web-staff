@@ -1,28 +1,24 @@
-import ArrayStore from "devextreme/data/array_store";
+
 import CustomStore from "devextreme/data/custom_store";
-import notify from "devextreme/ui/notify";
 
 
-export interface DataSourceOptions {
-  database: string;
-  collectionName: string;
-}
 
-function handleErrors(response: any) {
+
+function handleErrors(response) {
   if (!response.ok) {
     throw Error(response.statusText);
   }
   return response;
 }
 
-export const createDataSource = (options: DataSourceOptions) => {
+export const createDataSource = (options) => {
   let idField = "_id";
   let database = options.database;
   let collectionName = options.collectionName;
 
   const customDataSource = new CustomStore({
     key: idField,
-    load: (loadOptions: any) => {
+    load: (loadOptions) => {
       let url = `http://localhost:4004/query`;
       const query = fetch(url, {
         method: "POST",

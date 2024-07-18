@@ -74,7 +74,7 @@ async function useMongo(
   } finally {
     try {
       client.close();
-    } catch {}
+    } catch { }
   }
 }
 

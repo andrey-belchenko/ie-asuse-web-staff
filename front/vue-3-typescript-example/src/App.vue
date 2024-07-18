@@ -12,6 +12,8 @@
       </div>
     </nav>
 
+    
+
     <div class="container mt-3">
       <router-view />
     </div>
@@ -21,7 +23,19 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 
+import DxButton from 'devextreme-vue/button';
+
 export default defineComponent({
   name: "App",
+  components: {
+      DxButton
+  },
+  methods: {
+      sayHelloWorld() {
+          alert('Hello world!')
+      }
+  }
 });
 </script>
+
+
