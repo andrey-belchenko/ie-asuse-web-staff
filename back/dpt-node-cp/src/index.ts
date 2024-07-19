@@ -1,11 +1,12 @@
 "use strict";
-console.log("starting...")
+console.log("starting...");
 const dotenv = require("dotenv");
 dotenv.config();
 import express from "express";
 import * as mongoDB from "mongodb";
 
 import cors from "cors";
+import { getData } from "./db";
 
 require("babel-polyfill");
 const query = require("devextreme-query-mongodb");
@@ -63,6 +64,16 @@ app.post("/query", async (req: any, res, next) => {
   }
 });
 
+app.post("/pg-query", async (req: any, res, next) => {
+  try {
+    logRequest(req);
+    const data = await getData();
+    res.json(data);
+  } catch (error) {
+    next(error);
+  }
+});
+
 async function useMongo(
   operations: (client: mongoDB.MongoClient) => Promise<void>
 ) {
@@ -74,7 +85,7 @@ async function useMongo(
   } finally {
     try {
       client.close();
-    } catch { }
+    } catch {}
   }
 }
 
