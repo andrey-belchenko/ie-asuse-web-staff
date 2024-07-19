@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
-
+import TryDx from '../views/TryDx.vue'
+import PivotGrid from '../views/pivot/PivotGrid.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -8,6 +9,16 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: HomeView
+    },
+    {
+      path: '/try',
+      name: 'try',
+      component: TryDx
+    },
+    {
+      path: '/pivot',
+      name: 'pivot',
+      component: PivotGrid
     },
     {
       path: '/about',
