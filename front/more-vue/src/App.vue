@@ -16,11 +16,17 @@ import HelloWorld from './components/HelloWorld.vue'
       </nav>
     </div>
   </header> -->
-
-  <RouterView />
+  <div class="main">
+    <RouterView />
+  </div>
+ 
 </template>
 
 <style scoped>
+.main {
+  position: absolute;
+  inset: 0;
+}
 header {
   line-height: 1.5;
   max-height: 100vh;
