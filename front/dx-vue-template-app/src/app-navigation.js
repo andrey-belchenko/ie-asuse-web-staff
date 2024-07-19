@@ -19,6 +19,10 @@ export default [
       {
         text: "Report",
         path: "/report"
+      },
+      {
+        text: "Pivot",
+        path: "/pivot"
       }
     ]
   }

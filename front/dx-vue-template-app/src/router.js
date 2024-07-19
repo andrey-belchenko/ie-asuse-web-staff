@@ -7,6 +7,7 @@ import Tasks from "./views/tasks-page";
 import Report from "./views/report-page";
 import defaultLayout from "./layouts/side-nav-outer-toolbar";
 import simpleLayout from "./layouts/single-card";
+import Pivot from "./views/pivot-page";
 
 function loadView(view) {
   return () => import (/* webpackChunkName: "login" */ `./views/${view}.vue`)
@@ -49,6 +50,15 @@ const router = new createRouter({
         layout: defaultLayout
       },
       component: Report
+    },
+    {
+      path: "/pivot",
+      name: "pivot",
+      meta: {
+        requiresAuth: true,
+        layout: defaultLayout
+      },
+      component: Pivot
     },
     {
       path: "/login-form",

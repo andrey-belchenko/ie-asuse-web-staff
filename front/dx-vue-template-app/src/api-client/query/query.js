@@ -12,14 +12,14 @@ function handleErrors(response) {
 }
 
 export const createDataSource = (options) => {
-  let idField = "kod_tipdog";
+  let idField = "_id";
   let database = options.database;
   let collectionName = options.collectionName;
 
   const customDataSource = new CustomStore({
     key: idField,
     load: (loadOptions) => {
-      let url = `http://localhost:4004/pg-query`;
+      let url = `http://localhost:4004/query`;
       const query = fetch(url, {
         method: "POST",
         headers: {

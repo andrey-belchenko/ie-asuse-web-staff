@@ -1,0 +1,36 @@
+{
+  "scripts": {
+    "serve": "vue-cli-service serve index.ts",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
+  },
+  "dependencies": {
+    "@babel/core": "^7.14.6",
+    "@babel/preset-env": "^7.14.7",
+    "@devextreme/runtime": "3.0.13",
+    "@vue/cli-service-global": "^4.5.19",
+    "devexpress-diagram": "2.2.8",
+    "devexpress-gantt": "4.1.56",
+    "devextreme": "24.1.3",
+    "devextreme-quill": "1.7.1",
+    "devextreme-vue": "24.1.3",
+    "dx-systemjs-vue-browser": "1.1.1",
+    "es6-object-assign": "1.1.0",
+    "inferno": "7.4.11",
+    "inferno-clone-vnode": "latest",
+    "inferno-compat": "latest",
+    "inferno-create-class": "latest",
+    "inferno-create-element": "7.4.11",
+    "inferno-dom": "latest",
+    "inferno-extras": "latest",
+    "inferno-hydrate": "7.4.11",
+    "jszip": "3.10.1",
+    "luxon": "1.28.1",
+    "mitt": "latest",
+    "prettier": "2.8.8",
+    "rrule": "2.6.4",
+    "typescript": "3.9.10",
+    "vue": "3.2.47"
+  },
+  "description": ""
+}
