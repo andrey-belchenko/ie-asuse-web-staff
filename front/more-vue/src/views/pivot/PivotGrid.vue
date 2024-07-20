@@ -5,7 +5,7 @@
         </div>
         <DxPivotGrid id="sales" :allow-sorting-by-summary="true" :allow-sorting="true" :allow-filtering="true"
             :allow-expand-all="true" :height="440" :show-borders="true" :data-source="dataSource">
-            <DxFieldChooser :enabled="false" />
+          
         </DxPivotGrid>
     </div>
 </template>
@@ -15,23 +15,28 @@ import DxPivotGrid, {
 } from 'devextreme-vue/pivot-grid';
 import PivotGridDataSource from 'devextreme/ui/pivot_grid/data_source';
 import { sales } from './data';
+import { createDataSource } from "../../api-client/query/query.js";
+const dataStore = createDataSource({
+      database: "bav_sample",
+      collectionName: "financial_facts"
+    })
 
 const dataSource = new PivotGridDataSource({
+    // "company": random.choice(companies),
+    //     "product_type": random.choice(product_types),
+    //     "revenue": random.randint(1, 100) * 1000,
+    //     "expenses": random.randint(1, 100) * 500,
+    //     "date": datetime.now()
     fields: [
         {
-            caption: 'Region',
-            width: 120,
-            dataField: 'region',
+            caption: 'company',
+            dataField: 'company',
             area: 'row',
         },
         {
-            caption: 'City',
-            dataField: 'city',
-            width: 150,
+            caption: 'product_type',
+            dataField: 'product_type',
             area: 'row',
-            selector(data) {
-                return `${data.city} (${data.country})`;
-            },
         },
         {
             dataField: 'date',
@@ -39,15 +44,24 @@ const dataSource = new PivotGridDataSource({
             area: 'column',
         },
         {
-            caption: 'Sales',
-            dataField: 'amount',
+            caption: 'revenue',
+            dataField: 'revenue',
+            dataType: 'number',
+            summaryType: 'sum',
+            format: 'currency',
+            area: 'data',
+        },
+        {
+            caption: 'expenses',
+            dataField: 'expenses',
             dataType: 'number',
             summaryType: 'sum',
             format: 'currency',
             area: 'data',
         },
     ],
-    store: sales,
+    remoteOperations: true,
+    store: dataStore,
 });
 
 

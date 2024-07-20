@@ -17,7 +17,7 @@ product_types = ["Product 1", "Product 2", "Product 3", "Product 4", "Product 5"
 
 # Generate a larger number of sample financial facts
 sample_facts = []
-for i in range(1000):  # Adjust this value to generate more or fewer documents
+for i in range(100000):  # Adjust this value to generate more or fewer documents
     fact = {
         "company": random.choice(companies),
         "product_type": random.choice(product_types),

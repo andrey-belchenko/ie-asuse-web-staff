@@ -1,6 +1,6 @@
 <template>
   <DxDataGrid
-    :data-source="store"
+    :data-source="dataSource"
     :show-borders="true"
     :remote-operations="true"
   >
@@ -10,38 +10,10 @@
 import {
   DxDataGrid, DxColumn, DxPaging, DxPager,
 } from 'devextreme-vue/data-grid';
-import CustomStore from 'devextreme/data/custom_store';
-// import 'whatwg-fetch';
 
-const isNotEmpty = (value: any) => value !== undefined && value !== null && value !== '';
-
-const store = new CustomStore({
-  key: 'OrderNumber',
-  async load(loadOptions) {
-    const paramNames = [
-      'skip', 'take', 'requireTotalCount', 'requireGroupCount',
-      'sort', 'filter', 'totalSummary', 'group', 'groupSummary',
-    ] as const;
-
-    const queryString = paramNames
-      .filter((paramName) => isNotEmpty(loadOptions[paramName]))
-      .map((paramName) => `${paramName}=${JSON.stringify(loadOptions[paramName])}`)
-      .join('&');
-
-    try {
-      const response = await fetch(`https://js.devexpress.com/Demos/WidgetsGalleryDataService/api/orders?${queryString}`);
-
-      const result = await response.json();
-
-      return {
-        data: result.data,
-        totalCount: result.totalCount,
-        summary: result.summary,
-        groupCount: result.groupCount,
-      };
-    } catch (err) {
-      throw new Error('Data Loading Error');
-    }
-  },
-});
+import { createDataSource } from "../api-client/query/query.js";
+const dataSource = createDataSource({
+      database: "bav_sample",
+      collectionName: "financial_facts"
+    })
 </script>
