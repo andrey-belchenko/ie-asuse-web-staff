@@ -1,17 +1,13 @@
-
 import CustomStore from "devextreme/data/custom_store";
 
-
-
-
-function handleErrors(response) {
+function handleErrors(response: any) {
   if (!response.ok) {
     throw Error(response.statusText);
   }
   return response;
 }
 
-export const createDataSource = (options) => {
+export const createDataSource = (options: any) => {
   let idField = "_id";
   let database = options.database;
   let collectionName = options.collectionName;

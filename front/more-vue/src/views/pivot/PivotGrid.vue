@@ -15,7 +15,9 @@ import DxPivotGrid, {
 } from 'devextreme-vue/pivot-grid';
 import PivotGridDataSource from 'devextreme/ui/pivot_grid/data_source';
 import { sales } from './data';
-import { createDataSource } from "../../api-client/query/query.js";
+// import { createDataSource } from "../../api-client/query/query.js";
+
+import { createDataSource } from "@/api-client/query/query";
 const dataStore = createDataSource({
       database: "bav_sample",
       collectionName: "financial_facts"
