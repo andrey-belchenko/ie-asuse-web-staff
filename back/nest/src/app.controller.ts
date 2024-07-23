@@ -13,6 +13,7 @@ export class AppController {
 
   @Post('query')
   async create(@Body() request: any):Promise<any> {
-    return execQuery(request);
+    const data = await  execQuery(request)
+    return data;
   }
 }
