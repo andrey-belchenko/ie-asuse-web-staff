@@ -31,15 +31,19 @@ function replaceDateStrings(obj: any) {
 }
 
 export async function execQuery (req: any):Promise<any> {
-  log(req)
+  // log(req)
+  console.log("Request");
+  console.log(JSON.stringify(req.loadOptions));
   let results = undefined
   await useMongo(async (client: mongoDB.MongoClient) => {
     const db = client.db(req.database);
     const collection = db.collection(req.collection);
-    console.log("Collection: " + collection.collectionName);
+    // console.log("Collection: " + collection.collectionName);
     let loadOptions = replaceDateStrings(req.loadOptions);
-    console.log(JSON.stringify({ loadOptions: req.pipeline }));
+    // console.log(JSON.stringify({ loadOptions: req.pipeline }));
     results = await query(collection, loadOptions);
+    console.log("Response");
+    console.log(JSON.stringify(results));
   });
   return results
 };
@@ -59,7 +63,7 @@ async function useMongo(
   }
 }
 
-function log(req: any) {
-  console.log(JSON.stringify(req));
-}
+// function log(req: any) {
+//   console.log(JSON.stringify(req));
+// }
 
