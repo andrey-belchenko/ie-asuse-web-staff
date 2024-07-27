@@ -1,4 +1,4 @@
-import declaration from "../declaration";
+import declaration from "../declaration/obj";
 import { createObject, resetObjects } from "../utils/management";
 
 const run = async () => {

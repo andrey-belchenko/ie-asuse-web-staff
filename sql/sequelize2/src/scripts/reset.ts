@@ -1,4 +1,4 @@
-import declaration from "../declaration";
+import declaration from "../declaration/obj";
 import test_view from "../declaration/obj/test_view";
 import { resetObjects } from "../utils/management";
 
