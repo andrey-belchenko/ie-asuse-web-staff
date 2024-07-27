@@ -9,6 +9,16 @@
             "database": "postgres",
             "username": "postgres",
             "password": "1"
+        },
+        {
+            "previewLimit": 50,
+            "server":"asuse-ai-dev.infoenergo.loc",
+            "port": 5432,
+            "driver": "PostgreSQL",
+            "name": "asuse-ai-dev",
+            "database": "asuse",
+            "username": "asuse",
+            "password": "kl0pik"
         }
     ]
 }

@@ -31,12 +31,18 @@ export class DbObject {
       });
     }
 
-    if (typeof props.deleteStatement === "string") {
-      this.deleteStatement = new DdlStatement({
-        text: props.deleteStatement,
-      });
+    if (props.deleteStatement) {
+      if (typeof props.deleteStatement === "string") {
+        this.deleteStatement = new DdlStatement({
+          text: props.deleteStatement,
+        });
+      } else {
+        this.deleteStatement = props.deleteStatement!!;
+      }
     } else {
-      this.deleteStatement = props.deleteStatement!!;
+      this.deleteStatement = new DdlStatement({
+        text: "SELECT null",
+      });
     }
 
     this.dependsOn = props.dependsOn || [];
