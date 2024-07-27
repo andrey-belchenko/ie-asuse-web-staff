@@ -1,29 +1,39 @@
-import { SqlStatement } from "./SqlStatement";
+import { DdlStatement } from "./DdlStatement";
 
 export type DpObjectProps = {
-  //   schema?: string;
-  //   name: string;
-  createStatement: SqlStatement;
-  deleteStatement?: SqlStatement;
+  dirname: string;
+  createStatement?: DdlStatement;
+  deleteStatement?: DdlStatement;
 };
 
 export class DbObject {
-  //   name: string;
-  //   schema?: string;
-  createStatement: SqlStatement;
-  deleteStatement?: SqlStatement;
+  dirname?: string;
+  private createStatement: DdlStatement;
+  private deleteStatement: DdlStatement;
   constructor(props: DpObjectProps) {
-    // this.name = props.name;
-    // this.schema = props.schema;
-    this.createStatement = props.createStatement;
-    this.deleteStatement = props.deleteStatement;
+    this.dirname = props.dirname;
+    if (props.createStatement) {
+      this.createStatement = props.createStatement;
+    } else {
+      this.createStatement = new DdlStatement({ filePath: "create.sql" }).init(
+        this.dirname
+      )!!;
+    }
+
+    if (props.deleteStatement) {
+      this.deleteStatement = props.deleteStatement;
+    } else {
+      this.deleteStatement = new DdlStatement({ filePath: "delete.sql" }).init(
+        this.dirname
+      )!!;
+    }
   }
 
-  createStatementText(): string {
-    return this.createStatement.text!!;
+  createSql(): string {
+    return this.createStatement.getText();
   }
 
-  deleteStatementText(): string {
-    return this.deleteStatement?.text!!;
+  deleteSql(): string {
+    return this.deleteStatement.getText();
   }
 }

@@ -10,7 +10,7 @@ module.exports = {
     //   AS select sale from  public.sales s;
     // `);
 
-    await queryInterface.sequelize.query(test_view.deleteStatementText());
-    await queryInterface.sequelize.query(test_view.createStatementText());
+    await queryInterface.sequelize.query(test_view.deleteSql());
+    await queryInterface.sequelize.query(test_view.createSql());
   },
 };

@@ -1,4 +1,6 @@
-export default {
+import { Options } from "sequelize";
+
+const options: Options = {
   username: "postgres",
   password: "1",
   database: "postgres",
@@ -6,3 +8,5 @@ export default {
   port: 5432,
   dialect: "postgres",
 };
+
+export default options;

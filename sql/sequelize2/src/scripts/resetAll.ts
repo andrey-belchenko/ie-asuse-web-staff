@@ -1,15 +1,11 @@
-import path from "path";
-import { Sequelize } from "sequelize";
-import config from "../config";
+import declaration from "../declaration";
+import { resetDbObject } from "../utils/management";
 
-const options: any = config;
-const sequelize = new Sequelize(options);
 
-sequelize
-  .query('DROP TABLE IF EXISTS public."SequelizeMeta"')
-  .then(() => {
-    console.log("Query executed successfully");
-  })
-  .catch((err: Error) => {
-    console.error(err);
-  });
+const run = async () => {
+  for (let item of declaration) {
+    resetDbObject(item);
+  }
+};
+
+run();
