@@ -1,5 +1,0 @@
-import { View } from "../../classes/View";
-
-export default new View({
-  dirname: __dirname,
-});

@@ -31,7 +31,7 @@ export const resetObjects = async (dbObjects: DbObject[]) => {
     }
     iteration += 1;
     if (iteration > 100) {
-      let names = Array.from(objectsToCreate).map(obj => obj.dirname).join(', ');
+      let names = Array.from(objectsToCreate).map(obj => obj.fileName).join(', ');
       throw new Error("Can't resolve creation order for " + names);
     }
   }

@@ -1,35 +1,30 @@
+import path from "path";
 import { DdlStatement } from "./DdlStatement";
 
 export type DpObjectProps = {
-  dirname: string;
+  fileName: string;
   createStatement?: DdlStatement;
   deleteStatement?: DdlStatement;
   dependsOn?: DbObject[];
 };
 
 export class DbObject {
-  dirname: string;
+  fileName: string;
   private createStatement: DdlStatement;
   private deleteStatement: DdlStatement;
   dependsOn: DbObject[];
   dependent: DbObject[] = [];
   constructor(props: DpObjectProps) {
-    this.dirname = props.dirname;
+    this.fileName = props.fileName;
     if (props.createStatement) {
       this.createStatement = props.createStatement;
     } else {
-      this.createStatement = new DdlStatement({ filePath: "create.sql" }).init(
-        this.dirname
-      )!!;
+      this.createStatement = new DdlStatement({
+        filePath: this.getDefaultSqlPath(this.fileName),
+      });
     }
 
-    if (props.deleteStatement) {
-      this.deleteStatement = props.deleteStatement;
-    } else {
-      this.deleteStatement = new DdlStatement({ filePath: "delete.sql" }).init(
-        this.dirname
-      )!!;
-    }
+    this.deleteStatement = props.deleteStatement!!;
 
     this.dependsOn = props.dependsOn || [];
     for (let parent of this.dependsOn) {
@@ -43,5 +38,23 @@ export class DbObject {
 
   deleteSql(): string {
     return this.deleteStatement.getText();
+  }
+
+  private getDefaultSqlPath(filePath: string) {
+    let parsed = path.parse(filePath);
+    let pathArray = parsed.dir.split(path.sep);
+    let folderIndex = pathArray.indexOf("obj");
+    if (folderIndex > -1) {
+      pathArray[folderIndex] = "sql";
+    }
+    let newDir = pathArray.join(path.sep);
+    let newExt = ".sql";
+    let newFilePath = path.format({
+      root: parsed.root,
+      dir: newDir,
+      name: parsed.name,
+      ext: newExt,
+    });
+    return newFilePath;
   }
 }
