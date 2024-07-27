@@ -1,10 +1,11 @@
 require("ts-node/register");
+const config = require('./config.ts').default;
 
 module.exports = {
-  username: "postgres",
-  password: "1",
-  database: "postgres",
-  host: "127.0.0.1",
-  port: 5432,
-  dialect: "postgres",
+  username: config.username,
+  password: config.password,
+  database: config.database,
+  host: config.host,
+  port: config.port,
+  dialect: config.dialect,
 };
