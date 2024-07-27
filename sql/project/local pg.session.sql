@@ -1,0 +1,1 @@
+SELECT * FROM dm_fin
