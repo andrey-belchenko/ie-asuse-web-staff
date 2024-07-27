@@ -10,7 +10,7 @@
   },
   "include": [
     "src/**/*.ts"
-  ],
+, "src/database/sequelize.config.js"  ],
   "exclude": [
     "node_modules"
   ]
