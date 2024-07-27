@@ -1,3 +1,3 @@
 CREATE OR REPLACE VIEW public.test_view AS
-select *
+select customer
 from public.sales s

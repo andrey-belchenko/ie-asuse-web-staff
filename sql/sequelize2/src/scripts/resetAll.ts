@@ -1,11 +1,9 @@
 import declaration from "../declaration";
-import { resetDbObject } from "../utils/management";
-
+import { createObject, resetObjects } from "../utils/management";
 
 const run = async () => {
-  for (let item of declaration) {
-    resetDbObject(item);
-  }
+  await resetObjects(declaration);
+  console.log("done")
 };
 
 run();

@@ -4,12 +4,15 @@ export type DpObjectProps = {
   dirname: string;
   createStatement?: DdlStatement;
   deleteStatement?: DdlStatement;
+  dependsOn?: DbObject[];
 };
 
 export class DbObject {
-  dirname?: string;
+  dirname: string;
   private createStatement: DdlStatement;
   private deleteStatement: DdlStatement;
+  dependsOn: DbObject[];
+  dependent: DbObject[] = [];
   constructor(props: DpObjectProps) {
     this.dirname = props.dirname;
     if (props.createStatement) {
@@ -26,6 +29,11 @@ export class DbObject {
       this.deleteStatement = new DdlStatement({ filePath: "delete.sql" }).init(
         this.dirname
       )!!;
+    }
+
+    this.dependsOn = props.dependsOn || [];
+    for (let parent of this.dependsOn) {
+      parent.dependent.push(this);
     }
   }
 
