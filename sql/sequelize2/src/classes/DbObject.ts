@@ -20,7 +20,7 @@ export class DbObject {
     if (props.createStatement) {
       if (typeof props.createStatement === "string") {
         this.createStatement = new DdlStatement({
-          text: this.getDefaultSqlPath(props.createStatement),
+          text: props.createStatement,
         });
       } else {
         this.createStatement = props.createStatement;
@@ -33,7 +33,7 @@ export class DbObject {
 
     if (typeof props.deleteStatement === "string") {
       this.deleteStatement = new DdlStatement({
-        text: this.getDefaultSqlPath(props.deleteStatement),
+        text: props.deleteStatement,
       });
     } else {
       this.deleteStatement = props.deleteStatement!!;
@@ -58,7 +58,7 @@ export class DbObject {
     let pathArray = parsed.dir.split(path.sep);
     let folderIndex = pathArray.indexOf("obj");
     if (folderIndex > -1) {
-      pathArray[folderIndex] = "sql";
+      pathArray[folderIndex] = "ddl";
     }
     let newDir = pathArray.join(path.sep);
     let newExt = ".sql";

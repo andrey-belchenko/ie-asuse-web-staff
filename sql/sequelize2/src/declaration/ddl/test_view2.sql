@@ -1,3 +1,3 @@
-CREATE OR REPLACE VIEW public.test_view2 AS
+CREATE OR REPLACE VIEW reporting.test_view2 AS
 select *
-from public.test_view s
+from reporting.test_view s
