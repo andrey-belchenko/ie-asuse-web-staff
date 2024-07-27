@@ -5,7 +5,7 @@ const config = require(path.join(__dirname, '../config/config.json'))[env];
 
 const sequelize = new Sequelize(config);
 
-sequelize.query('DROP TABLE public."SequelizeMeta"')
+sequelize.query('DROP TABLE IF EXISTS public."SequelizeMeta"')
   .then(function() {
     console.log('Query executed successfully');
   })
