@@ -3,8 +3,8 @@ import { DdlStatement } from "./DdlStatement";
 
 export type DpObjectProps = {
   fileName: string;
-  createStatement?: DdlStatement;
-  deleteStatement?: DdlStatement;
+  createStatement?: DdlStatement | string;
+  deleteStatement?: DdlStatement | string;
   dependsOn?: DbObject[];
 };
 
@@ -16,15 +16,28 @@ export class DbObject {
   dependent: DbObject[] = [];
   constructor(props: DpObjectProps) {
     this.fileName = props.fileName;
+
     if (props.createStatement) {
-      this.createStatement = props.createStatement;
+      if (typeof props.createStatement === "string") {
+        this.createStatement = new DdlStatement({
+          text: this.getDefaultSqlPath(props.createStatement),
+        });
+      } else {
+        this.createStatement = props.createStatement;
+      }
     } else {
       this.createStatement = new DdlStatement({
         filePath: this.getDefaultSqlPath(this.fileName),
       });
     }
 
-    this.deleteStatement = props.deleteStatement!!;
+    if (typeof props.deleteStatement === "string") {
+      this.deleteStatement = new DdlStatement({
+        text: this.getDefaultSqlPath(props.deleteStatement),
+      });
+    } else {
+      this.deleteStatement = props.deleteStatement!!;
+    }
 
     this.dependsOn = props.dependsOn || [];
     for (let parent of this.dependsOn) {
