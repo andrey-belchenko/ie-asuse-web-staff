@@ -1,8 +1,6 @@
-begin;
-
-delete from report_stg.фин_начисления;
-
-insert into report_stg.фин_начисления (
+CREATE OR REPLACE FUNCTION report_stg.fill_фин_начисления() RETURNS VOID LANGUAGE plpgsql AS $$ BEGIN
+DELETE FROM report_stg.фин_начисления;
+INSERT INTO report_stg.фин_начисления (
         договор_ид,
         вид_реал_ид,
         док_нач_ид,
@@ -19,14 +17,14 @@ SELECT fv.kod_dog договор_ид,
     fv.dat_sf дата,
     sum(fr.nachisl) as начислено
 FROM sr_facras fr
-    left join sr_facvip fv on fr.kod_sf = fv.kod_sf
-where fv.vid_sf NOT IN (2, 9)
-    and fv.kod_dog is NOT NULL
-    and kod_dog = 358
-group BY fv.kod_dog,
+    LEFT JOIN sr_facvip fv ON fr.kod_sf = fv.kod_sf
+WHERE fv.vid_sf NOT IN (2, 9)
+    AND fv.kod_dog IS NOT NULL
+    -- AND kod_dog = 358
+GROUP BY fv.kod_dog,
     fv.vid_real,
     fv.kod_sf,
     fr.vid_t,
     fv.ym;
-
-end;
+END;
+$$;
