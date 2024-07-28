@@ -1,11 +1,10 @@
 import declaration from "../declaration/obj";
-import example from "../declaration/obj/functions/example";
-import test_view from "../declaration/obj/test_view";
+import фин_начисления from "../declaration/obj/report_stg/tables/фин_начисления";
 import { resetObjects } from "../utils/management";
 
 declaration;
 const run = async () => {
-  await resetObjects([example]);
+  await resetObjects([фин_начисления]);
   console.log("done");
 };
 

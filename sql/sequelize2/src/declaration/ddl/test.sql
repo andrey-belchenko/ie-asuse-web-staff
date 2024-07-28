@@ -1,1 +1,0 @@
-SELECT * FROM public.test_view2
