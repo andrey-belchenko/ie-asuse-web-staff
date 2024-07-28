@@ -1,6 +1,5 @@
-drop table reporting.st_sr_facras;
-
-create table reporting.st_sr_facras as
+drop table report_dev.draft;
+create table report_dev.draft as
 SELECT fv.kod_dog договор_ид,
     fv.vid_real вид_реал_ид,
     fv.kod_sf док_нач_ид,
@@ -17,9 +16,8 @@ group BY fv.kod_dog,
     fv.vid_real,
     fv.kod_sf,
     fr.vid_t,
-    fv.ym
--- limit 5 
---     <call function="if" as="dat_rep" type="date" comment="59495 " dimension="dat">
+    fv.ym -- limit 5 
+    --     <call function="if" as="dat_rep" type="date" comment="59495 " dimension="dat">
     --   <call function="and">
     --     <call function="lt">
     --       <call function="date to ym">
