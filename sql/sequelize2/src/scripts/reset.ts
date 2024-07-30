@@ -16,7 +16,7 @@ const run = async () => {
     // фин_опл,
     // fill_фин_опл,
     // report_dm,
-    msr_фин_обор_детал,
+    // msr_фин_обор_детал,
     fill_msr_фин_обор_детал,
   ]);
   console.log("done");

@@ -1,10 +1,13 @@
 select
-    report_stg.fill_фин_начисл ()
-delete from report_stg.фин_начисления
+    report_dm.fill_msr_фин_обор_детал ()
+
+
+
+-- delete from report_stg.фин_начисления
 select
     count(*)
 from
-report_stg.фин_начисл limit 100
+report_dm.msr_фин_обор_детал limit 100
 
 
 
