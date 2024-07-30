@@ -11,7 +11,6 @@ SELECT fv.kod_dog AS договор_ид,
 FROM sr_facras fr
   LEFT JOIN sr_facvip fv ON fr.kod_sf = fv.kod_sf
 WHERE fv.vid_sf NOT IN (2, 9)
-  AND fv.kod_dog IS NOT NULL
   -- AND fv.kod_dog = 358
 GROUP BY fv.kod_dog,
   fv.vid_real,

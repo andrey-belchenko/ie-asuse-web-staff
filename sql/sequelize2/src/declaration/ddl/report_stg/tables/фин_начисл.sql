@@ -6,4 +6,6 @@ CREATE TABLE report_stg.фин_начисл (
   период_ид numeric(6, 2) NULL,
   дата timestamptz NULL,
   начисл numeric NULL
-)
+);
+
+CREATE INDEX фин_начисл_договор_ид  ON report_stg.фин_начисл USING btree(договор_ид );
