@@ -1,4 +1,6 @@
 import report_dev from "./report_dev/report_dev";
+import fill_msr_фин_обор_детал from "./report_dm/functions/fill_msr_фин_обор_детал";
+import msr_фин_обор_детал from "./report_dm/tables/msr_фин_обор_детал";
 import fill_фин_начисл from "./report_stg/functions/fill_фин_начисл";
 import fill_фин_опл from "./report_stg/functions/fill_фин_опл";
 import report_stg from "./report_stg/report_stg";
@@ -14,4 +16,6 @@ export default [
   fill_фин_начисл,
   фин_опл,
   fill_фин_опл,
+  msr_фин_обор_детал,
+  fill_msr_фин_обор_детал
 ];

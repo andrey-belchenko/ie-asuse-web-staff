@@ -1,5 +1,7 @@
-create table report_dev.msr_фин_обор_детал
-as
+CREATE OR REPLACE FUNCTION report_dm.fill_msr_фин_обор_детал () RETURNS VOID LANGUAGE plpgsql AS $$ 
+BEGIN 
+DELETE FROM report_stg.msr_фин_обор_детал;
+INSERT INTO report_dm.msr_фин_обор_детал
 select a.договор_ид,
     a.вид_реал_ид,
     a.дата,
@@ -24,6 +26,6 @@ select a.договор_ид,
     a.опл_ид,
     a.тип_опл_ид,
     a.исх_опл_ид,
-    a.опл
-from report_stg.фин_опл a
-where договор_ид = 358
+    a.опл;
+END;
+$$;
