@@ -1,6 +1,6 @@
 import declaration from "../declaration/obj";
-import fill_фин_начисления from "../declaration/obj/report_stg/functions/fill_фин_начисления";
-import фин_начисления from "../declaration/obj/report_stg/tables/фин_начисления";
+import fill_фин_начисления from "../declaration/obj/report_stg/functions/fill_фин_начисл";
+import фин_начисления from "../declaration/obj/report_stg/tables/фин_начисл";
 import { resetObjects } from "../utils/management";
 
 declaration;

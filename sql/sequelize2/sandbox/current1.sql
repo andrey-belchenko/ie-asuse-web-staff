@@ -1,7 +1,7 @@
 select
-    report_stg.fill_фин_начисления ()
+    report_stg.fill_фин_начисл ()
 delete from report_stg.фин_начисления
 select
-    *
+    count(*)
 from
-report_stg.фин_начисления limit 100
+report_stg.фин_начисл limit 100
