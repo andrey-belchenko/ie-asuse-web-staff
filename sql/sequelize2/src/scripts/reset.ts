@@ -5,7 +5,10 @@ import { resetObjects } from "../utils/management";
 
 declaration;
 const run = async () => {
-  await resetObjects([фин_начисления, fill_фин_начисления]);
+  await resetObjects([
+    // фин_начисления, 
+    fill_фин_начисления
+  ]);
   console.log("done");
 };
 
