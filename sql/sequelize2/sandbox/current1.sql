@@ -1,5 +1,5 @@
 select
-    report_dm.fill_msr_фин_обор_детал ()
+    report_dm.fill_msr_фин_детал ()
 
 
 

@@ -1,3 +1,7 @@
+CREATE OR REPLACE FUNCTION report_dm.fill_msr_фин_детал () RETURNS VOID LANGUAGE plpgsql AS $$ 
+BEGIN 
+DELETE FROM report_dm.msr_фин_детал;
+INSERT INTO report_dm.msr_фин_детал
 with x1 as (
     select case
             when вид_реал_ид = 2 then начисл
@@ -12,13 +16,11 @@ with x1 as (
         case
             when тип_опл_ид in (5, 6) then - опл
         end as сторно_кред,
-        --coalesce(a.начисл,0) - coalesce(a.опл,0) обор,
         a.*
     from report_dm.msr_фин_обор_детал a
-    where договор_ид = 358
 ),
 x2 as (
-    select --case when вид_реал_ид = 2 then 	обор end as обор_осн,
+    select
         coalesce(a.начисл_осн, 0) - coalesce(a.погаш_осн, 0) обор_осн,
         coalesce(a.опл_кред, 0) - coalesce(a.сторно_кред, 0) обор_кред,
         a.*
@@ -36,7 +38,7 @@ x4 as (
                     PARTITION BY договор_ид
                     ORDER BY дата
                 ) - INTERVAL '1 day'
-            )::date,
+            )::timestamptz,
             '9999-01-01'
         ) as итог_по_дог_до,
         a.*
@@ -65,4 +67,6 @@ x5 as (
     from x4 a
 )
 select *
-from x5 a
+from x5 a;
+END;
+$$;

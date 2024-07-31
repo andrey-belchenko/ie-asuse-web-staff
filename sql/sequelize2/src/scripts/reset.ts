@@ -1,6 +1,8 @@
 import declaration from "../declaration/obj";
+import fill_msr_фин_детал from "../declaration/obj/report_dm/functions/fill_msr_фин_детал";
 import fill_msr_фин_обор_детал from "../declaration/obj/report_dm/functions/fill_msr_фин_обор_детал";
 import report_dm from "../declaration/obj/report_dm/report_dm";
+import msr_фин_детал from "../declaration/obj/report_dm/tables/msr_фин_детал";
 import msr_фин_обор_детал from "../declaration/obj/report_dm/tables/msr_фин_обор_детал";
 import fill_фин_начисления from "../declaration/obj/report_stg/functions/fill_фин_начисл";
 import fill_фин_опл from "../declaration/obj/report_stg/functions/fill_фин_опл";
@@ -17,7 +19,9 @@ const run = async () => {
     // fill_фин_опл,
     // report_dm,
     // msr_фин_обор_детал,
-    fill_msr_фин_обор_детал,
+    // fill_msr_фин_обор_детал,
+    msr_фин_детал,
+    fill_msr_фин_детал
   ]);
   console.log("done");
 };
