@@ -7,7 +7,7 @@ select
 select
     count(*)
 from
-report_dm.msr_фин_обор_детал limit 100
+report_dm.msr_фин_детал limit 100
 
 
 

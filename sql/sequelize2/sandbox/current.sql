@@ -1,68 +1,23 @@
-with x1 as (
-    select case
-            when вид_реал_ид = 2 then начисл
-        end as начисл_осн,
-        case
-            when вид_реал_ид = 2
-            and тип_опл_ид in (0, 3, 4) then опл
-        end as погаш_осн,
-        case
-            when тип_опл_ид in (1, 2) then опл
-        end as опл_кред,
-        case
-            when тип_опл_ид in (5, 6) then - опл
-        end as сторно_кред,
-        --coalesce(a.начисл,0) - coalesce(a.опл,0) обор,
-        a.*
-    from report_dm.msr_фин_обор_детал a
-    where договор_ид = 358
-),
-x2 as (
-    select --case when вид_реал_ид = 2 then 	обор end as обор_осн,
-        coalesce(a.начисл_осн, 0) - coalesce(a.погаш_осн, 0) обор_осн,
-        coalesce(a.опл_кред, 0) - coalesce(a.сторно_кред, 0) обор_кред,
-        a.*
-    from x1 a
-),
-x3 as (
-    select coalesce(a.обор_осн, 0) - coalesce(a.обор_кред, 0) обор,
-        a.*
-    from x2 a
-),
-x4 as (
-    select coalesce(
-            (
-                LEAD(дата) OVER (
-                    PARTITION BY договор_ид
-                    ORDER BY дата
-                ) - INTERVAL '1 day'
-            )::date,
-            '9999-01-01'
-        ) as итог_по_дог_до,
-        a.*
-    from x3 a
-),
-x5 as (
-    select case
-            when a.дата <= a.итог_по_дог_до then SUM(a.обор_осн) OVER (
-                PARTITION BY договор_ид
-                ORDER BY дата
-            )
-        end as долг_осн_по_дог,
-        case
-            when a.дата <= a.итог_по_дог_до then SUM(a.обор_кред) OVER (
-                PARTITION BY договор_ид
-                ORDER BY дата
-            )
-        end as долг_кред_по_дог,
-        case
-            when a.дата <= a.итог_по_дог_до then SUM(a.обор) OVER (
-                PARTITION BY договор_ид
-                ORDER BY дата
-            )
-        end as долг_по_дог,
-        a.*
-    from x4 a
-)
-select *
-from x5 a
+create table report_dev.test2 as
+
+
+select 
+
+договор_ид,
+sum(case when дата between '2022-11-01'::date and '2022-11-30'::date then начисл_осн end) начисл_осн,
+sum(case when дата between '2022-11-01'::date and '2022-11-30'::date then погаш_осн end) погаш_осн,
+sum(case when '2022-11-01'::date between дата and итог_по_дог_до then долг_по_дог end) долг_по_дог_нач,
+sum(case when '2022-11-30'::date between дата and итог_по_дог_до then долг_по_дог end) долг_по_дог_кон
+from report_dm.msr_фин_детал
+
+where 
+1=1
+--and договор_ид =358 
+--and дата between '2022-11-01'::date and '2022-11-30'::date
+and итог_по_дог_до > '2022-10-31'::date
+and дата <= '2022-11-30'::date 
+group by договор_ид
+
+
+
+select count(*) from report_dm.msr_фин_детал
