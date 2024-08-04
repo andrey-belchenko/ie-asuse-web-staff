@@ -4,7 +4,9 @@ CREATE TABLE report_dm.msr_фин_сальдо_по_дог (
     акт_по timestamptz NULL,
     долг_осн_деб numeric NULL,
     долг_осн_кред numeric NULL,
-    долг_осн numeric NULL
+    долг_осн numeric NULL,
+    долг numeric NULL,
+    долг_деб numeric NULL
 );
 CREATE INDEX i_msr_фин_сальдо_по_дог_договор_ид ON report_dm.msr_фин_сальдо_по_дог USING btree(договор_ид);
 CREATE INDEX i_msr_фин_сальдо_по_дог_акт_с ON report_dm.msr_фин_сальдо_по_дог USING btree(акт_с);

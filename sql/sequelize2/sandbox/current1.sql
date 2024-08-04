@@ -6,7 +6,8 @@ select
 select
     report_dm.fill_dim_дата ()
 
-
+select
+    report_dm.fill_all()
 
 -- delete from report_stg.фин_начисления
 select

@@ -1,11 +1,22 @@
 CREATE OR REPLACE FUNCTION report_dm.fill_msr_фин_сальдо_по_дог () RETURNS VOID LANGUAGE plpgsql AS $$ BEGIN
 DELETE FROM report_dm.msr_фин_сальдо_по_дог;
-INSERT INTO report_dm.msr_фин_сальдо_по_дог with x1 as (
+INSERT INTO report_dm.msr_фин_сальдо_по_дог (
+        договор_ид,
+        акт_с,
+        акт_по,
+        долг_осн_деб,
+        долг_осн_кред,
+        долг_осн,
+        долг,
+        долг_деб
+    ) with x1 as (
         select a.дата,
             a.договор_ид,
             sum(a.обор_осн_деб) обор_осн_деб,
             sum(a.обор_осн_кред) обор_осн_кред,
-            sum(a.обор_осн) обор_осн
+            sum(a.обор_осн) обор_осн,
+            sum(a.обор) обор,
+            sum(a.обор_деб) обор_деб
         from report_dm.msr_фин_обор a
         group by a.дата,
             a.договор_ид
@@ -36,6 +47,14 @@ INSERT INTO report_dm.msr_фин_сальдо_по_дог with x1 as (
                 PARTITION BY a.договор_ид
                 ORDER BY a.дата
             ) as долг_осн,
+            SUM(a.обор) OVER (
+                PARTITION BY a.договор_ид
+                ORDER BY a.дата
+            ) as долг,
+            SUM(a.обор_деб) OVER (
+                PARTITION BY a.договор_ид
+                ORDER BY a.дата
+            ) as долг_деб,
             a.*
         from x2 a
     )
@@ -44,7 +63,9 @@ select договор_ид,
     a.акт_по,
     a.долг_осн_деб,
     a.долг_осн_кред,
-    a.долг_осн
+    a.долг_осн,
+    a.долг,
+    a.долг_деб
 from x3 a;
 END;
 $$;
