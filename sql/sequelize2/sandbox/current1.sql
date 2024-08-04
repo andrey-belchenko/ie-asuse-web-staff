@@ -1,5 +1,10 @@
 select
-    report_dm.fill_msr_фин_обор ()
+    report_dm.fill_msr_фин_обор ();
+
+
+
+select
+    report_dm.fill_dim_дата ()
 
 
 
