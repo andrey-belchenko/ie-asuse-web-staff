@@ -3,10 +3,12 @@ DELETE FROM report_dm.msr_фин_сальдо_по_дог;
 INSERT INTO report_dm.msr_фин_сальдо_по_дог with x1 as (
         select a.дата,
             a.договор_ид,
-            sum(a.обор_осн_деб),
-            sum(a.обор_осн_кред),
-            sum(a.обор_осн)
-        from msr_фин_обор a
+            sum(a.обор_осн_деб) обор_осн_деб,
+            sum(a.обор_осн_кред) обор_осн_кред,
+            sum(a.обор_осн) обор_осн
+        from report_dm.msr_фин_обор a
+        group by a.дата,
+            a.договор_ид
     ),
     x2 as (
         select coalesce(

@@ -9,6 +9,7 @@ import fill_фин_опл from "../declaration/obj/report_stg/functions/fill_ф�
 import фин_начисления from "../declaration/obj/report_stg/tables/фин_начисл";
 import фин_опл from "../declaration/obj/report_stg/tables/фин_опл";
 import { resetObjects } from "../utils/management";
+import fill_msr_фин_сальдо_по_дог from "../declaration/obj/report_dm/functions/fill_msr_фин_сальдо_по_дог";
 
 declaration;
 const run = async () => {
@@ -20,8 +21,8 @@ const run = async () => {
     // report_dm,
     // msr_фин_обор_детал,
     // fill_msr_фин_обор_детал,
-    msr_фин_детал,
-    fill_msr_фин_детал
+    // msr_фин_детал,
+    fill_msr_фин_сальдо_по_дог
   ]);
   console.log("done");
 };

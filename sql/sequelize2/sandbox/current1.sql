@@ -1,5 +1,5 @@
 select
-    report_dm.fill_msr_фин_детал ()
+    report_dm.fill_msr_фин_обор ()
 
 
 
@@ -13,6 +13,6 @@ report_dm.msr_фин_детал limit 100
 
 
 select
-    report_stg.fill_фин_опл ()
+    report_dm.fill_msr_фин_сальдо_по_дог ()
 
 select count(*) from report_stg.фин_опл
