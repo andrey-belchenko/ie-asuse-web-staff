@@ -20,3 +20,4 @@ CREATE TABLE report_dm.msr_фин_обор (
 );
 CREATE INDEX i_msr_фин_обор_договор_ид ON report_dm.msr_фин_обор USING btree(договор_ид);
 CREATE INDEX i_msr_фин_обор_дата ON report_dm.msr_фин_обор USING btree(дата);
+CREATE INDEX i_msr_фин_обор_договор_ид_дата ON report_dm.msr_фин_обор USING btree(договор_ид,дата);
