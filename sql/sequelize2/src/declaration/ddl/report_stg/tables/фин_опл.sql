@@ -4,6 +4,7 @@ CREATE TABLE report_stg.фин_опл (
 	вид_реал_ид int4 NULL,
 	тип_опл_ид int4 NULL,
 	исх_опл_ид int4 NULL,
+	док_нач_ид int4 NULL,
 	дата timestamptz NULL,
 	период_ид numeric(6, 2) NULL,
 	опл numeric NULL

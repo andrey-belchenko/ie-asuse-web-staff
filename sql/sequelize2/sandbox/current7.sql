@@ -130,7 +130,7 @@ sn as (
     select a.договор_ид,
         p.год,
         p.месяц,
-        sum(долг_осн) сумма
+        sum(долг) сумма
     from report_dm.msr_фин_сальдо_по_дог a
         join report_dev.период p on p.дата_с between a.акт_с and a.акт_по
         and p.договор_ид = a.договор_ид
