@@ -1,5 +1,4 @@
-with 
-n as (
+with n as (
     select a.договор_ид,
         a.вид_реал_ид,
         a.вид_тов_ид,
@@ -29,8 +28,6 @@ ok as (
     from report_dm.msr_фин_опл_кредит a
         join report_dev.период p on a.дата between p.дата_с and p.дата_по
         and p.договор_ид = a.договор_ид
-    where p.год = 2019
-        and p.месяц = 1
     group by a.договор_ид,
         p.год,
         p.месяц
@@ -67,8 +64,6 @@ op as (
     from report_dm.msr_фин_опл_погаш a
         join report_dev.период p on a.дата between p.дата_с and p.дата_по
         and p.договор_ид = a.договор_ид
-    where p.год = 2019
-        and p.месяц = 1
     group by a.договор_ид,
         a.вид_реал_ид,
         p.год,
@@ -95,6 +90,38 @@ o4 as (
         a.погаш_из_кред сумма
     from op a
     where погаш_из_кред != 0
+),
+sn as (
+    select 'Начальное сальдо' as имя_стр,
+        a.договор_ид,
+        a.вид_реал_ид,
+        p.год,
+        p.месяц,
+        1 as порядок,
+        sum(долг) сумма
+    from report_dm.msr_фин_сальдо_по_дог_вид_реал a
+        join report_dev.период p on p.дата_с between a.акт_с and a.акт_по
+        and p.договор_ид = a.договор_ид
+    group by a.договор_ид,
+        a.вид_реал_ид,
+        p.год,
+        p.месяц
+),
+sk as (
+    select 'Конечное сальдо' as имя_стр,
+        a.договор_ид,
+        a.вид_реал_ид,
+        p.год,
+        p.месяц,
+        5 as порядок,
+        sum(долг) сумма
+    from report_dm.msr_фин_сальдо_по_дог_вид_реал a
+        join report_dev.период p on p.дата_по between a.акт_с and a.акт_по
+        and p.договор_ид = a.договор_ид
+    group by a.договор_ид,
+        a.вид_реал_ид,
+        p.год,
+        p.месяц
 ),
 x as (
     select a.договор_ид,
@@ -146,18 +173,28 @@ x as (
         a.порядок,
         a.сумма
     from o4 a
-) 
--- sn as (
---     select a.договор_ид,
---         p.год,
---         p.месяц,
---         sum(долг) сумма
---     from report_dm.msr_фин_сальдо_по_дог a
---         join report_dev.период p on p.дата_с between a.акт_с and a.акт_по
---         and p.договор_ид = a.договор_ид
---     group by a.договор_ид,
---         p.год,
---         p.месяц
--- )
+    UNION ALL
+    select a.договор_ид,
+        a.год,
+        a.месяц,
+        a.вид_реал_ид,
+        null as вид_тов_ид,
+        a.имя_стр,
+        a.порядок,
+        a.сумма
+    from sn a
+    UNION ALL
+    select a.договор_ид,
+        a.год,
+        a.месяц,
+        a.вид_реал_ид,
+        null as вид_тов_ид,
+        a.имя_стр,
+        a.порядок,
+        a.сумма
+    from sk a
+)
 select *
-from x
+from x a
+-- where a.год = 2019
+--     and a.месяц = 1
