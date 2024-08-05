@@ -15,7 +15,7 @@ const run = async () => {
   await resetObjects([
     //  фин_опл,
     //  fill_фин_опл
-    msr_фин_опл_погаш,
+    // msr_фин_опл_погаш,
     fill_msr_фин_опл_погаш
   ]);
   console.log("done");
