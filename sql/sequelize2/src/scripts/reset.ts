@@ -1,9 +1,11 @@
 import declaration from "../declaration/obj";
 import fill_dim_data from "../declaration/obj/report_dm/functions/fill_dim_дата";
+import fill_msr_фин_начисл from "../declaration/obj/report_dm/functions/fill_msr_фин_начисл";
 import fill_msr_фин_опл from "../declaration/obj/report_dm/functions/fill_msr_фин_опл";
 import fill_msr_фин_опл_кредит from "../declaration/obj/report_dm/functions/fill_msr_фин_опл_кредит";
 import fill_msr_фин_опл_погаш from "../declaration/obj/report_dm/functions/fill_msr_фин_опл_погаш";
 import dim_дата from "../declaration/obj/report_dm/tables/dim_дата";
+import msr_фин_начисл from "../declaration/obj/report_dm/tables/msr_фин_начисл";
 import msr_фин_опл from "../declaration/obj/report_dm/tables/msr_фин_опл";
 import msr_фин_опл_кредит from "../declaration/obj/report_dm/tables/msr_фин_опл_кредит";
 import msr_фин_опл_погаш from "../declaration/obj/report_dm/tables/msr_фин_опл_погаш";
@@ -21,7 +23,9 @@ const run = async () => {
     // fill_msr_фин_опл_погаш
     // msr_фин_опл_кредит,
     // fill_msr_фин_опл_кредит
-    msr_фин,
+    // msr_фин,
+    msr_фин_начисл,
+    fill_msr_фин_начисл
   ]);
   console.log("done");
 };

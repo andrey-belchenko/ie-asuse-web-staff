@@ -1,5 +1,6 @@
 import fill_all from "./functions/fill_all";
 import fill_dim_data from "./functions/fill_dim_дата";
+import fill_msr_фин_начисл from "./functions/fill_msr_фин_начисл";
 import fill_msr_фин_обор from "./functions/fill_msr_фин_обор";
 import fill_msr_фин_опл from "./functions/fill_msr_фин_опл";
 import fill_msr_фин_опл_кредит from "./functions/fill_msr_фин_опл_кредит";
@@ -7,6 +8,7 @@ import fill_msr_фин_опл_погаш from "./functions/fill_msr_фин_оп�
 import fill_msr_фин_сальдо from "./functions/fill_msr_фин_сальдо_по_дог";
 import report_dm from "./report_dm";
 import dim_дата from "./tables/dim_дата";
+import msr_фин_начисл from "./tables/msr_фин_начисл";
 import msr_фин_обор from "./tables/msr_фин_обор";
 import msr_фин_опл from "./tables/msr_фин_опл";
 import msr_фин_опл_кредит from "./tables/msr_фин_опл_кредит";
@@ -16,6 +18,7 @@ import msr_фин from "./views/msr_фин";
 
 export default [
   report_dm,
+  msr_фин_начисл,
   msr_фин_опл,
   msr_фин_обор,
   msr_фин_сальдо,
@@ -24,6 +27,7 @@ export default [
   msr_фин,
   dim_дата,
   fill_all,
+  fill_msr_фин_начисл,
   fill_msr_фин_опл,
   fill_msr_фин_обор,
   fill_msr_фин_сальдо,
