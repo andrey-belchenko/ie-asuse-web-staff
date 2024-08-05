@@ -2,11 +2,13 @@ import fill_all from "./functions/fill_all";
 import fill_dim_data from "./functions/fill_dim_дата";
 import fill_msr_фин_обор from "./functions/fill_msr_фин_обор";
 import fill_msr_фин_опл from "./functions/fill_msr_фин_опл";
+import fill_msr_фин_опл_погаш from "./functions/fill_msr_фин_опл_погаш";
 import fill_msr_фин_сальдо from "./functions/fill_msr_фин_сальдо_по_дог";
 import report_dm from "./report_dm";
 import dim_дата from "./tables/dim_дата";
 import msr_фин_обор from "./tables/msr_фин_обор";
 import msr_фин_опл from "./tables/msr_фин_опл";
+import msr_фин_опл_погаш from "./tables/msr_фин_опл_погаш";
 import msr_фин_сальдо from "./tables/msr_фин_сальдо_по_дог";
 
 export default [
@@ -14,10 +16,12 @@ export default [
   msr_фин_опл,
   msr_фин_обор,
   msr_фин_сальдо,
+  msr_фин_опл_погаш,
   dim_дата,
   fill_all,
   fill_msr_фин_опл,
   fill_msr_фин_обор,
   fill_msr_фин_сальдо,
-  fill_dim_data
+  fill_dim_data,
+  fill_msr_фин_опл_погаш,
 ];
