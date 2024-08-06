@@ -19,7 +19,7 @@ INSERT INTO report_dm.msr_фин_опл_кредит (
             a.тип_опл_ид,
             a.опл
         from report_stg.фин_опл a
-        where a.тип_опл_ид in (1, 2, 5, 6) --and договор_ид = 358
+        where a.тип_опл_ид in (1, 2, 5, 6) 
     ),
     x2 as (
         select a.*,

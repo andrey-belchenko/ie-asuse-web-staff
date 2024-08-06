@@ -15,7 +15,7 @@ INSERT INTO report_dm.dim_дата (
                 FROM дата
             )::integer AS год
         FROM generate_series(
-                (CURRENT_DATE - INTERVAL '10 years')::date,
+                (CURRENT_DATE - INTERVAL '30 years')::date,
                 (CURRENT_DATE + INTERVAL '1 years')::date,
                 '1 day'::interval
             ) AS дата

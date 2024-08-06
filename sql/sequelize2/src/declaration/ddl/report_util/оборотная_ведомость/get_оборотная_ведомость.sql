@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION report_util.get_лицевая_карта(p_договор_ид integer []) RETURNS TABLE (
+CREATE OR REPLACE FUNCTION report_util.get_лицевая_карта(p_дата_с date, p_дата_по date, отделение_ид integer) RETURNS TABLE (
         строка text,
         договор_ид int4,
         год int4,
