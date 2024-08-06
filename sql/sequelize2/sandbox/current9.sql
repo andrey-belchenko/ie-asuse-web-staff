@@ -1,3 +1,5 @@
+create table report_dev.лс as
+
 with n as (
     select a.договор_ид,
         a.вид_реал_ид,
@@ -9,9 +11,6 @@ with n as (
     from report_dm.msr_фин_начисл a
         join report_dev.период p on a.дата between p.дата_с and p.дата_по
         and p.договор_ид = a.договор_ид
-    where a.начисл is not null
-        and p.год = 2019
-        and p.месяц = 1
     group by a.договор_ид,
         a.вид_реал_ид,
         a.вид_тов_ид,
@@ -193,8 +192,22 @@ x as (
         a.порядок,
         a.сумма
     from sk a
+),
+x1 as (
+    select a.*,
+        coalesce(a.имя_стр, t.номер || ' ' || t.имя) строка
+    from x a
+        left join report_dm.dim_вид_тов t on a.вид_тов_ид = t.вид_тов_ид
 )
-select *
-from x a
--- where a.год = 2019
---     and a.месяц = 1
+select a.строка,
+    a.договор_ид,
+    a.год,
+    a.месяц,
+    a.вид_реал_ид,
+    DENSE_RANK() over (
+        order by a.порядок,
+            a.строка
+    ) порядок,
+    a.сумма
+from x1 a -- where a.год = 2019
+    --     and a.месяц = 1

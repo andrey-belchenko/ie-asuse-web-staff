@@ -46,13 +46,16 @@ group by a.договор_ид,
     d.месяц
 ORDER by d.год,
     d.месяц;
--- CREATE TEMP TABLE период ON COMMIT DROP AS with x1 
+
+DROP TABLE IF EXISTS  report_dev.период;
 CREATE TEMP TABLE период ON COMMIT DROP AS with x1 as (
+-- CREATE TABLE report_dev.период AS with x1 as (
     SELECT a.договор_ид,
         min(a.дата) дата_с,
         max(a.дата) дата_по
     from report_dm.msr_фин_обор a
-    where a.договор_ид in (358)
+    -- where a.договор_ид in (358)
+    where a.договор_ид in(899)
     group by a.договор_ид
 )
 select a.договор_ид,

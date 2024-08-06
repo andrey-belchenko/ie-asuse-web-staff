@@ -1,1 +1,7 @@
-select  count(*) from report_dm.msr_фин_обор
+select строка,
+    год,
+    месяц,
+    сумма
+from report_util.get_лицевая_карта(2058)
+where вид_реал_ид = 2
+order by год,месяц, порядок
