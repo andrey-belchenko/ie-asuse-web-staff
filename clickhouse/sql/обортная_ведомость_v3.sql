@@ -42,6 +42,6 @@ from report_dm.msr_fin a
     join p_otd po on d.otdelenie_id = po.otdelenie_id
     left join report_dm.dim_otdelenie o on d.otdelenie_id = o.otdelenie_id
 where a.vid_real_id = 2 
-and p on a.akt_s <=  toDate('2021-03-31')
+and a.akt_s <=  toDate('2021-03-31')
     and a.akt_po >= toDate('2021-03-01')
 group by a.dogovor_id
