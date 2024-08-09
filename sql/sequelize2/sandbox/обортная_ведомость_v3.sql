@@ -43,6 +43,6 @@ from report_dm.msr_фин a
     join p_отд po on d.отделение_ид = po.отделение_ид
     left join report_dm.dim_отделение o on d.отделение_ид = o.отделение_ид
 where a.вид_реал_ид = 2 
-and p on a.акт_с <=  '2021-03-31':date
+and a.акт_с <=  '2021-03-31'::date
     and a.акт_по >= '2021-03-01'::date
 group by a.договор_ид
