@@ -16,7 +16,6 @@ export class DbObject {
   dependent: DbObject[] = [];
   constructor(props: DpObjectProps) {
     this.fileName = props.fileName;
-
     if (props.createStatement) {
       if (typeof props.createStatement === "string") {
         this.createStatement = new DdlStatement({
@@ -31,24 +30,36 @@ export class DbObject {
       });
     }
 
-    if (props.deleteStatement) {
-      if (typeof props.deleteStatement === "string") {
-        this.deleteStatement = new DdlStatement({
-          text: props.deleteStatement,
-        });
-      } else {
-        this.deleteStatement = props.deleteStatement!!;
-      }
-    } else {
-      this.deleteStatement = new DdlStatement({
-        text: "SELECT null",
-      });
-    }
+    this.deleteStatement = this.prepareDeleteStatement(props.deleteStatement);
 
     this.dependsOn = props.dependsOn || [];
     for (let parent of this.dependsOn) {
       parent.dependent.push(this);
     }
+  }
+
+  private prepareDeleteStatement(
+    newValue: DdlStatement | string | undefined
+  ): DdlStatement {
+    let value: DdlStatement;
+    if (newValue) {
+      if (typeof newValue === "string") {
+        value = new DdlStatement({
+          text: newValue,
+        });
+      } else {
+        value = newValue!!;
+      }
+    } else {
+      value = new DdlStatement({
+        text: "SELECT null",
+      });
+    }
+    return value;
+  }
+
+  setDeleteStatement(value: DdlStatement | string | undefined) {
+    this.deleteStatement = this.prepareDeleteStatement(value);
   }
 
   createSql(): string {
@@ -75,5 +86,14 @@ export class DbObject {
       ext: newExt,
     });
     return newFilePath;
+  }
+
+  getObjectFullName(): string {
+    let parsed = path.parse(this.fileName);
+    let pathArray = parsed.dir.split(path.sep);
+    let folderIndex = pathArray.indexOf("obj");
+    let schemaName = pathArray[folderIndex + 1];
+    let objectName = path.basename(this.fileName, path.extname(this.fileName));
+    return `${schemaName}.${objectName}`
   }
 }

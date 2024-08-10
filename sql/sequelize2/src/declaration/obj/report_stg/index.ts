@@ -1,5 +1,5 @@
-import fill_фин_начисл from "./functions/fill_фин_начисл";
-import fill_фин_опл from "./functions/fill_фин_опл";
+import fill_фин_начисл from "./procedures/fill_фин_начисл";
+import fill_фин_опл from "./procedures/fill_фин_опл";
 import report_stg from "./report_stg";
 import фин_начисл from "./tables/фин_начисл";
 import фин_опл from "./tables/фин_опл";
