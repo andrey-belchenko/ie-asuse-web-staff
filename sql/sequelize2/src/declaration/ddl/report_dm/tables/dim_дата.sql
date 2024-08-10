@@ -1,6 +1,6 @@
 CREATE TABLE report_dm.dim_дата (
+    changed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     дата date NULL PRIMARY KEY,
-    изменено TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     год int4 NULL,
     месяц int4 NULL,
 );

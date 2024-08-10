@@ -1,6 +1,6 @@
 CREATE TABLE report_dm.msr_фин_опл_погаш (
 	id SERIAL,
-	изменено TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	changed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	опл_id int4 NULL,
 	договор_id int4,
 	вид_реал_id int4 NULL,

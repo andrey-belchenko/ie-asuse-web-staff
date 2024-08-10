@@ -6,5 +6,5 @@ export default [
     fileName: __filename,
     createStatement: /*sql*/ `CREATE SCHEMA report_util`,
   }),
-  лицевая_карта,
+  ...лицевая_карта,
 ];

@@ -1,6 +1,6 @@
 CREATE TABLE report_stg.фин_начисл (
   id SERIAL,
-  изменено TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  changed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   договор_id int4 NULL,
   вид_реал_id int4 NULL,
   док_нач_id int4 NULL,
