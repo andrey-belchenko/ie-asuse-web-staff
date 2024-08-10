@@ -10,7 +10,7 @@
             )::integer 
             
             
-             from report_dm.msr_фин_обор  where договор_ид=358 and тип_опл_ид=2
+             from report_dm.msr_фин_обор  where договор_id=358 and тип_опл_id=2
 
              and 
 

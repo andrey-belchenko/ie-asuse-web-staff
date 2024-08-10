@@ -1,4 +1,4 @@
-drop table if exists report_dev.test1;
+--drop table if exists report_dev.test1;
 create table report_dev.test1 as 
 -- будущие параметры процедуры параметры записываем в cte, для удобства подстановки при отладке
 with p as (
@@ -13,61 +13,61 @@ p_отд as (
 -- 1. СБОР ФАКТОВ ИЗ РАЗНЫХ ТАБЛИЦ И ФИЛЬТРАЦИЯ
 -- 1.1 факты по начислениям
 n as (
-    select a.договор_ид,
+    select a.договор_id,
         a.начисл
     from report_dm.msr_фин_начисл a -- ФИЛЬТРАЦИЯ (одинаковая для всех фактов по ОБОРОТАМ)
         join p on a.дата between p.дата_с and p.дата_по
-        left join report_dm.dim_договор d on d.договор_ид = a.договор_ид
-        join p_отд o on d.отделение_ид = o.отделение_ид
-    where a.вид_реал_ид = 2 -- and a.договор_ид = 2058
+        left join report_dm.dim_договор d on d.договор_id = a.договор_id
+        join p_отд o on d.отделение_id = o.отделение_id
+    where a.вид_реал_id = 2 -- and a.договор_id = 2058
 ),
 -- 1.2 факты по оплате счетов
 op as (
-    select a.договор_ид,
+    select a.договор_id,
         a.погаш_оплатой,
         a.погаш_из_кред
     from report_dm.msr_фин_опл_погаш a -- ФИЛЬТРАЦИЯ (одинаковая для всех фактов по ОБОРОТАМ)
         join p on a.дата between p.дата_с and p.дата_по
-        left join report_dm.dim_договор d on d.договор_ид = a.договор_ид
-        join p_отд o on d.отделение_ид = o.отделение_ид
-    where a.вид_реал_ид = 2 -- and a.договор_ид = 2058
+        left join report_dm.dim_договор d on d.договор_id = a.договор_id
+        join p_отд o on d.отделение_id = o.отделение_id
+    where a.вид_реал_id = 2 -- and a.договор_id = 2058
 ),
 -- 1.3 факты обороты по кредиту
 ok as (
-    select a.договор_ид,
+    select a.договор_id,
         a.опл_кред_перепл,
         a.опл_кред_аванс
     from report_dm.msr_фин_опл_кредит a -- ФИЛЬТРАЦИЯ (одинаковая для всех фактов по ОБОРОТАМ)
         join p on a.дата between p.дата_с and p.дата_по
-        left join report_dm.dim_договор d on d.договор_ид = a.договор_ид
-        join p_отд o on d.отделение_ид = o.отделение_ид
-    where a.вид_реал_ид = 2 -- and a.договор_ид = 2058
+        left join report_dm.dim_договор d on d.договор_id = a.договор_id
+        join p_отд o on d.отделение_id = o.отделение_id
+    where a.вид_реал_id = 2 -- and a.договор_id = 2058
 ),
 -- 1.4 факты сальдо на начало
 sn as (
-    select a.договор_ид,
+    select a.договор_id,
         a.долг_деб as долг_деб_нач,
         a.долг_кред as долг_кред_нач
     from report_dm.msr_фин_сальдо_по_дог_вид_реал a -- ФИЛЬТРАЦИЯ (отличается фильтр по дате - на начало)
         join p on p.дата_с between a.акт_с and a.акт_по
-        left join report_dm.dim_договор d on d.договор_ид = a.договор_ид
-        join p_отд o on d.отделение_ид = o.отделение_ид
-    where a.вид_реал_ид = 2 -- and a.договор_ид = 2058
+        left join report_dm.dim_договор d on d.договор_id = a.договор_id
+        join p_отд o on d.отделение_id = o.отделение_id
+    where a.вид_реал_id = 2 -- and a.договор_id = 2058
 ),
 -- 1.5 факты сальдо на конец
 sk as (
-    select a.договор_ид,
+    select a.договор_id,
         a.долг_деб as долг_деб_кон,
         a.долг_кред as долг_кред_кон
     from report_dm.msr_фин_сальдо_по_дог_вид_реал a -- ФИЛЬТРАЦИЯ (отличается фильтр по дате - на конец)
         join p on p.дата_по between a.акт_с and a.акт_по
-        left join report_dm.dim_договор d on d.договор_ид = a.договор_ид
-        join p_отд o on d.отделение_ид = o.отделение_ид
-    where a.вид_реал_ид = 2 -- and a.договор_ид = 2058
+        left join report_dm.dim_договор d on d.договор_id = a.договор_id
+        join p_отд o on d.отделение_id = o.отделение_id
+    where a.вид_реал_id = 2 -- and a.договор_id = 2058
 ),
 -- 2. ОБЪЕДИНЕНИЕ ВСЕХ СОБРАННЫХ ФАКТОВ В ОБЩУЮ ТАБЛИЦУ
 x as (
-    select договор_ид,
+    select договор_id,
         null::numeric долг_деб_нач,
         null::numeric долг_кред_нач,
         начисл,
@@ -79,7 +79,7 @@ x as (
         null::numeric долг_кред_кон
     from n
     UNION ALL
-    select договор_ид,
+    select договор_id,
         null долг_деб_нач,
         null долг_кред_нач,
         null начисл,
@@ -91,7 +91,7 @@ x as (
         null долг_кред_кон
     from op
     UNION ALL
-    select договор_ид,
+    select договор_id,
         null долг_деб_нач,
         null долг_кред_нач,
         null начисл,
@@ -103,7 +103,7 @@ x as (
         null долг_кред_кон
     from ok
     UNION ALL
-    select договор_ид,
+    select договор_id,
         долг_деб_нач,
         долг_кред_нач,
         null начисл,
@@ -115,7 +115,7 @@ x as (
         null долг_кред_кон
     from sn
     UNION ALL
-    select договор_ид,
+    select договор_id,
         null долг_деб_нач,
         null долг_кред_нач,
         null начисл,
@@ -129,7 +129,7 @@ x as (
 ),
 -- 3. ГРУППИРОВКА И ВЫРАЖЕНИЯ С АРИФМЕТИЧЕСКИМИ ОПЕРАЦИЯМИ ПРИ НЕОБХОДИМОСТИ
 x1 as (
-    select договор_ид,
+    select договор_id,
         sum(долг_деб_нач) долг_деб_нач,
         sum(долг_кред_нач) долг_кред_нач,
         sum(начисл) начисл,
@@ -140,11 +140,11 @@ x1 as (
         sum(долг_деб_кон) долг_деб_кон,
         sum(долг_кред_кон) долг_кред_кон
     from x
-    group by договор_ид
+    group by договор_id
 ),
 -- 4. ДОБАВЛЕНИЕ АТРИБУТОВ ИЗ ИЗМЕРЕНИЙ
 x2 as (
-    select a.договор_ид,
+    select a.договор_id,
         o.наименование отделение_наименование,
         d.номер договор_номер,
         a.долг_деб_нач,
@@ -157,8 +157,8 @@ x2 as (
         a.долг_деб_кон,
         a.долг_кред_кон
     from x1 a
-        left join report_dm.dim_договор d on d.договор_ид = a.договор_ид
-        left join report_dm.dim_отделение o on d.отделение_ид = o.отделение_ид
+        left join report_dm.dim_договор d on d.договор_id = a.договор_id
+        left join report_dm.dim_отделение o on d.отделение_id = o.отделение_id
 )
 select *
 from x1

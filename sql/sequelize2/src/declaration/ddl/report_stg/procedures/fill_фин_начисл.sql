@@ -4,7 +4,7 @@ SELECT fv.kod_dog AS договор_id,
   fv.kod_sf AS док_нач_id,
   fr.vid_t AS вид_тов_id,
   fv.ym AS период_id,
-  fv.dat_sf AS дата,
+  report_stg.get_ym_last_date(fv.ym) AS дата,
   sum(fr.nachisl) as начисл
 FROM sr_facras fr
   LEFT JOIN sr_facvip fv ON fr.kod_sf = fv.kod_sf
@@ -15,7 +15,15 @@ GROUP BY fv.kod_dog,
   fr.vid_t,
   fv.ym;
 DELETE FROM report_stg.фин_начисл;
-INSERT INTO report_stg.фин_начисл
+INSERT INTO report_stg.фин_начисл (
+    договор_id,
+    вид_реал_id,
+    док_нач_id,
+    вид_тов_id,
+    период_id,
+    дата,
+    начисл
+  )
 SELECT *
 FROM tmp;
 commit;

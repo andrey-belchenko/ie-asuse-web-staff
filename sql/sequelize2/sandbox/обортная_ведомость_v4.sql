@@ -4,7 +4,7 @@ with p as (
     select '2021-03-01'::date дата_с,
         '2021-03-31'::date дата_по
 )
-select a.договор_ид,
+select a.договор_id,
 sum(a.начисл) начисл,
 sum(a.погаш_оплатой) погаш_оплатой,
 sum(a.погаш_из_кред) погаш_из_кред,
@@ -32,7 +32,7 @@ sum(
 ) долг_кред_кон
 from report_dm.msr_фин a
     cross join p
-where a.вид_реал_ид = 2 
+where a.вид_реал_id = 2 
 and a.акт_с <=  '2021-03-31'::date
     and a.акт_по >= '2021-03-01'::date
-group by a.договор_ид
+group by a.договор_id

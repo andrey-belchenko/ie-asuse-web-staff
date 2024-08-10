@@ -8,7 +8,7 @@ p_отд as (
     select *
     from report_dm.dim_отделение
 )
-select a.договор_ид,
+select a.договор_id,
 max(o.наименование) отделение_наименование,
 max(d.номер) договор_номер,
 sum(a.начисл) начисл,
@@ -39,10 +39,10 @@ sum(
 from report_dm.msr_фин a
     join p on a.акт_с <= p.дата_по
     and a.акт_по >= p.дата_с
-    left join report_dm.dim_договор d on d.договор_ид = a.договор_ид
-    join p_отд po on d.отделение_ид = po.отделение_ид
-    left join report_dm.dim_отделение o on d.отделение_ид = o.отделение_ид
-where a.вид_реал_ид = 2 
+    left join report_dm.dim_договор d on d.договор_id = a.договор_id
+    join p_отд po on d.отделение_id = po.отделение_id
+    left join report_dm.dim_отделение o on d.отделение_id = o.отделение_id
+where a.вид_реал_id = 2 
 and a.акт_с <=  '2021-03-31'::date
     and a.акт_по >= '2021-03-01'::date
-group by a.договор_ид
+group by a.договор_id

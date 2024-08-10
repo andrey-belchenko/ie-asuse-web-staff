@@ -1,4 +1,5 @@
 import { Schema } from "../../../classes/Schema";
+import functions from "./functions";
 import procedures from "./procedures";
 import tables from "./tables";
 
@@ -8,5 +9,6 @@ export default [
     createStatement: /*sql*/ `CREATE SCHEMA report_stg`,
   }),
   ...tables,
+  ...functions,
   ...procedures,
 ];

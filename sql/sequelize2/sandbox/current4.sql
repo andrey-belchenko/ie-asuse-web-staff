@@ -9,7 +9,7 @@ with d as (
         месяц
 ),
 x1 as (
-    select a.договор_ид,
+    select a.договор_id,
         d.год,
         d.месяц,
         sum(
@@ -24,8 +24,8 @@ x1 as (
         ) долг_осн_кон
     from report_dm.msr_фин_сальдо_по_дог a
         cross join d
-    where a.договор_ид = 358
-    group by a.договор_ид,
+    where a.договор_id = 358
+    group by a.договор_id,
         d.год,
         d.месяц
 )

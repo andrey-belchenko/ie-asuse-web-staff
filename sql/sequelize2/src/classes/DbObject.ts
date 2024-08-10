@@ -94,6 +94,11 @@ export class DbObject {
     let folderIndex = pathArray.indexOf("obj");
     let schemaName = pathArray[folderIndex + 1];
     let objectName = path.basename(this.fileName, path.extname(this.fileName));
-    return `${schemaName}.${objectName}`
+    if (objectName != "index") {
+      objectName = "." + objectName;
+    } else {
+      objectName = "";
+    }
+    return `${schemaName}${objectName}`;
   }
 }
