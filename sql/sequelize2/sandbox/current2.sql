@@ -1,7 +1,6 @@
-with 
+call report_dm.fill_dim_дата () 
 
-sn as 
-(
 
-    select * from 
-)
+
+
+select * from report_dm.dim_дата
