@@ -1,6 +1,6 @@
-import { Function } from "../../../../classes/Function";
+import { Procedure } from "../../../../classes/Procedure";
 
-export default new Function({
+export default new Procedure({
   fileName: __filename,
   deleteStatement: /*sql*/ `DROP FUNCTION IF EXISTS report_dm.fill_dim_дата`,
 });
