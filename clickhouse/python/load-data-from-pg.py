@@ -1,4 +1,5 @@
-from datetime import datetime, time
+from datetime import datetime
+import time
 import psycopg2
 from clickhouse_driver import Client
 
@@ -26,12 +27,20 @@ while True:
         break
     portion += 1
     # print(pg_data)
-    print("portion:", portion,  datetime.now().time())
+    print("portion:", portion, datetime.now().time())
+    atc = 0
     while True:
         try:
-            ch_client.execute("INSERT INTO msr_fin FORMAT TabSeparated", pg_data, types_check=True)
+            atc += 1
+            print("Attempt:", atc)
+            ch_client.execute(
+                "INSERT INTO msr_fin FORMAT TabSeparated", pg_data, types_check=True
+            )
             break
         except Exception as e:
             print("Error occurred:", e)
+            if atc > 0:
+                print("skipped")
+                break
             print("Waiting for 30 seconds before retrying...")
             time.sleep(30)

@@ -1,6 +1,6 @@
 insert into ob_result with p as (
-        select toDate('2021-03-01') data_s,
-            toDate('2021-03-31') data_po
+        select toDate('2022-01-01') data_s,
+            toDate('2022-01-30') data_po
     )
 select a.dogovor_id,
     sum(a.nachisl) nachisl,
@@ -31,6 +31,10 @@ select a.dogovor_id,
 from msr_fin a
     cross join p
 where a.vid_real_id = 2
-    and a.akt_s <= toDate('2021-03-31')
-    and a.akt_po >= toDate('2021-03-01')
+    and a.akt_s <= toDate('2022-03-31')
+    and a.akt_s >= toDate('2022-01-01')
 group by a.dogovor_id
+
+
+
+
