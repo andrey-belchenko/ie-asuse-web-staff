@@ -1,5 +1,6 @@
 CREATE TABLE report_stg.фин_опл (
 	ид SERIAL,
+	изменено TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	договор_ид int4 NULL,
 	опл_ид int4 NULL,
 	вид_реал_ид int4 NULL,

@@ -1,6 +1,7 @@
 CREATE TABLE report_dm.msr_фин_обор (
 	id SERIAL,
-	договор_ид int4 NULL,
+	изменено TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	договор_ид int4,
 	вид_реал_ид int4 NULL,
 	дата date,
 	обор_деб numeric NULL,

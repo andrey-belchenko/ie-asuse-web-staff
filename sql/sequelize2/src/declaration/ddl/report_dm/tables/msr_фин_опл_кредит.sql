@@ -1,7 +1,8 @@
 CREATE TABLE report_dm.msr_фин_опл_кредит (
 	ид SERIAL,
+	изменено TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	опл_ид int4 NULL,
-	договор_ид int4 NULL,
+	договор_ид int4,
 	вид_реал_ид int4 NULL,
 	дата date,
 	опл_кред_перепл numeric NULL,
