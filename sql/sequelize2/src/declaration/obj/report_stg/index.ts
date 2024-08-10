@@ -1,7 +1,12 @@
-import fill_фин_начисл from "./procedures/fill_фин_начисл";
-import fill_фин_опл from "./procedures/fill_фин_опл";
-import report_stg from "./report_stg";
-import фин_начисл from "./tables/фин_начисл";
-import фин_опл from "./tables/фин_опл";
+import { Schema } from "../../../classes/Schema";
+import procedures from "./procedures";
+import tables from "./tables";
 
-export default [report_stg, фин_начисл, фин_опл, fill_фин_начисл, fill_фин_опл];
+export default [
+  new Schema({
+    fileName: __filename,
+    createStatement: /*sql*/ `CREATE SCHEMA report_stg`,
+  }),
+  ...tables,
+  ...procedures,
+];
