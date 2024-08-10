@@ -18,5 +18,6 @@ DELETE FROM report_stg.фин_начисл;
 INSERT INTO report_stg.фин_начисл
 SELECT *
 FROM tmp;
+commit;
 END;
 $$;

@@ -11,5 +11,6 @@ select o.kod_dog as договор_ид,
     o.ym AS период_ид,
     coalesce(o.opl, 0) + coalesce(o.opls, 0) as опл
 from sr_opl o;
+commit;
 END;
 $$;

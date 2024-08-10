@@ -1,5 +1,5 @@
 CREATE TABLE report_dm.dim_дата (
-    дата timestamptz NULL,
+    дата date NULL,
     год int4 NULL,
     месяц int4 NULL
 );

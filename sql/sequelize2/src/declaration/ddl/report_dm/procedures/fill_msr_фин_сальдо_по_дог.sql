@@ -28,7 +28,7 @@ INSERT INTO report_dm.msr_фин_сальдо_по_дог (
                         PARTITION BY a.договор_ид
                         ORDER BY a.дата
                     ) - INTERVAL '1 day'
-                )::timestamptz,
+                )::date,
                 '2100-12-31'
             ) as акт_по,
             a.*

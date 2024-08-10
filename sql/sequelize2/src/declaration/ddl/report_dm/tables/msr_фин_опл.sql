@@ -1,7 +1,7 @@
 CREATE TABLE report_dm.msr_фин_опл (
 	договор_ид int4 NULL,
 	вид_реал_ид int4 NULL,
-	дата timestamptz NULL,
+	дата date NULL,
 	период_ид numeric(6, 2) NULL,
 	док_нач_ид int4 NULL,
 	опл_деб_без_аванса numeric NULL,

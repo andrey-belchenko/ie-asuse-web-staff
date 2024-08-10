@@ -4,7 +4,7 @@ CREATE TABLE report_stg.фин_начисл (
   док_нач_ид int4 NULL,
   вид_тов_ид int4 NULL,
   период_ид numeric(6, 2) NULL,
-  дата timestamptz NULL,
+  дата date NULL,
   начисл numeric NULL
 );
 

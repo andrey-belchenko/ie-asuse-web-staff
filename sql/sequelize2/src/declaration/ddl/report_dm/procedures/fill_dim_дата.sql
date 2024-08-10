@@ -5,7 +5,7 @@ INSERT INTO report_dm.dim_дата (
         год,
         месяц
     ) with x1 as (
-        SELECT дата::timestamptz,
+        SELECT дата::date,
             EXTRACT(
                 MONTH
                 FROM дата

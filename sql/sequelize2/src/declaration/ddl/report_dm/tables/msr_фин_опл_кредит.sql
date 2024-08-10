@@ -2,7 +2,7 @@ CREATE TABLE report_dm.msr_фин_опл_кредит (
 	опл_ид int4 NULL,
 	договор_ид int4 NULL,
 	вид_реал_ид int4 NULL,
-	дата timestamptz NULL,
+	дата date NULL,
 	опл_кред_перепл numeric NULL,
 	опл_кред_аванс numeric NULL,
 	сторно_кред_перепл numeric NULL,
