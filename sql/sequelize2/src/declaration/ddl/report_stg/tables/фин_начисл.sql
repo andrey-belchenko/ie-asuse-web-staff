@@ -1,4 +1,5 @@
 CREATE TABLE report_stg.фин_начисл (
+  ид SERIAL,
   договор_ид int4 NULL,
   вид_реал_ид int4 NULL,
   док_нач_ид int4 NULL,

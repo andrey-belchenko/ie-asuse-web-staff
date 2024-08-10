@@ -1,7 +1,8 @@
 CREATE TABLE report_dm.msr_фин_обор (
+	id SERIAL,
 	договор_ид int4 NULL,
 	вид_реал_ид int4 NULL,
-	дата date NULL,
+	дата date,
 	обор_деб numeric NULL,
 	обор_кред numeric NULL
 );

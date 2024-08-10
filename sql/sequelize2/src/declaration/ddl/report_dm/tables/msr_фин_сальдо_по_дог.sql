@@ -1,7 +1,8 @@
 CREATE TABLE report_dm.msr_фин_сальдо_по_дог (
+    ид SERIAL,
     договор_ид int4 NULL,
-    акт_с date NULL,
-    акт_по date NULL,
+    акт_с date,
+    акт_по date,
     долг_осн_деб numeric NULL,
     долг_осн_кред numeric NULL,
     долг_осн numeric NULL,
