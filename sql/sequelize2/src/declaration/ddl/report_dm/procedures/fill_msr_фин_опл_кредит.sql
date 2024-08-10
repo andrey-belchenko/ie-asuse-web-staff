@@ -1,9 +1,9 @@
 CREATE OR REPLACE PROCEDURE report_dm.fill_msr_фин_опл_кредит () LANGUAGE plpgsql AS $$ BEGIN
 DELETE FROM report_dm.msr_фин_опл_кредит;
 INSERT INTO report_dm.msr_фин_опл_кредит (
-        опл_ид,
-        договор_ид,
-        вид_реал_ид,
+        опл_id,
+        договор_id,
+        вид_реал_id,
         дата,
         опл_кред_перепл,
         опл_кред_аванс,
@@ -12,28 +12,28 @@ INSERT INTO report_dm.msr_фин_опл_кредит (
         опл_кред,
         сторно_кред
     ) with x1 as (
-        select a.договор_ид,
-            2 вид_реал_ид,
+        select a.договор_id,
+            2 вид_реал_id,
             a.дата,
-            a.опл_ид,
-            a.тип_опл_ид,
+            a.опл_id,
+            a.тип_опл_id,
             a.опл
         from report_stg.фин_опл a
-        where a.тип_опл_ид in (1, 2, 5, 6) 
+        where a.тип_опл_id in (1, 2, 5, 6) 
     ),
     x2 as (
         select a.*,
             case
-                when тип_опл_ид in (1) then опл
+                when тип_опл_id in (1) then опл
             end as опл_кред_перепл,
             case
-                when тип_опл_ид in (2) then опл
+                when тип_опл_id in (2) then опл
             end as опл_кред_аванс,
             case
-                when тип_опл_ид in (5) then - опл
+                when тип_опл_id in (5) then - опл
             end as сторно_кред_перепл,
             case
-                when тип_опл_ид in (6) then - опл
+                when тип_опл_id in (6) then - опл
             end as сторно_кред_аванс
         from x1 a
     ),
@@ -48,9 +48,9 @@ INSERT INTO report_dm.msr_фин_опл_кредит (
             coalesce(a.опл_кред, 0) - coalesce(a.сторно_кред, 0) обор_кред
         from x3 a
     )
-select опл_ид,
-    договор_ид,
-    вид_реал_ид,
+select опл_id,
+    договор_id,
+    вид_реал_id,
     дата,
     sum(опл_кред_перепл) опл_кред_перепл,
     sum(опл_кред_аванс) опл_кред_аванс,
@@ -59,9 +59,9 @@ select опл_ид,
     sum(опл_кред) опл_кред,
     sum(сторно_кред) сторно_кред
 from x4
-group by опл_ид,
-    договор_ид,
-    вид_реал_ид,
+group by опл_id,
+    договор_id,
+    вид_реал_id,
     дата;
 commit;
 END;

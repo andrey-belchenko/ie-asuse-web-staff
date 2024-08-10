@@ -1,9 +1,9 @@
 CREATE TABLE report_dm.msr_фин_опл_кредит (
-	ид SERIAL,
+	id SERIAL,
 	изменено TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-	опл_ид int4 NULL,
-	договор_ид int4,
-	вид_реал_ид int4 NULL,
+	опл_id int4 NULL,
+	договор_id int4,
+	вид_реал_id int4 NULL,
 	дата date,
 	опл_кред_перепл numeric NULL,
 	опл_кред_аванс numeric NULL,
@@ -13,6 +13,6 @@ CREATE TABLE report_dm.msr_фин_опл_кредит (
 	сторно_кред numeric NULL
 );
 
-CREATE INDEX i_msr_фин_опл_кредит_договор_ид ON report_dm.msr_фин_опл_кредит USING btree(договор_ид);
+CREATE INDEX i_msr_фин_опл_кредит_договор_id ON report_dm.msr_фин_опл_кредит USING btree(договор_id);
 CREATE INDEX i_msr_фин_опл_кредит_дата ON report_dm.msr_фин_опл_кредит USING btree(дата);
-CREATE INDEX i_msr_фин_опл_кредит_договор_ид_дата ON report_dm.msr_фин_опл_кредит USING btree(договор_ид, дата);
+CREATE INDEX i_msr_фин_опл_кредит_договор_id_дата ON report_dm.msr_фин_опл_кредит USING btree(договор_id, дата);

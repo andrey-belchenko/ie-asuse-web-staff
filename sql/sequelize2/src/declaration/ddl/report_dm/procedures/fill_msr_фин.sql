@@ -1,11 +1,11 @@
 CREATE OR REPLACE PROCEDURE report_dm.fill_msr_фин () LANGUAGE plpgsql AS $$ BEGIN
 DELETE FROM report_dm.msr_фин;
 INSERT INTO report_dm.msr_фин (
-        договор_ид,
-        вид_реал_ид,
+        договор_id,
+        вид_реал_id,
         дата,
-        док_нач_ид,
-        опл_ид,
+        док_нач_id,
+        опл_id,
         акт_с,
         акт_по,
         начисл,
@@ -27,12 +27,12 @@ INSERT INTO report_dm.msr_фин (
         долг_кред,
         долг_деб
     ) with x1 as (
-        SELECT договор_ид,
-            вид_реал_ид,
+        SELECT договор_id,
+            вид_реал_id,
             дата,
-            док_нач_ид,
+            док_нач_id,
             начисл,
-            NULL::int4 AS опл_ид,
+            NULL::int4 AS опл_id,
             NULL::numeric AS погаш_оплатой_без_аванса,
             NULL::numeric AS погаш_оплатой_аванс,
             NULL::numeric AS погаш_из_перепл,
@@ -54,12 +54,12 @@ INSERT INTO report_dm.msr_фин (
             NULL::numeric AS долг_деб
         FROM report_dm.msr_фин_начисл
         UNION ALL
-        SELECT договор_ид,
-            вид_реал_ид,
+        SELECT договор_id,
+            вид_реал_id,
             дата,
-            док_нач_ид,
+            док_нач_id,
             NULL AS начисл,
-            опл_ид,
+            опл_id,
             погаш_оплатой_без_аванса,
             погаш_оплатой_аванс,
             погаш_из_перепл,
@@ -81,12 +81,12 @@ INSERT INTO report_dm.msr_фин (
             NULL AS долг_деб
         FROM report_dm.msr_фин_опл_погаш
         UNION ALL
-        SELECT договор_ид,
-            вид_реал_ид,
+        SELECT договор_id,
+            вид_реал_id,
             дата,
-            NULL AS док_нач_ид,
+            NULL AS док_нач_id,
             NULL AS начисл,
-            опл_ид,
+            опл_id,
             NULL AS погаш_оплатой_без_аванса,
             NULL AS погаш_оплатой_аванс,
             NULL AS погаш_из_перепл,
@@ -108,12 +108,12 @@ INSERT INTO report_dm.msr_фин (
             NULL AS долг_деб
         FROM report_dm.msr_фин_опл_кредит
         UNION ALL
-        SELECT договор_ид,
-            вид_реал_ид,
+        SELECT договор_id,
+            вид_реал_id,
             акт_с as дата,
-            NULL as док_нач_ид,
+            NULL as док_нач_id,
             NULL AS начисл,
-            NULL AS опл_ид,
+            NULL AS опл_id,
             NULL AS погаш_оплатой_без_аванса,
             NULL AS погаш_оплатой_аванс,
             NULL AS погаш_из_перепл,
@@ -135,11 +135,11 @@ INSERT INTO report_dm.msr_фин (
             долг_деб
         FROM report_dm.msr_фин_сальдо_по_дог_вид_реал
     )
-select договор_ид,
-    вид_реал_ид,
+select договор_id,
+    вид_реал_id,
     дата,
-    док_нач_ид,
-    опл_ид,
+    док_нач_id,
+    опл_id,
     акт_с,
     акт_по,
     sum(начисл) начисл,
@@ -161,11 +161,11 @@ select договор_ид,
     sum(долг_кред) долг_кред,
     sum(долг_деб) долг_деб
 from x1
-group by договор_ид,
-    вид_реал_ид,
+group by договор_id,
+    вид_реал_id,
     дата,
-    док_нач_ид,
-    опл_ид,
+    док_нач_id,
+    опл_id,
     акт_с,
     акт_по;
 commit;

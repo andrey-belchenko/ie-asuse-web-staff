@@ -1,5 +1,5 @@
 CREATE OR REPLACE VIEW report_dm.dim_отделение AS
-select o.kodp отделение_ид,
+select o.kodp отделение_id,
     o.name наименование
 from kr_org o
 where exists (

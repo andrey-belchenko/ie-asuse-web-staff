@@ -1,9 +1,9 @@
 CREATE OR REPLACE PROCEDURE report_stg.fill_фин_начисл () LANGUAGE plpgsql AS $$ BEGIN CREATE TEMP TABLE IF NOT EXISTS tmp ON COMMIT DROP AS
-SELECT fv.kod_dog AS договор_ид,
-  fv.vid_real AS вид_реал_ид,
-  fv.kod_sf AS док_нач_ид,
-  fr.vid_t AS вид_тов_ид,
-  fv.ym AS период_ид,
+SELECT fv.kod_dog AS договор_id,
+  fv.vid_real AS вид_реал_id,
+  fv.kod_sf AS док_нач_id,
+  fr.vid_t AS вид_тов_id,
+  fv.ym AS период_id,
   fv.dat_sf AS дата,
   sum(fr.nachisl) as начисл
 FROM sr_facras fr
