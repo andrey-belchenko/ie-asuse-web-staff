@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION report_dm.fill_msr_фин_опл () RETURNS VOID LANGUAGE plpgsql AS $$ BEGIN
+CREATE OR REPLACE PROCEDURE report_dm.fill_msr_фин_опл () LANGUAGE plpgsql AS $$ BEGIN
 DELETE FROM report_dm.msr_фин_опл;
 INSERT INTO report_dm.msr_фин_опл (
         договор_ид,

@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION report_stg.fill_фин_начисл () RETURNS VOID LANGUAGE plpgsql AS $$ BEGIN CREATE TEMP TABLE IF NOT EXISTS tmp ON COMMIT DROP AS
+CREATE OR REPLACE PROCEDURE report_stg.fill_фин_начисл () LANGUAGE plpgsql AS $$ BEGIN CREATE TEMP TABLE IF NOT EXISTS tmp ON COMMIT DROP AS
 SELECT fv.kod_dog AS договор_ид,
   fv.vid_real AS вид_реал_ид,
   fv.kod_sf AS док_нач_ид,
