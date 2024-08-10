@@ -11,8 +11,8 @@ INSERT INTO report_dm.msr_фин_обор (
             a.вид_реал_ид,
             a.дата,
             a.начисл,
-            null::numeric  погаш,
-            null::numeric  обор_кред
+            null::numeric погаш,
+            null::numeric обор_кред
         from report_dm.msr_фин_начисл a
         union all
         select a.договор_ид,
@@ -40,5 +40,6 @@ from x1 a
 group by a.договор_ид,
     a.вид_реал_ид,
     a.дата;
+commit;
 END;
 $$;

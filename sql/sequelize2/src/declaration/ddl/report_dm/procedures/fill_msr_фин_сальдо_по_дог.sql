@@ -67,5 +67,6 @@ select договор_ид,
     a.долг,
     a.долг_деб
 from x3 a;
+commit;
 END;
 $$;

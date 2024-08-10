@@ -16,6 +16,7 @@ select a.договор_ид,
     a.док_нач_ид,
     a.вид_тов_ид,
     a.начисл
-    from report_stg.фин_начисл a;
+from report_stg.фин_начисл a;
+commit;
 END;
 $$;
