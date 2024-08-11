@@ -3,6 +3,7 @@ DELETE FROM report_dm.msr_фин_опл_кредит a USING report_stg.refresh_
 WHERE rs.договор_id = a.договор_id
     AND a.дата BETWEEN rs.дата_c AND rs.дата_по;
 INSERT INTO report_dm.msr_фин_опл_кредит (
+        refresh_slice_id,
         опл_id,
         договор_id,
         вид_реал_id,
@@ -14,7 +15,8 @@ INSERT INTO report_dm.msr_фин_опл_кредит (
         опл_кред,
         сторно_кред
     ) with x1 as (
-        select a.договор_id,
+        select rs.refresh_slice_id,
+            a.договор_id,
             2 вид_реал_id,
             a.дата,
             a.опл_id,
@@ -52,7 +54,9 @@ INSERT INTO report_dm.msr_фин_опл_кредит (
             coalesce(a.опл_кред, 0) - coalesce(a.сторно_кред, 0) обор_кред
         from x3 a
     )
-select опл_id,
+select 
+refresh_slice_id,
+опл_id,
     договор_id,
     вид_реал_id,
     дата,

@@ -3,13 +3,15 @@ DELETE FROM report_dm.msr_фин_обор a USING report_stg.refresh_slice rs
 WHERE rs.договор_id = a.договор_id
     AND a.дата BETWEEN rs.дата_c AND rs.дата_по;
 INSERT INTO report_dm.msr_фин_обор (
+        refresh_slice_id,
         договор_id,
         вид_реал_id,
         дата,
         обор_деб,
         обор_кред
     ) with x1 as (
-        select a.договор_id,
+        select rs.refresh_slice_id,
+            a.договор_id,
             a.вид_реал_id,
             a.дата,
             a.начисл,
@@ -19,7 +21,8 @@ INSERT INTO report_dm.msr_фин_обор (
             JOIN report_stg.refresh_slice rs ON rs.договор_id = a.договор_id
             AND a.дата BETWEEN rs.период_с AND rs.период_по
         union all
-        select a.договор_id,
+        select rs.refresh_slice_id,
+            a.договор_id,
             a.вид_реал_id,
             a.дата,
             null начисл,
@@ -29,7 +32,8 @@ INSERT INTO report_dm.msr_фин_обор (
             JOIN report_stg.refresh_slice rs ON rs.договор_id = a.договор_id
             AND a.дата BETWEEN rs.период_с AND rs.период_по
         union all
-        select a.договор_id,
+        select rs.refresh_slice_id,
+            a.договор_id,
             a.вид_реал_id,
             a.дата,
             null начисл,
@@ -39,7 +43,8 @@ INSERT INTO report_dm.msr_фин_обор (
             JOIN report_stg.refresh_slice rs ON rs.договор_id = a.договор_id
             AND a.дата BETWEEN rs.период_с AND rs.период_по
     )
-select a.договор_id,
+select a.refresh_slice_id,
+    a.договор_id,
     a.вид_реал_id,
     a.дата,
     coalesce(sum(a.начисл), 0) - coalesce(sum(a.погаш), 0) обор_деб,
