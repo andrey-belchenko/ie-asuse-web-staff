@@ -11,19 +11,23 @@ import фин_закрытие_начисл from "../declaration/obj/report_stg/
 import фин_закрытие_кред from "../declaration/obj/report_stg/tables/фин_закрытие_кред";
 
 import { resetObjects } from "../utils/management";
+import fill_фин_опл from "../declaration/obj/report_stg/procedures/fill_фин_опл";
+import fill_фин_начисл from "../declaration/obj/report_stg/procedures/fill_фин_начисл";
 
 declaration;
 const run = async () => {
   await resetObjects([
-     refresh_slice,
+    //  refresh_slice,
     // ...procedures_stg,
     // ...functions_stg
     // ...report_stg
     // ...report_dm
     // фин_закрытие_начисл,
     // fill_фин_закрытие_начисл,
-    фин_закрытие_кред,
-    fill_фин_закрытие_кред
+    // фин_закрытие_кред,
+    // fill_фин_закрытие_кред
+    fill_фин_начисл,
+    fill_фин_опл
   ]);
   console.log("done");
 };
