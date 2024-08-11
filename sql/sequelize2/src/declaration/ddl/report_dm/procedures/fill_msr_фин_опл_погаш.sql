@@ -25,6 +25,8 @@ INSERT INTO report_dm.msr_фин_опл_погаш (
             a.тип_опл_id,
             a.опл
         from report_stg.фин_опл a
+            JOIN report_stg.refresh_slice rs ON rs.договор_id = a.договор_id
+            AND a.дата BETWEEN rs.период_с AND rs.период_по
         where a.тип_опл_id in (0, 2, 3, 4) -- and договор_id = 358
     ),
     x2 as (

@@ -21,6 +21,8 @@ INSERT INTO report_dm.msr_фин_опл_кредит (
             a.тип_опл_id,
             a.опл
         from report_stg.фин_опл a
+            JOIN report_stg.refresh_slice rs ON rs.договор_id = a.договор_id
+            AND a.дата BETWEEN rs.период_с AND rs.период_по
         where a.тип_опл_id in (1, 2, 5, 6)
     ),
     x2 as (
