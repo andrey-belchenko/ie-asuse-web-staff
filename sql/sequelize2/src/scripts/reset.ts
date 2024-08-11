@@ -13,7 +13,8 @@ const run = async () => {
     //  refresh_slice,
     // ...procedures_stg,
     // ...functions_stg
-    ...report_stg
+    // ...report_stg
+    
   ]);
   console.log("done");
 };
