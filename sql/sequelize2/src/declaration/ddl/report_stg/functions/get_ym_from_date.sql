@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION report_stg.get_ym_from_date(p_date DATE) RETURNS NUMERIC AS $$ BEGIN RETURN (
+CREATE OR REPLACE FUNCTION report_stg.get_ym_from_date(p_date DATE) RETURNS numeric(6, 2) AS $$ BEGIN RETURN (
         (
             EXTRACT(
                 YEAR
@@ -8,6 +8,6 @@ CREATE OR REPLACE FUNCTION report_stg.get_ym_from_date(p_date DATE) RETURNS NUME
                 FROM p_date
             ) / 100.0
         )
-    );
+    ):: numeric(6, 2);
 END;
 $$ LANGUAGE plpgsql;

@@ -4,6 +4,7 @@ CREATE TABLE report_stg.refresh_slice (
   договор_id int4,
   дата_c date,
   дата_по date,
+  дата_архивации date,
   период_с numeric(6, 2) NULL,
   период_по numeric(6, 2) NULL
 );

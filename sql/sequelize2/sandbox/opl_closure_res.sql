@@ -1,6 +1,6 @@
-CREATE OR REPLACE PROCEDURE report_stg.fill_фин_закрытие_опл () LANGUAGE plpgsql AS $$ BEGIN
-DELETE FROM report_stg.фин_закрытие_опл;
-INSERT INTO report_stg.фин_закрытие_опл (опл_id, дата_закрытия) with o as (
+CREATE OR REPLACE PROCEDURE report_stg.fill_фин_закрытие_кред () LANGUAGE plpgsql AS $$ BEGIN
+DELETE FROM report_stg.фин_закрытие_кред;
+INSERT INTO report_stg.фин_закрытие_кред (опл_id, дата_закрытия) with o as (
     select kod_opl,
       dat_uch,
       opl opl

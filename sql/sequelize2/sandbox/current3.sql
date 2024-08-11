@@ -1,66 +1,57 @@
-with o as (
-    select kod_opl,
-        dat_uch,
-        opl opl
-    from sr_opl a
-    where a.kod_type_opl in (1, 2)
-        and a.kod_dog = 358
-),
-s as (
-    select kod_parent as kod_opl,
-        dat_uch,
-        COALESCE(opl, 0) + COALESCE(opls, 0) as opl
-    from sr_opl a
-    where a.kod_type_opl in (5, 6)
-        and a.kod_dog = 358
-),
-k1 as (
-    select *
-    from o
-    union all
-    select *
-    from s
-),
-k2 as (
-    select kod_opl,
-        sum(opl) as dolg,
-        max (dat_uch) as dat_uch
-    from k1 a
-    GROUP BY kod_opl
-),
-k3 as (
-    select kod_opl,
+with x as (
+    SELECT fv.kod_dog AS договор_id,
+        fv.vid_real AS вид_реал_id,
+        fv.kod_sf AS док_нач_id,
+        fr.vid_t AS вид_тов_id,
+        fv.ym AS период_id,
+        report_stg.get_last_date_of_ym(fv.ym) AS дата,
+        fr.nachisl as начисл,
+        rs.refresh_slice_id refresh_slice_id,
         case
-            when dolg = 0 then dat_uch
-            else '2100-12-31'::date
-        end as closure_date
-    from k2
+            when COALESCE(cl.дата_закрытия, '2100-01-01'::date) <= rs.дата_архивации then 1
+            else 0
+        end as архив,
+        rs.дата_архивации
+    FROM sr_facras fr
+        LEFT JOIN sr_facvip fv ON fr.kod_sf = fv.kod_sf
+        JOIN report_stg.refresh_slice rs ON rs.договор_id = fv.kod_dog
+        AND fv.ym BETWEEN rs.период_с AND rs.период_по
+        LEFT JOIN report_stg.фин_закрытие_начисл cl on cl.док_нач_id = fv.kod_sf
+    WHERE fv.vid_sf NOT IN (2, 9)
 ),
-ks as (
-    select s.kod_opl,
-        o.closure_date
-    from sr_opl s
-        join k3 o on s.kod_parent = o.kod_opl
-    where s.kod_type_opl in (5, 6)
-        and s.kod_dog = 358
-),
-d1 as (
-    select kod_opl,
-        n.дата_закрытия
-    from sr_opl o
-        join report_stg.фин_закрытие_начисл n on n.док_нач_id = o.kod_sf
-    where o.kod_type_opl in (0, 2, 3, 4)
-        and o.kod_dog = 358
-),
-x as (
-    select *
-    from k3
-    union all
-    select *
-    from ks
-    union all
-    select *
-    from d1
+x1 as (
+    select refresh_slice_id,
+        договор_id,
+        вид_реал_id,
+        case
+            when архив = 1 then NULL
+            else док_нач_id
+        end док_нач_id,
+        вид_тов_id,
+        case
+            when архив = 1 then report_stg.get_ym_from_date(дата_архивации)
+            else период_id
+        end период_id,
+        case
+            when архив = 1 then дата_архивации
+            else дата
+        end дата,
+        начисл,
+        архив
+    from x
 )
-select *
-from x
+select max(refresh_slice_id) refresh_slice_id,
+    договор_id,
+    вид_реал_id,
+    док_нач_id,
+    вид_тов_id,
+    период_id,
+    дата,
+    sum(начисл) начисл
+from x1
+GROUP BY договор_id,
+    вид_реал_id,
+    док_нач_id,
+    вид_тов_id,
+    период_id,
+    дата
