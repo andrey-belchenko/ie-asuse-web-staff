@@ -1,7 +1,5 @@
 CREATE OR REPLACE PROCEDURE report_dm.fill_msr_фин_сальдо_по_дог () LANGUAGE plpgsql AS $$ BEGIN
-DELETE FROM report_dm.msr_фин_сальдо_по_дог a USING report_stg.refresh_slice rs
-WHERE rs.договор_id = a.договор_id
-    AND a.дата BETWEEN rs.дата_c AND rs.дата_по;
+DELETE FROM report_dm.msr_фин_сальдо_по_дог;
 INSERT INTO report_dm.msr_фин_сальдо_по_дог (
         договор_id,
         акт_с,
