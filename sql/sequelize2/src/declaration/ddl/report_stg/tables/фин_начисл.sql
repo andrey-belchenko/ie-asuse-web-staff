@@ -11,3 +11,4 @@ CREATE TABLE report_stg.фин_начисл (
 );
 
 CREATE INDEX фин_начисл_договор_id  ON report_stg.фин_начисл USING btree(договор_id );
+CREATE INDEX фин_начисл_договор_id_дата  ON report_stg.фин_начисл USING btree(договор_id, дата );

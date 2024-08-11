@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION report_stg.get_ym_last_date(p_ym NUMERIC) RETURNS DATE AS $$ BEGIN -- chat gpt
+CREATE OR REPLACE FUNCTION report_stg.get_last_date_of_ym(p_ym NUMERIC) RETURNS DATE AS $$ BEGIN -- chat gpt
     RETURN (
         DATE_TRUNC(
             'MONTH',
