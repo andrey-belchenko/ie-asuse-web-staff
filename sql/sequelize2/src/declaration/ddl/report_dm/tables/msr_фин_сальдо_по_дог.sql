@@ -1,6 +1,7 @@
 CREATE TABLE report_dm.msr_фин_сальдо_по_дог (
     id SERIAL,
     changed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    refresh_slice_id int4,
     договор_id int4,
     акт_с date,
     акт_по date,

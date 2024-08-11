@@ -1,7 +1,7 @@
 CREATE OR REPLACE PROCEDURE report_stg.fill_фин_начисл () LANGUAGE plpgsql AS $$ BEGIN
-delete from report_stg.фин_начисл a USING report_stg.refresh_slice rs
-where rs.договор_id = a.договор_id
-  and a.дата BETWEEN rs.дата_c and rs.дата_по;
+DELETE FROM report_stg.фин_начисл a USING report_stg.refresh_slice rs
+WHERE rs.договор_id = a.договор_id
+  AND a.дата BETWEEN rs.дата_c AND rs.дата_по;
 INSERT INTO report_stg.фин_начисл (
     договор_id,
     вид_реал_id,
@@ -9,7 +9,8 @@ INSERT INTO report_stg.фин_начисл (
     вид_тов_id,
     период_id,
     дата,
-    начисл
+    начисл,
+    refresh_slice_id
   )
 SELECT fv.kod_dog AS договор_id,
   fv.vid_real AS вид_реал_id,
@@ -17,7 +18,8 @@ SELECT fv.kod_dog AS договор_id,
   fr.vid_t AS вид_тов_id,
   fv.ym AS период_id,
   report_stg.get_last_date_of_ym(fv.ym) AS дата,
-  sum(fr.nachisl) as начисл
+  sum(fr.nachisl) as начисл,
+  max(rs.refresh_slice_id) refresh_slice_id
 FROM sr_facras fr
   LEFT JOIN sr_facvip fv ON fr.kod_sf = fv.kod_sf
   join report_stg.refresh_slice rs on rs.договор_id = fv.kod_dog

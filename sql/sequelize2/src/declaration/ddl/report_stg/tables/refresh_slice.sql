@@ -1,5 +1,5 @@
 CREATE TABLE report_stg.refresh_slice (
-  id SERIAL,
+  refresh_slice_id SERIAL,
   changed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   договор_id int4,
   дата_c date,

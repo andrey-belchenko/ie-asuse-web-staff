@@ -1,6 +1,7 @@
 CREATE TABLE report_dm.msr_фин_опл_кредит (
 	id SERIAL,
 	changed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	refresh_slice_id int4,
 	опл_id int4 NULL,
 	договор_id int4,
 	вид_реал_id int4 NULL,
