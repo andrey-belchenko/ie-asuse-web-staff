@@ -1,5 +1,7 @@
 CREATE OR REPLACE PROCEDURE report_dm.fill_msr_фин_опл_кредит () LANGUAGE plpgsql AS $$ BEGIN
-DELETE FROM report_dm.msr_фин_опл_кредит;
+DELETE FROM report_dm.msr_фин_опл_кредит a USING report_stg.refresh_slice rs
+WHERE rs.договор_id = a.договор_id
+    AND a.дата BETWEEN rs.дата_c AND rs.дата_по;
 INSERT INTO report_dm.msr_фин_опл_кредит (
         опл_id,
         договор_id,
@@ -19,7 +21,7 @@ INSERT INTO report_dm.msr_фин_опл_кредит (
             a.тип_опл_id,
             a.опл
         from report_stg.фин_опл a
-        where a.тип_опл_id in (1, 2, 5, 6) 
+        where a.тип_опл_id in (1, 2, 5, 6)
     ),
     x2 as (
         select a.*,

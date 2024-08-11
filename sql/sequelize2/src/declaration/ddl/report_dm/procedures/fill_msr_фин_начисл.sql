@@ -1,5 +1,7 @@
 CREATE OR REPLACE PROCEDURE report_dm.fill_msr_фин_начисл () LANGUAGE plpgsql AS $$ BEGIN
-DELETE FROM report_dm.msr_фин_начисл;
+DELETE FROM report_dm.msr_фин_начисл a USING report_stg.refresh_slice rs
+WHERE rs.договор_id = a.договор_id
+    AND a.дата BETWEEN rs.дата_c AND rs.дата_по;
 INSERT INTO report_dm.msr_фин_начисл (
         договор_id,
         вид_реал_id,
@@ -14,7 +16,9 @@ select a.договор_id,
     a.док_нач_id,
     a.вид_тов_id,
     a.начисл
-from report_stg.фин_начисл a;
+from report_stg.фин_начисл a
+    JOIN report_stg.refresh_slice rs ON rs.договор_id = a.договор_id
+    AND a.дата BETWEEN rs.период_с AND rs.период_по;
 commit;
 END;
 $$;

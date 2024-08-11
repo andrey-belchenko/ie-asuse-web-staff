@@ -1,5 +1,7 @@
 CREATE OR REPLACE PROCEDURE report_dm.fill_msr_фин_опл_погаш () LANGUAGE plpgsql AS $$ BEGIN
-DELETE FROM report_dm.msr_фин_опл_погаш;
+DELETE FROM report_dm.msr_фин_опл_погаш a USING report_stg.refresh_slice rs
+WHERE rs.договор_id = a.договор_id
+    AND a.дата BETWEEN rs.дата_c AND rs.дата_по;
 INSERT INTO report_dm.msr_фин_опл_погаш (
         опл_id,
         договор_id,

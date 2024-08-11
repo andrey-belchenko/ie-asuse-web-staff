@@ -22,8 +22,8 @@ SELECT fv.kod_dog AS договор_id,
   max(rs.refresh_slice_id) refresh_slice_id
 FROM sr_facras fr
   LEFT JOIN sr_facvip fv ON fr.kod_sf = fv.kod_sf
-  join report_stg.refresh_slice rs on rs.договор_id = fv.kod_dog
-  and fv.ym BETWEEN rs.период_с and rs.период_по
+  JOIN report_stg.refresh_slice rs ON rs.договор_id = fv.kod_dog
+  AND fv.ym BETWEEN rs.период_с AND rs.период_по
 WHERE fv.vid_sf NOT IN (2, 9) 
 GROUP BY fv.kod_dog,
   fv.vid_real,
