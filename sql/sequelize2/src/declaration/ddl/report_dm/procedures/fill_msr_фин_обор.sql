@@ -19,7 +19,7 @@ INSERT INTO report_dm.msr_фин_обор (
             null::numeric обор_кред
         from report_dm.msr_фин_начисл a
             JOIN report_stg.refresh_slice rs ON rs.договор_id = a.договор_id
-            AND a.дата BETWEEN rs.период_с AND rs.период_по
+            AND a.дата BETWEEN rs.дата_c AND rs.дата_по
         union all
         select rs.refresh_slice_id,
             a.договор_id,
@@ -30,7 +30,7 @@ INSERT INTO report_dm.msr_фин_обор (
             null обор_кред
         from report_dm.msr_фин_опл_погаш a
             JOIN report_stg.refresh_slice rs ON rs.договор_id = a.договор_id
-            AND a.дата BETWEEN rs.период_с AND rs.период_по
+            AND a.дата BETWEEN rs.дата_c AND rs.дата_по
         union all
         select rs.refresh_slice_id,
             a.договор_id,
@@ -41,9 +41,9 @@ INSERT INTO report_dm.msr_фин_обор (
             a.обор_кред
         from report_dm.msr_фин_опл_кредит a
             JOIN report_stg.refresh_slice rs ON rs.договор_id = a.договор_id
-            AND a.дата BETWEEN rs.период_с AND rs.период_по
+            AND a.дата BETWEEN rs.дата_c AND rs.дата_по
     )
-select a.refresh_slice_id,
+select max(a.refresh_slice_id) refresh_slice_id,
     a.договор_id,
     a.вид_реал_id,
     a.дата,

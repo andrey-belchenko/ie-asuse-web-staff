@@ -3,7 +3,7 @@ delete from report_stg.refresh_slice
 
 select * from report_stg.refresh_slice
 
-insert into report_stg.refresh_slice(договор_id, дата_c, дата_по) values (358,'2000-01-01','3000-01-01')
+insert into report_stg.refresh_slice(договор_id, дата_c, дата_по) values (358,'1900-01-01','3000-01-01')
 
 insert into report_stg.refresh_slice(договор_id, дата_c, дата_по) values (358,'2022-03-01'::date, '2022-03-31'::date)
 

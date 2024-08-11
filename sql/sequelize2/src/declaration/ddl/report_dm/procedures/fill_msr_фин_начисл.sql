@@ -21,7 +21,7 @@ select
     a.начисл
 from report_stg.фин_начисл a
     JOIN report_stg.refresh_slice rs ON rs.договор_id = a.договор_id
-    AND a.дата BETWEEN rs.период_с AND rs.период_по;
+    AND a.дата BETWEEN rs.дата_c AND rs.дата_по;
 commit;
 END;
 $$;

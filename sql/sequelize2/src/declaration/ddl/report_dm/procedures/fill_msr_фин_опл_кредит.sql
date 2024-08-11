@@ -24,7 +24,7 @@ INSERT INTO report_dm.msr_фин_опл_кредит (
             a.опл
         from report_stg.фин_опл a
             JOIN report_stg.refresh_slice rs ON rs.договор_id = a.договор_id
-            AND a.дата BETWEEN rs.период_с AND rs.период_по
+            AND a.дата BETWEEN rs.дата_c AND rs.дата_по
         where a.тип_опл_id in (1, 2, 5, 6)
     ),
     x2 as (
@@ -54,9 +54,8 @@ INSERT INTO report_dm.msr_фин_опл_кредит (
             coalesce(a.опл_кред, 0) - coalesce(a.сторно_кред, 0) обор_кред
         from x3 a
     )
-select 
-refresh_slice_id,
-опл_id,
+select max(refresh_slice_id) refresh_slice_id,
+    опл_id,
     договор_id,
     вид_реал_id,
     дата,

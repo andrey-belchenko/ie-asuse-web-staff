@@ -1,4 +1,5 @@
 import declaration from "../declaration/obj";
+import report_dm from "../declaration/obj/report_dm";
 import procedures_dm from "../declaration/obj/report_dm/procedures";
 import report_stg from "../declaration/obj/report_stg";
 import functions_stg from "../declaration/obj/report_stg/functions";
@@ -14,6 +15,7 @@ const run = async () => {
     // ...procedures_stg,
     // ...functions_stg
     // ...report_stg
+    ...report_dm
     
   ]);
   console.log("done");

@@ -3,6 +3,7 @@ DELETE FROM report_dm.msr_фин_сальдо_по_дог_вид_реал a USIN
 WHERE rs.договор_id = a.договор_id
     AND a.акт_с >= rs.дата_c;
 INSERT INTO report_dm.msr_фин_сальдо_по_дог_вид_реал (
+        refresh_slice_id,
         договор_id,
         вид_реал_id,
         акт_с,
@@ -12,6 +13,7 @@ INSERT INTO report_dm.msr_фин_сальдо_по_дог_вид_реал (
         долг_кред
     ) with prd as (
         select договор_id,
+            refresh_slice_id,
             (дата_c - INTERVAL '1 day')::date дата
         from report_stg.refresh_slice
     ),
@@ -84,15 +86,15 @@ INSERT INTO report_dm.msr_фин_сальдо_по_дог_вид_реал (
             a.*
         from x2 a
     )
-select a.договор_id,
+select prd.refresh_slice_id,
+    a.договор_id,
     a.вид_реал_id,
     a.дата as акт_с,
     a.акт_по,
     a.долг,
     a.долг_деб,
     a.долг_кред
-from x3 a
-    --исключаются записи с оборотами до начала затронутого периода которые были добавлены в начале oold
+from x3 a --исключаются записи с оборотами до начала затронутого периода которые были добавлены в начале oold
     JOIN prd ON prd.договор_id = a.договор_id
     AND a.дата > prd.дата;
 commit;
