@@ -4,7 +4,9 @@ import procedures_dm from "../declaration/obj/report_dm/procedures";
 import report_stg from "../declaration/obj/report_stg";
 import functions_stg from "../declaration/obj/report_stg/functions";
 import procedures_stg from "../declaration/obj/report_stg/procedures";
+import fill_фин_закрытие_начисл from "../declaration/obj/report_stg/procedures/fill_фин_закрытие_начисл";
 import refresh_slice from "../declaration/obj/report_stg/tables/refresh_slice";
+import фин_закрытие_начисл from "../declaration/obj/report_stg/tables/фин_закрытие_начисл";
 
 import { resetObjects } from "../utils/management";
 
@@ -15,8 +17,9 @@ const run = async () => {
     // ...procedures_stg,
     // ...functions_stg
     // ...report_stg
-    ...report_dm
-    
+    // ...report_dm
+    фин_закрытие_начисл,
+    fill_фин_закрытие_начисл,
   ]);
   console.log("done");
 };
