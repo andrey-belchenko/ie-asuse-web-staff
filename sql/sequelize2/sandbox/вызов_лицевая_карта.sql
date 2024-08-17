@@ -9,8 +9,8 @@ from report_util.get_лицевая_карта(
     )
 where вид_реал_id in (2)
 
--- and год=2022
--- and месяц=1
+and год=2022
+and месяц=1
 group by строка,
     год,
     месяц

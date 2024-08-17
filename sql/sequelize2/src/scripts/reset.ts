@@ -14,13 +14,14 @@ import { resetObjects } from "../utils/management";
 import fill_фин_опл from "../declaration/obj/report_stg/procedures/fill_фин_опл";
 import fill_фин_начисл from "../declaration/obj/report_stg/procedures/fill_фин_начисл";
 import get_лицевая_карта from "../declaration/obj/report_util/лицевая_карта/get_лицевая_карта";
+import report_util from "../declaration/obj/report_util";
 
 declaration;
 const run = async () => {
   await resetObjects([
     //  refresh_slice,
     // ...procedures_stg,
-    ...functions_stg,
+    // ...functions_stg,
     // ...report_stg
     // ...report_dm
     // фин_закрытие_начисл,
@@ -29,7 +30,8 @@ const run = async () => {
     // fill_фин_закрытие_кред
     // fill_фин_начисл,
     // fill_фин_опл
-    get_лицевая_карта
+    // get_лицевая_карта
+    ...report_util
   ]);
   console.log("done");
 };

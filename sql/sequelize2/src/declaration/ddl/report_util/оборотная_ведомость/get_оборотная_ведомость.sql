@@ -1,241 +1,183 @@
-CREATE OR REPLACE FUNCTION report_util.get_лицевая_карта(p_дата_с date, p_дата_по date, отделение_id integer) RETURNS TABLE (
-        строка text,
-        договор_id int4,
-        год int4,
-        месяц int4,
-        вид_реал_id int4,
-        порядок int8,
-        сумма numeric
-    ) LANGUAGE plpgsql AS $$ BEGIN CREATE TEMP TABLE период ON COMMIT DROP AS with x1 as (
-        SELECT a.договор_id,
-            min(a.дата) дата_с,
-            max(a.дата) дата_по
-        from report_dm.msr_фин_обор a
-        where a.договор_id in (
-                SELECT unnest(p_договор_id)
+CREATE OR REPLACE FUNCTION report_util.get_оборотная_ведомость(
+        p_дата_с date,
+        p_дата_по date,
+        p_отделение_id integer []
+    ) RETURNS TABLE (
+        договор_id int4 ,
+        долг_деб_нач numeric ,
+        долг_кред_нач numeric ,
+        начисл numeric ,
+        погаш_оплатой numeric ,
+        погаш_из_кред numeric ,
+        опл_кред_перепл numeric ,
+        опл_кред_аванс numeric ,
+        долг_деб_кон numeric ,
+        долг_кред_кон numeric 
+    ) LANGUAGE plpgsql AS $$ BEGIN 
+    CREATE TEMP TABLE result ON COMMIT DROP AS with p as (
+        select p_дата_с дата_с,
+            p_дата_по дата_по
+    ),
+    -- тут может быть фильтр по отделению
+    p_отд as (
+        select *
+        from report_dm.dim_отделение a
+        where a.отделение_id in (
+                SELECT unnest(p_отделение_id)
             )
+    ),
+    -- 1. СБОР ФАКТОВ ИЗ РАЗНЫХ ТАБЛИЦ И ФИЛЬТРАЦИЯ
+    -- 1.1 факты по начислениям
+    n as (
+        select a.договор_id,
+            a.начисл
+        from report_dm.msr_фин_начисл a -- ФИЛЬТРАЦИЯ (одинаковая для всех фактов по ОБОРОТАМ)
+            join p on a.дата between p.дата_с and p.дата_по
+            left join report_dm.dim_договор d on d.договор_id = a.договор_id
+            join p_отд o on d.отделение_id = o.отделение_id
+        where a.вид_реал_id = 2 
+    ),
+    -- 1.2 факты по оплате счетов
+    op as (
+        select a.договор_id,
+            a.погаш_оплатой,
+            a.погаш_из_кред
+        from report_dm.msr_фин_опл_погаш a -- ФИЛЬТРАЦИЯ (одинаковая для всех фактов по ОБОРОТАМ)
+            join p on a.дата between p.дата_с and p.дата_по
+            left join report_dm.dim_договор d on d.договор_id = a.договор_id
+            join p_отд o on d.отделение_id = o.отделение_id
+        where a.вид_реал_id = 2 
+    ),
+    -- 1.3 факты обороты по кредиту
+    ok as (
+        select a.договор_id,
+            a.опл_кред_перепл,
+            a.опл_кред_аванс
+        from report_dm.msr_фин_опл_кредит a -- ФИЛЬТРАЦИЯ (одинаковая для всех фактов по ОБОРОТАМ)
+            join p on a.дата between p.дата_с and p.дата_по
+            left join report_dm.dim_договор d on d.договор_id = a.договор_id
+            join p_отд o on d.отделение_id = o.отделение_id
+        where a.вид_реал_id = 2 
+    ),
+    -- 1.4 факты сальдо на начало
+    sn as (
+        select a.договор_id,
+            a.долг_деб as долг_деб_нач,
+            a.долг_кред as долг_кред_нач
+        from report_dm.msr_фин_сальдо_по_дог_вид_реал a -- ФИЛЬТРАЦИЯ (отличается фильтр по дате - на начало)
+            join p on p.дата_с between a.акт_с and a.акт_по
+            left join report_dm.dim_договор d on d.договор_id = a.договор_id
+            join p_отд o on d.отделение_id = o.отделение_id
+        where a.вид_реал_id = 2 
+    ),
+    -- 1.5 факты сальдо на конец
+    sk as (
+        select a.договор_id,
+            a.долг_деб as долг_деб_кон,
+            a.долг_кред as долг_кред_кон
+        from report_dm.msr_фин_сальдо_по_дог_вид_реал a -- ФИЛЬТРАЦИЯ (отличается фильтр по дате - на конец)
+            join p on p.дата_по between a.акт_с and a.акт_по
+            left join report_dm.dim_договор d on d.договор_id = a.договор_id
+            join p_отд o on d.отделение_id = o.отделение_id
+        where a.вид_реал_id = 2 
+    ),
+    -- 2. ОБЪЕДИНЕНИЕ ВСЕХ СОБРАННЫХ ФАКТОВ В ОБЩУЮ ТАБЛИЦУ
+    x as (
+        select a.договор_id,
+            null::numeric долг_деб_нач,
+            null::numeric долг_кред_нач,
+            a.начисл,
+            null::numeric погаш_оплатой,
+            null::numeric погаш_из_кред,
+            null::numeric опл_кред_перепл,
+            null::numeric опл_кред_аванс,
+            null::numeric долг_деб_кон,
+            null::numeric долг_кред_кон
+        from n a
+        UNION ALL
+        select a.договор_id,
+            null долг_деб_нач,
+            null долг_кред_нач,
+            null начисл,
+            a.погаш_оплатой,
+            a.погаш_из_кред,
+            null опл_кред_перепл,
+            null опл_кред_аванс,
+            null долг_деб_кон,
+            null долг_кред_кон
+        from op a
+        UNION ALL
+        select a.договор_id,
+            null долг_деб_нач,
+            null долг_кред_нач,
+            null начисл,
+            null погаш_оплатой,
+            null погаш_из_кред,
+            a.опл_кред_перепл,
+            a.опл_кред_аванс,
+            null долг_деб_кон,
+            null долг_кред_кон
+        from ok a
+        UNION ALL
+        select a.договор_id,
+            a.долг_деб_нач,
+            a.долг_кред_нач,
+            null начисл,
+            null погаш_оплатой,
+            null погаш_из_кред,
+            null опл_кред_перепл,
+            null опл_кред_аванс,
+            null долг_деб_кон,
+            null долг_кред_кон
+        from sn a
+        UNION ALL
+        select a.договор_id,
+            null долг_деб_нач,
+            null долг_кред_нач,
+            null начисл,
+            null погаш_оплатой,
+            null погаш_из_кред,
+            null опл_кред_перепл,
+            null опл_кред_аванс,
+            a.долг_деб_кон,
+            a.долг_кред_кон
+        from sk a
+    ),
+    -- 3. ГРУППИРОВКА И ВЫРАЖЕНИЯ С АРИФМЕТИЧЕСКИМИ ОПЕРАЦИЯМИ ПРИ НЕОБХОДИМОСТИ
+    x1 as (
+        select a.договор_id,
+            sum(a.долг_деб_нач) долг_деб_нач,
+            sum(a.долг_кред_нач) долг_кред_нач,
+            sum(a.начисл) начисл,
+            sum(a.погаш_оплатой) погаш_оплатой,
+            sum(a.погаш_из_кред) погаш_из_кред,
+            sum(a.опл_кред_перепл) опл_кред_перепл,
+            sum(a.опл_кред_аванс) опл_кред_аванс,
+            sum(a.долг_деб_кон) долг_деб_кон,
+            sum(a.долг_кред_кон) долг_кред_кон
+        from x a
         group by a.договор_id
+    ),
+    -- 4. ДОБАВЛЕНИЕ АТРИБУТОВ ИЗ ИЗМЕРЕНИЙ
+    x2 as (
+        select a.договор_id,
+            o.наименование отделение_наименование,
+            d.номер договор_номер,
+            a.долг_деб_нач,
+            a.долг_кред_нач,
+            a.начисл,
+            a.погаш_оплатой,
+            a.погаш_из_кред,
+            a.опл_кред_перепл,
+            a.опл_кред_аванс,
+            a.долг_деб_кон,
+            a.долг_кред_кон
+        from x1 a
+            left join report_dm.dim_договор d on d.договор_id = a.договор_id
+            left join report_dm.dim_отделение o on d.отделение_id = o.отделение_id
     )
-select a.договор_id,
-    d.год,
-    d.месяц,
-    min(d.дата) дата_с,
-    max(d.дата) дата_по
-from x1 a
-    join report_dm.dim_дата d on d.дата between a.дата_с and a.дата_по
-group by a.договор_id,
-    d.год,
-    d.месяц;
-CREATE TEMP TABLE result ON COMMIT DROP AS with n as (
-    select a.договор_id,
-        a.вид_реал_id,
-        a.вид_тов_id,
-        p.год,
-        p.месяц,
-        2 as порядок,
-        sum(a.начисл) сумма
-    from report_dm.msr_фин_начисл a
-        join период p on a.дата between p.дата_с and p.дата_по
-        and p.договор_id = a.договор_id
-    group by a.договор_id,
-        a.вид_реал_id,
-        a.вид_тов_id,
-        p.год,
-        p.месяц
-),
-ok as (
-    select a.договор_id,
-        p.год,
-        p.месяц,
-        2 вид_реал_id,
-        sum(a.опл_кред_перепл) опл_кред_перепл,
-        sum(a.опл_кред_аванс) опл_кред_аванс
-    from report_dm.msr_фин_опл_кредит a
-        join период p on a.дата between p.дата_с and p.дата_по
-        and p.договор_id = a.договор_id
-    group by a.договор_id,
-        p.год,
-        p.месяц
-),
-o1 as (
-    select a.договор_id,
-        74 as вид_тов_id,
-        a.год,
-        a.месяц,
-        a.вид_реал_id,
-        2 as порядок,
-        a.опл_кред_перепл сумма
-    from ok a
-    where опл_кред_перепл != 0
-),
-o2 as (
-    select a.договор_id,
-        75 as вид_тов_id,
-        a.год,
-        a.месяц,
-        a.вид_реал_id,
-        2 as порядок,
-        a.опл_кред_аванс сумма
-    from ok a
-    where опл_кред_аванс != 0
-),
-op as (
-    select a.договор_id,
-        a.вид_реал_id,
-        p.год,
-        p.месяц,
-        sum(a.погаш_оплатой) погаш_оплатой,
-        sum(a.погаш_из_кред) погаш_из_кред
-    from report_dm.msr_фин_опл_погаш a
-        join период p on a.дата between p.дата_с and p.дата_по
-        and p.договор_id = a.договор_id
-    group by a.договор_id,
-        a.вид_реал_id,
-        p.год,
-        p.месяц
-),
-o3 as (
-    select 'Оплачено' as имя_стр,
-        a.договор_id,
-        a.вид_реал_id,
-        a.год,
-        a.месяц,
-        3 as порядок,
-        a.погаш_оплатой сумма
-    from op a
-    where погаш_оплатой != 0
-),
-o4 as (
-    select 'Погашение факта' as имя_стр,
-        a.договор_id,
-        a.вид_реал_id,
-        a.год,
-        a.месяц,
-        4 as порядок,
-        a.погаш_из_кред сумма
-    from op a
-    where погаш_из_кред != 0
-),
-sn as (
-    select 'Начальное сальдо' as имя_стр,
-        a.договор_id,
-        a.вид_реал_id,
-        p.год,
-        p.месяц,
-        1 as порядок,
-        sum(долг) сумма
-    from report_dm.msr_фин_сальдо_по_дог_вид_реал a
-        join период p on p.дата_с between a.акт_с and a.акт_по
-        and p.договор_id = a.договор_id
-    group by a.договор_id,
-        a.вид_реал_id,
-        p.год,
-        p.месяц
-),
-sk as (
-    select 'Конечное сальдо' as имя_стр,
-        a.договор_id,
-        a.вид_реал_id,
-        p.год,
-        p.месяц,
-        5 as порядок,
-        sum(долг) сумма
-    from report_dm.msr_фин_сальдо_по_дог_вид_реал a
-        join период p on p.дата_по between a.акт_с and a.акт_по
-        and p.договор_id = a.договор_id
-    group by a.договор_id,
-        a.вид_реал_id,
-        p.год,
-        p.месяц
-),
-x as (
-    select a.договор_id,
-        a.год,
-        a.месяц,
-        a.вид_реал_id,
-        a.вид_тов_id,
-        null as имя_стр,
-        a.порядок,
-        a.сумма
-    from n a
-    UNION ALL
-    select a.договор_id,
-        a.год,
-        a.месяц,
-        a.вид_реал_id,
-        a.вид_тов_id,
-        null as имя_стр,
-        a.порядок,
-        a.сумма
-    from o1 a
-    UNION ALL
-    select a.договор_id,
-        a.год,
-        a.месяц,
-        a.вид_реал_id,
-        a.вид_тов_id,
-        null as имя_стр,
-        a.порядок,
-        a.сумма
-    from o2 a
-    UNION ALL
-    select a.договор_id,
-        a.год,
-        a.месяц,
-        a.вид_реал_id,
-        null as вид_тов_id,
-        a.имя_стр,
-        a.порядок,
-        a.сумма
-    from o3 a
-    UNION ALL
-    select a.договор_id,
-        a.год,
-        a.месяц,
-        a.вид_реал_id,
-        null as вид_тов_id,
-        a.имя_стр,
-        a.порядок,
-        a.сумма
-    from o4 a
-    UNION ALL
-    select a.договор_id,
-        a.год,
-        a.месяц,
-        a.вид_реал_id,
-        null as вид_тов_id,
-        a.имя_стр,
-        a.порядок,
-        a.сумма
-    from sn a
-    UNION ALL
-    select a.договор_id,
-        a.год,
-        a.месяц,
-        a.вид_реал_id,
-        null as вид_тов_id,
-        a.имя_стр,
-        a.порядок,
-        a.сумма
-    from sk a
-),
-x1 as (
-    select a.*,
-        coalesce(a.имя_стр, t.номер || ' ' || t.имя) строка
-    from x a
-        left join report_dm.dim_вид_тов t on a.вид_тов_id = t.вид_тов_id
-)
-select a.строка,
-    a.договор_id,
-    a.год,
-    a.месяц,
-    a.вид_реал_id,
-    DENSE_RANK() over (
-        order by a.порядок,
-            a.строка
-    ) порядок,
-    a.сумма
-from x1 a;
+select *
+from x1;
 RETURN QUERY
 select *
 from result;
