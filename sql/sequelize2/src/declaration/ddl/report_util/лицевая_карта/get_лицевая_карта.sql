@@ -8,8 +8,8 @@ CREATE OR REPLACE FUNCTION report_util.get_лицевая_карта(p_дого�
         сумма numeric
     ) LANGUAGE plpgsql AS $$ BEGIN CREATE TEMP TABLE период ON COMMIT DROP AS with x1 as (
         SELECT a.договор_id,
-            min(a.дата) дата_с,
-            max(a.дата) дата_по
+            min(report_stg.get_beg_of_month(a.дата)) дата_с,
+            max(report_stg.get_end_of_month(a.дата)) дата_по
         from report_dm.msr_фин_обор a
         where a.договор_id in (
                 SELECT unnest(p_договор_id)
