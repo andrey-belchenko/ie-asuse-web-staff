@@ -4,7 +4,7 @@
             <ReportList @report-select="handleReportSelect" />
         </DxItem>
         <DxItem :resizable="true" :collapsible="true" size="300px" text="Left Pane">
-            <div>{{ currentItem?.text }}</div>
+            <div>{{ currentItem?.title }}</div>
             <ParamsForm :fields="fields" v-model:form="form" />
 
         </DxItem>
@@ -25,8 +25,8 @@ import FieldDate from './editors/FieldDate.vue';
 import { ref } from 'vue';
 const currentItem = ref();
 const val = ref<Date>();
-const handleReportSelect = (itemData: any) => {
-    currentItem.value = itemData
+const handleReportSelect = (item: any) => {
+    currentItem.value = item
 }
 
 interface Field {

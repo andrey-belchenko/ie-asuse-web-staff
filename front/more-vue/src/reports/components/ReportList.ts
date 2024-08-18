@@ -1,28 +1,9 @@
 import nav10 from "../config/navigators/nav10";
 import { Folder, type NavigatorItem } from "../types/Folder";
 
-export default [
-  {
-    id: "1",
-    text: "Отчеты по задолженности",
-    expanded: true,
-    items: [
-      {
-        id: "1_1",
-        text: "Сверхнормативная задолженность",
-        expanded: true,
-      },
-      {
-        id: "1_2",
-        text: "Задолженность по договору",
-      },
-    ],
-  },
-];
+const navigator = nav10;
 
-export const navigator = nav10;
-
-type TreeItem = {
+export type TreeItem = {
   data: NavigatorItem;
   id: number;
   parentId?: number;
