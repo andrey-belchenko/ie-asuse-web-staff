@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import TryDx from '../views/TryDx.vue'
 import PivotGrid from '../views/pivot/PivotGrid.vue'
+import Reports from '../views/Reports.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -19,6 +20,11 @@ const router = createRouter({
       path: '/pivot',
       name: 'pivot',
       component: PivotGrid
+    },
+    {
+      path: '/reports',
+      name: 'reports',
+      component: Reports
     },
     {
       path: '/about',
