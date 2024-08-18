@@ -2,7 +2,7 @@
     <div v-if="formConfig">
         <div v-for="fieldConfig in formConfig.fields" :key="fieldConfig.name">
             <div>{{ fieldConfig.label }}</div>
-            <component :is="getEditorComponent(fieldConfig.editor)" @change="updateForm"
+            <component :is="getEditorComponent(fieldConfig.editor)" @change="updateForm" :configuration="fieldConfig.editor"
                 v-model="values[fieldConfig.name]" />
         </div>
     </div>

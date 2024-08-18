@@ -1,7 +1,6 @@
 <template>
-    <DxDropDownBox v-model:value="gridBoxValue" :input-attr="{ 'aria-label': 'Owner' }" :defer-rendering="false"
-        :show-clear-button="true" :data-source="gridDataSource" :display-expr="options?.displayField"
-        :value-expr="options?.keyField" placeholder="Select a value...">
+    <DxDropDownBox v-model:value="gridBoxValue" :defer-rendering="false" :show-clear-button="true"
+        :data-source="gridDataSource" :display-expr="configuration?.displayField" :value-expr="configuration?.keyField">
         <template #content="{ data }">
             <DxDataGrid :height="345" :data-source="gridDataSource" :columns="gridColumns" :hover-state-enabled="true"
                 v-model:selected-row-keys="gridBoxValue">
@@ -20,6 +19,7 @@ import {
 } from 'devextreme-vue/data-grid';
 import CustomStore from 'devextreme/data/custom_store';
 import type { FieldSelectOptions } from './FieldSelect';
+import type { SelectEditor } from '@/reports/types/editors/system/SelectEditor';
 
 
 
@@ -28,15 +28,15 @@ const props = defineProps({
         type: Array,
         required: false
     },
-    options: {
-        type: Object as () => FieldSelectOptions,
+    configuration: {
+        type: Object as () => SelectEditor,
         required: false
     }
 });
 
-const gridColumns = ref(props.options?.columns);
+const gridColumns = ref(props.configuration?.columns);
 
-const gridDataSource = makeAsyncDataSource(props.options?.data, props.options?.keyField);
+const gridDataSource = makeAsyncDataSource(props.configuration?.data, props.configuration?.keyField);
 
 const gridBoxValue = ref(props.modelValue);
 
