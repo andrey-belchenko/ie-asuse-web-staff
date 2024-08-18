@@ -20,8 +20,8 @@
 import { DxSplitter, DxItem } from 'devextreme-vue/splitter';
 import ReportList from './ReportList.vue';
 import ParamsForm from './ParamsForm.vue';
-import FieldSelect from '../reports/fields/FieldSelect.vue';
-import FieldDate from '../reports/fields/FieldDate.vue';
+import FieldSelect from './editors/FieldSelect.vue';
+import FieldDate from './editors/FieldDate.vue';
 import { ref } from 'vue';
 const currentItem = ref();
 const val = ref<Date>();
