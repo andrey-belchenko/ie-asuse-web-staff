@@ -1,6 +1,6 @@
-import FieldDate from "./editors/FieldDate.vue";
-import FieldText from "./editors/FieldText.vue";
-import FieldSelect from "./editors/FieldSelect.vue";
+import FieldDate from "./editors/DateEditor.vue";
+import FieldText from "./editors/TextEditor.vue";
+import FieldSelect from "./editors/SelectEditor.vue";
 import type { Editor } from "../types/Editor";
 import { DateEditor } from "../types/editors/system/DateEditor";
 import { TextEditor } from "../types/editors/system/TextEditor";
