@@ -4,13 +4,13 @@ import type { Form } from "./Form";
 export interface ReportProps {
   title: string;
   paramsForm?: Form;
-  dataSource: DataSource;
+  dataSource?: DataSource;
 }
 
 export class Report {
   title: string;
   paramsForm?: Form;
-  dataSource: DataSource;
+  dataSource?: DataSource;
   constructor(props: ReportProps) {
     this.title = props.title;
     this.paramsForm = props.paramsForm;
