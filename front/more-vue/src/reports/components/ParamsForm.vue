@@ -1,9 +1,9 @@
 <template>
-    <div>
-        <div v-for="field in fields" :key="field.field">
-            <div>{{ field.label }}</div>
-            <component :is="getComponent(field.type)" @change="updateForm" v-model="values[field.field]"
-                :options="field.options" />
+    <div v-if="formConfig">
+        <div v-for="fieldConfig in formConfig.fields" :key="fieldConfig.name">
+            <div>{{ fieldConfig.label }}</div>
+            <component :is="getEditorComponent(fieldConfig.editor)" @change="updateForm"
+                v-model="values[fieldConfig.name]" />
         </div>
     </div>
 </template>
@@ -25,9 +25,9 @@ const props = defineProps({
         type: Array as () => Field[],
         required: true
     },
-    formConfig:{
+    formConfig: {
         type: Object as () => Form,
-        required: false
+        required: true
     }
 });
 
