@@ -13,10 +13,10 @@
 
 // v-model:value="form[field.field]" @change="updateForm"
 import { ref, watch } from 'vue';
-import FieldDate from './reports/fields/FieldDate.vue';
-import FieldText from './reports/fields/FieldText.vue';
-import FieldSelect from './reports/fields/FieldSelect.vue';
-import FieldSelectDep from './reports/fields/FieldSelectDep.vue';
+import FieldDate from '../reports/fields/FieldDate.vue';
+import FieldText from '../reports/fields/FieldText.vue';
+import FieldSelect from '../reports/fields/FieldSelect.vue';
+import FieldSelectDep from '../reports/fields/FieldSelectDep.vue';
 interface Field {
     label: string;
     type: string;
