@@ -4,9 +4,8 @@
             <ReportList @report-select="handleReportSelect" />
         </DxItem>
         <DxItem :resizable="true" :collapsible="true" size="300px" text="Left Pane">
-            <div>{{ currentItem?.title }}</div>
-            <ParamsForm :fields="fields" v-model:values="formValues" />
-
+            <div>{{ selectedReport?.title }}</div>
+            <ParamsForm :fields="fields" :formConfig="selectedReport?.paramsForm" v-model:values="formValues" />
         </DxItem>
         <DxItem :resizable="true" :collapsible="true" text="Right Pane" min-size="70px">
             {{ JSON.stringify(formValues) }}
@@ -24,10 +23,13 @@ import FieldSelect from './editors/FieldSelect.vue';
 import FieldDate from './editors/FieldDate.vue';
 import { ref } from 'vue';
 import type { NavigatorItem } from '../types/Folder';
-const currentItem = ref();
+import { Report } from '../types/Report';
+const selectedReport = ref<Report>();
 const val = ref<Date>();
 const handleReportSelect = (item: NavigatorItem) => {
-    currentItem.value = item
+    if (item instanceof Report) {
+        selectedReport.value = item
+    }
 }
 
 interface Field {

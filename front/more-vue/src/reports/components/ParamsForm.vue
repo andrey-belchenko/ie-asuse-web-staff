@@ -24,7 +24,7 @@ const props = defineProps({
         type: Array as () => Field[],
         required: true
     },
-    form:{
+    formConfig:{
         type: Object as () => Form,
         required: false
     }
