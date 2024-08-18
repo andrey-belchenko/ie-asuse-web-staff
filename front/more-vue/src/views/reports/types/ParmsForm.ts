@@ -1,0 +1,3 @@
+class ParamsForm {
+  fields: ParamField[] = [];
+}
