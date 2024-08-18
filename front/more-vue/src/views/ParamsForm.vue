@@ -2,7 +2,7 @@
     <div>
         <div v-for="field in fields" :key="field.field">
             <div>{{ field.label }}</div>
-            <component :is="getComponent(field.type)" @change="updateForm" v-model="form[field.field]"/>
+            <component :is="getComponent(field.type)" @change="updateForm" v-model="form[field.field]" :options="field.options" />
         </div>
     </div>
 </template>
@@ -16,11 +16,12 @@ import { ref, watch } from 'vue';
 import FieldDate from './reports/fields/FieldDate.vue';
 import FieldText from './reports/fields/FieldText.vue';
 import FieldSelect from './reports/fields/FieldSelect.vue';
-
+import FieldSelectDep from './reports/fields/FieldSelectDep.vue';
 interface Field {
     label: string;
     type: string;
     field: string;
+    options?: any;
 }
 
 const props = defineProps({
@@ -44,6 +45,8 @@ const getComponent = (type: string) => {
             return FieldText;
         case 'select':
             return FieldSelect;
+        case 'selectDep':
+            return FieldSelectDep;
         default:
             return null;
     }

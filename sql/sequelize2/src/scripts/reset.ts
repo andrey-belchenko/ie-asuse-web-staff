@@ -15,6 +15,7 @@ import fill_фин_опл from "../declaration/obj/report_stg/procedures/fill_ф
 import fill_фин_начисл from "../declaration/obj/report_stg/procedures/fill_фин_начисл";
 import get_лицевая_карта from "../declaration/obj/report_util/лицевая_карта/get_лицевая_карта";
 import report_util from "../declaration/obj/report_util";
+import dim_отделение from "../declaration/obj/report_dm/views/dim_отделение";
 
 declaration;
 const run = async () => {
@@ -31,7 +32,8 @@ const run = async () => {
     // fill_фин_начисл,
     // fill_фин_опл
     // get_лицевая_карта
-    ...report_util
+    // ...report_util
+    dim_отделение
   ]);
   console.log("done");
 };
