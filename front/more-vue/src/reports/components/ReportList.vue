@@ -7,17 +7,11 @@ import { ref } from 'vue';
 import DxTreeView from 'devextreme-vue/tree-view'
 import { getTreeItems, type TreeItem } from './ReportList';
 import type { NavigatorItem } from '../types/Folder';
-
 const treeItems = ref(getTreeItems());
-// const currentItem = ref<NavigatorItem | undefined>(undefined);
-
-
 const emit = defineEmits<{
-  (event: 'report-select', value: NavigatorItem): void
+    (event: 'report-select', value: NavigatorItem): void
 }>()
-
 function selectItem({ itemData }: { itemData: TreeItem }) {
-    // currentItem.value = itemData.data;
     emit('report-select', itemData.data);
 }
 

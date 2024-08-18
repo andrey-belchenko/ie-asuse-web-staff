@@ -5,11 +5,11 @@
         </DxItem>
         <DxItem :resizable="true" :collapsible="true" size="300px" text="Left Pane">
             <div>{{ currentItem?.title }}</div>
-            <ParamsForm :fields="fields" v-model:form="form" />
+            <ParamsForm :fields="fields" v-model:values="formValues" />
 
         </DxItem>
         <DxItem :resizable="true" :collapsible="true" text="Right Pane" min-size="70px">
-            {{ JSON.stringify(form) }}
+            {{ JSON.stringify(formValues) }}
             <FieldSelect v-mode="val" />
             <!-- <FieldDate  v-model="val"/> -->
         </DxItem>
@@ -60,5 +60,5 @@ const fields: Field[] = [
     }
 ];
 
-const form = ref({});
+const formValues = ref({});
 </script>
