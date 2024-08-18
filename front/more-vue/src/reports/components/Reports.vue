@@ -23,9 +23,10 @@ import ParamsForm from './ParamsForm.vue';
 import FieldSelect from './editors/FieldSelect.vue';
 import FieldDate from './editors/FieldDate.vue';
 import { ref } from 'vue';
+import type { NavigatorItem } from '../types/Folder';
 const currentItem = ref();
 const val = ref<Date>();
-const handleReportSelect = (item: any) => {
+const handleReportSelect = (item: NavigatorItem) => {
     currentItem.value = item
 }
 

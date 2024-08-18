@@ -11,7 +11,10 @@ import type { NavigatorItem } from '../types/Folder';
 const treeItems = ref(getTreeItems());
 // const currentItem = ref<NavigatorItem | undefined>(undefined);
 
-const emit = defineEmits(['report-select'])
+
+const emit = defineEmits<{
+  (event: 'report-select', value: NavigatorItem): void
+}>()
 
 function selectItem({ itemData }: { itemData: TreeItem }) {
     // currentItem.value = itemData.data;
