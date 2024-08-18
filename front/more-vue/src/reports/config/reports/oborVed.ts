@@ -1,3 +1,4 @@
+import { TextEditor } from "@/reports/types/editors/system/TextEditor";
 import { DepSelectEditor } from "../../types/editors/custom/DepSelectEditor";
 import { DateEditor } from "../../types/editors/system/DateEditor";
 import { Field } from "../../types/Field";
@@ -9,11 +10,11 @@ export default new Report({
   dataSource: "report_util.get_оборотная_ведомость",
   paramsForm: new Form({
     fields: [
-      // new Field({
-      //   label: "Отделение",
-      //   name: "dep",
-      //   editor: new DepSelectEditor({}),
-      // }),
+      new Field({
+        label: "Отделение",
+        name: "dep",
+        editor: new DepSelectEditor({}),
+      }),
       new Field({
         label: "Дата с",
         name: "date1",
@@ -23,6 +24,11 @@ export default new Report({
         label: "Дата по",
         name: "date2",
         editor: new DateEditor({}),
+      }),
+      new Field({
+        label: "Имя",
+        name: "name",
+        editor: new TextEditor({}),
       }),
     ],
   }),

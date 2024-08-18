@@ -27,7 +27,7 @@ const props = defineProps({
     },
     formConfig: {
         type: Object as () => Form,
-        required: true
+        required: false
     }
 });
 
