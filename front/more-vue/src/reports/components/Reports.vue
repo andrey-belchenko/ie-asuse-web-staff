@@ -9,8 +9,6 @@
         </DxItem>
         <DxItem :resizable="true" :collapsible="true" text="Right Pane" min-size="70px">
             {{ JSON.stringify(formValues) }}
-            <FieldSelect v-mode="val" />
-            <!-- <FieldDate  v-model="val"/> -->
         </DxItem>
     </DxSplitter>
 </template>
@@ -19,8 +17,6 @@
 import { DxSplitter, DxItem } from 'devextreme-vue/splitter';
 import ReportList from './ReportList.vue';
 import ParamsForm from './ParamsForm.vue';
-import FieldSelect from './editors/FieldSelect.vue';
-import FieldDate from './editors/FieldDate.vue';
 import { ref } from 'vue';
 import type { NavigatorItem } from '../types/Folder';
 import { Report } from '../types/Report';
