@@ -18,7 +18,6 @@ import {
     DxDataGrid, DxSelection, DxPaging, DxFilterRow, DxScrolling,
 } from 'devextreme-vue/data-grid';
 import CustomStore from 'devextreme/data/custom_store';
-import type { FieldSelectOptions } from './FieldSelect';
 import type { SelectEditor } from '@/reports/types/editors/system/SelectEditor';
 
 
