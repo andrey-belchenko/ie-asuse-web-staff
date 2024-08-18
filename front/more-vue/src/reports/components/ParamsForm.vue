@@ -10,8 +10,9 @@
 
 <script setup lang="ts">
 import { ref, watch } from 'vue';
-import { getFieldComponent } from './ParamsForm';
+import { getFieldComponent, getEditorComponent } from './ParamsForm';
 import type { Form } from '../types/Form';
+import type { Editor } from '../types/Editor';
 interface Field {
     label: string;
     type: string;
@@ -39,6 +40,11 @@ watch(values, () => {
 const getComponent = (type: string) => {
     return getFieldComponent(type)
 };
+
+const getFieldEditorComponent = (editorConfig: Editor) => {
+    return getEditorComponent(editorConfig)
+};
+
 
 const emit = defineEmits(['update:values']);
 

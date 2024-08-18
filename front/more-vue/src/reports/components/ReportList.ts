@@ -8,6 +8,7 @@ export type TreeItem = {
   id: number;
   parentId?: number;
   title: string;
+  expanded: boolean;
 };
 
 export function getTreeItems() {
@@ -20,6 +21,7 @@ export function getTreeItems() {
         id: id,
         data: item,
         title: item.title,
+        expanded:true
       };
       if (parentId) {
         treeItem.parentId = parentId;

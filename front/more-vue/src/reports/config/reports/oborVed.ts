@@ -9,11 +9,11 @@ export default new Report({
   dataSource: "report_util.get_оборотная_ведомость",
   paramsForm: new Form({
     fields: [
-      new Field({
-        label: "Отделение",
-        name: "dep",
-        editor: new DepSelectEditor({}),
-      }),
+      // new Field({
+      //   label: "Отделение",
+      //   name: "dep",
+      //   editor: new DepSelectEditor({}),
+      // }),
       new Field({
         label: "Дата с",
         name: "date1",
