@@ -8,7 +8,7 @@ import DxDateBox from 'devextreme-vue/date-box';
 const props = defineProps({
     modelValue: {
         type: Date,
-        required: true
+        required: false
     }
 });
 

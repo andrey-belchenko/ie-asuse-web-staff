@@ -8,7 +8,7 @@ import DxTextBox from 'devextreme-vue/text-box';
 const props = defineProps({
     modelValue: {
         type: String,
-        required: true
+        required: false
     }
 });
 

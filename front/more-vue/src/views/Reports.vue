@@ -10,6 +10,8 @@
         </DxItem>
         <DxItem :resizable="true" :collapsible="true" text="Right Pane" min-size="70px" >
             {{ JSON.stringify(form) }}
+            <FieldSelect  v-mode="val"/>
+            <!-- <FieldDate  v-model="val"/> -->
         </DxItem>
     </DxSplitter>
 </template>
@@ -18,9 +20,11 @@
 import { DxSplitter, DxItem } from 'devextreme-vue/splitter';
 import ReportList from './ReportList.vue';
 import ParamsForm from './ParamsForm.vue';
+import FieldSelect from './reports/fields/FieldSelect.vue';
+import FieldDate from './reports/fields/FieldDate.vue';
 import { ref } from 'vue';
 const currentItem = ref();
-
+const val = ref<Date>();
 const handleReportSelect = (itemData: any) => {
     currentItem.value = itemData
 }
@@ -46,6 +50,11 @@ const fields: Field[] = [
         label: "Имя",
         type: "text",
         field: "name"
+    },
+    {
+        label: "Отделение",
+        type: "select",
+        field: "dep"
     }
 ];
 

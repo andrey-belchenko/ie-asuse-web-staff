@@ -2,7 +2,7 @@
     <div>
         <div v-for="field in fields" :key="field.field">
             <div>{{ field.label }}</div>
-            <component :is="getComponent(field.type)" v-model:value="form[field.field]" @change="updateForm" />
+            <component :is="getComponent(field.type)" @change="updateForm" v-model="form[field.field]"/>
         </div>
     </div>
 </template>
@@ -10,9 +10,12 @@
 <script setup lang="ts">
 //   :type="field.type === 'dateBox' ? 'date' : undefined"
 //       :value-change-event="field.type === 'textBox' ? 'keyup' : undefined"
+
+// v-model:value="form[field.field]" @change="updateForm"
 import { ref, watch } from 'vue';
 import FieldDate from './reports/fields/FieldDate.vue';
 import FieldText from './reports/fields/FieldText.vue';
+import FieldSelect from './reports/fields/FieldSelect.vue';
 
 interface Field {
     label: string;
@@ -39,6 +42,8 @@ const getComponent = (type: string) => {
             return FieldDate;
         case 'text':
             return FieldText;
+        case 'select':
+            return FieldSelect;
         default:
             return null;
     }
