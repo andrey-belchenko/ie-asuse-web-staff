@@ -1,7 +1,7 @@
-interface ParamEditorProps {}
+export interface EditorProps {}
 
-class ParamEditor {
-  constructor(props: ParamEditorProps) {}
+export class Editor {
+  constructor(props: EditorProps) {}
 }
 
 // interface AnimalProps {

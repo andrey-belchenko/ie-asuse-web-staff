@@ -1,3 +1,0 @@
-class ParamsForm {
-  fields: ParamField[] = [];
-}
