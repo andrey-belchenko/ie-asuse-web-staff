@@ -34,17 +34,17 @@ interface Field {
 const fields: Field[] = [
     {
         label: "Дата с",
-        type: "dateBox",
+        type: "date",
         field: "date1"
     },
     {
         label: "Дата по",
-        type: "dateBox",
+        type: "date",
         field: "date2"
     },
     {
         label: "Имя",
-        type: "textBox",
+        type: "text",
         field: "name"
     }
 ];

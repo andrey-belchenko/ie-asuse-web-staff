@@ -12,7 +12,7 @@
 //       :value-change-event="field.type === 'textBox' ? 'keyup' : undefined"
 import { ref, watch } from 'vue';
 import FieldDate from './reports/fields/FieldDate.vue';
-import DxTextBox from 'devextreme-vue/text-box';
+import FieldText from './reports/fields/FieldText.vue';
 
 interface Field {
     label: string;
@@ -35,10 +35,10 @@ watch(form, () => {
 
 const getComponent = (type: string) => {
     switch (type) {
-        case 'dateBox':
+        case 'date':
             return FieldDate;
-        case 'textBox':
-            return DxTextBox;
+        case 'text':
+            return FieldText;
         default:
             return null;
     }
