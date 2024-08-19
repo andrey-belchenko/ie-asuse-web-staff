@@ -3,11 +3,8 @@
         <DxItem :resizable="true" :collapsible="true" size="300px" text="Left Pane">
             <ReportList @report-select="handleReportSelect" />
         </DxItem>
-        <DxItem :resizable="true" :collapsible="true" size="300px" text="Left Pane">
-            <ParamsForm :fields="fields" :formConfig="selectedReport?.paramsForm" v-model:values="formValues" />
-        </DxItem>
-        <DxItem :resizable="true" :collapsible="true" text="Right Pane" min-size="70px">
-            {{ JSON.stringify(formValues) }}
+        <DxItem :resizable="true" :collapsible="true" min-size="70px">
+            <Report :report-config="selectedReport" />
         </DxItem>
     </DxSplitter>
 </template>
@@ -15,47 +12,19 @@
 <script setup lang="ts">
 import { DxSplitter, DxItem } from 'devextreme-vue/splitter';
 import ReportList from './ReportList.vue';
-import ParamsForm from './ParamsForm.vue';
+import Report from './Report.vue';
 import { ref } from 'vue';
 import type { NavigatorItem } from '../types/Folder';
-import { Report } from '../types/Report';
-const selectedReport = ref<Report>();
-const val = ref<Date>();
+import { Report as ReportConfig } from '../types/Report';
+const selectedReport = ref<ReportConfig>();
 const handleReportSelect = (item: NavigatorItem) => {
-    if (item instanceof Report) {
+    if (item instanceof ReportConfig) {
         selectedReport.value = item
+    }else{
+        selectedReport.value = undefined
     }
 }
 
-interface Field {
-    label: string;
-    type: string;
-    field: string;
-    options?: any;
-}
-
-const fields: Field[] = [
-    {
-        label: "Отделение",
-        type: "selectDep",
-        field: "dep"
-    },
-    {
-        label: "Дата с",
-        type: "date",
-        field: "date1"
-    },
-    {
-        label: "Дата по",
-        type: "date",
-        field: "date2"
-    },
-    {
-        label: "Имя",
-        type: "text",
-        field: "name"
-    }
-];
-
-const formValues = ref({});
 </script>
+
+

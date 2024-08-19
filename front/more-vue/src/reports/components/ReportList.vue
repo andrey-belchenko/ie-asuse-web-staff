@@ -1,7 +1,10 @@
 <template>
-    <DxTreeView id="treeview" :items="treeItems" :search-enabled="true" parent-id-expr="parentId" key-expr="id"
-        data-structure="plain" display-expr="title" @item-click="selectItem" :focus-state-enabled="false"
-        :select-by-click="true" selection-mode="single" />
+    <div class="main">
+        <DxTreeView id="treeview" :items="treeItems" :search-enabled="true" parent-id-expr="parentId" key-expr="id"
+            data-structure="plain" display-expr="title" @item-click="selectItem" :focus-state-enabled="false"
+            :select-by-click="true" selection-mode="single" />
+    </div>
+
 </template>
 <script setup lang="ts">
 import { ref } from 'vue';
@@ -17,3 +20,9 @@ function selectItem({ itemData }: { itemData: TreeItem }) {
 }
 
 </script>
+
+<style scoped>
+.main {
+    margin: 5px;
+}
+</style>
