@@ -6,19 +6,6 @@ import { DateEditor } from "../types/editors/system/DateEditor";
 import { TextEditor } from "../types/editors/system/TextEditor";
 import { SelectEditor } from "../types/editors/system/SelectEditor";
 
-export const getFieldComponent = (type: string) => {
-  switch (type) {
-    case "date":
-      return FieldDate;
-    case "text":
-      return FieldText;
-    case "select":
-      return FieldSelect;
-    default:
-      return null;
-  }
-};
-
 export const getEditorComponent = (editor: Editor) => {
   if (editor instanceof DateEditor) {
     return FieldDate;
