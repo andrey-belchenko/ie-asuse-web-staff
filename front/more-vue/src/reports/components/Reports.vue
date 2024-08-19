@@ -4,7 +4,6 @@
             <ReportList @report-select="handleReportSelect" />
         </DxItem>
         <DxItem :resizable="true" :collapsible="true" size="300px" text="Left Pane">
-            <div>{{ selectedReport?.title }}</div>
             <ParamsForm :fields="fields" :formConfig="selectedReport?.paramsForm" v-model:values="formValues" />
         </DxItem>
         <DxItem :resizable="true" :collapsible="true" text="Right Pane" min-size="70px">

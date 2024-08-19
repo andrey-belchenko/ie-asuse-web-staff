@@ -1,8 +1,7 @@
 <template>
-    <div v-if="formConfig">
-        <div>{{ JSON.stringify(values) }}</div>
+    <div v-if="formConfig" class="form">
         <div v-for="fieldConfig in formConfig.fields" :key="fieldConfig.name">
-            <div>{{ fieldConfig.label }}</div>
+            <div class="label">{{ fieldConfig.label }}</div>
             <component :is="getEditorComponent(fieldConfig.editor)" :configuration="fieldConfig.editor"
                 v-model="values[fieldConfig.name]" />
         </div>
@@ -29,3 +28,13 @@ watchEffect(() => {
 });
 
 </script>
+
+<style scoped>
+
+.form {
+    margin: 5px;
+}
+.label {
+    margin: 5px 0px 5px 0px;
+}
+</style>

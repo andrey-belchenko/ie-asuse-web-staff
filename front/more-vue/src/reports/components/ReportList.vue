@@ -1,6 +1,7 @@
 <template>
     <DxTreeView id="treeview" :items="treeItems" :search-enabled="true" parent-id-expr="parentId" key-expr="id"
-        data-structure="plain" display-expr="title" @item-click="selectItem" />
+        data-structure="plain" display-expr="title" @item-click="selectItem" :focus-state-enabled="false"
+        :select-by-click="true" selection-mode="single" />
 </template>
 <script setup lang="ts">
 import { ref } from 'vue';

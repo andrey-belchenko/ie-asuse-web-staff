@@ -1,10 +1,11 @@
 <template>
     <DxDropDownBox v-model:value="gridBoxValue" :defer-rendering="false" :show-clear-button="true"
-        :data-source="gridDataSource" :display-expr="configuration?.displayField" :value-expr="configuration?.keyField">
+        :drop-down-options="{ resizeEnabled: true }" :data-source="gridDataSource"
+        :display-expr="configuration?.displayField" :value-expr="configuration?.keyField">
         <template #content="{ data }">
-            <DxDataGrid :height="345" :data-source="gridDataSource" :columns="gridColumns" :hover-state-enabled="true"
+            <DxDataGrid :height="345" :data-source="gridDataSource" :columns="gridColumns" :hover-state-enabled="true" :column-auto-width="true"
                 v-model:selected-row-keys="gridBoxValue">
-                <DxSelection mode="multiple" />
+                <DxSelection mode="multiple" show-check-boxes-mode="always" />
                 <DxFilterRow :visible="true" />
                 <DxScrolling mode="virtual" />
             </DxDataGrid>

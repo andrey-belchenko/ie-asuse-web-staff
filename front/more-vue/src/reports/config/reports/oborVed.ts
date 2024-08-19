@@ -25,11 +25,6 @@ export default new Report({
         name: "date2",
         editor: new DateEditor({}),
       }),
-      new Field({
-        label: "Имя",
-        name: "name",
-        editor: new TextEditor({}),
-      }),
     ],
   }),
 });
