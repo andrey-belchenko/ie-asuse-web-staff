@@ -9,6 +9,7 @@ export type TreeItem = {
   parentId?: number;
   title: string;
   expanded: boolean;
+  icon?: string;
 };
 
 export function getTreeItems() {
@@ -21,7 +22,7 @@ export function getTreeItems() {
         id: id,
         data: item,
         title: item.title,
-        expanded:true
+        expanded: true,
       };
       if (parentId) {
         treeItem.parentId = parentId;
@@ -29,6 +30,8 @@ export function getTreeItems() {
       treeItems.push(treeItem);
       if (item instanceof Folder) {
         getNext(item.items, id);
+      } else {
+        treeItem.icon = "file";
       }
     }
   };
