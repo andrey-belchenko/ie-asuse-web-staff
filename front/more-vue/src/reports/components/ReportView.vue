@@ -1,6 +1,4 @@
 <template>
-       ReportView
-       {{ JSON.stringify(params ?? {}) }}
      <ReportTable :params="params" :report-config="reportConfig"/>
 </template>
 
