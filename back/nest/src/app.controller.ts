@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Body } from '@nestjs/common';
 import { AppService } from './app.service';
-import { execQuery } from './query';
+import { execQuery, putDataToTemp } from './mongo';
 import { execFunction } from './pgsql';
 
 @Controller()
@@ -13,14 +13,15 @@ export class AppController {
   }
 
   @Post('query')
-  async create(@Body() request: any):Promise<any> {
-    const data = await  execQuery(request)
+  async create(@Body() request: any): Promise<any> {
+    const data = await execQuery(request);
     return data;
   }
 
   @Post('call')
-  async call(@Body() request: any):Promise<any> {
-    const data = await  execFunction()
-    return data;
+  async call(@Body() request: any): Promise<void> {
+    const data = await execFunction(request.functionName, request.params);
+    putDataToTemp(data, request.tempTableName);
+    // return data;
   }
 }

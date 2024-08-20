@@ -17,8 +17,8 @@
             </DxSummary>
             <DxGroupPanel :visible="true" />
             <DxGrouping :auto-expand-all="true" />
-            <DxExport :enabled="true" :allow-export-selected-data="true" />
-            <DxSelection mode="multiple"/>
+            <DxExport :enabled="true" :allow-export-selected-data="false" />
+            <DxSelection mode="single"/>
         </DxDataGrid>
     </div>
 
@@ -40,8 +40,8 @@ import { saveAs } from 'file-saver-es';
 import { exportDataGrid } from 'devextreme/excel_exporter';
 
 const dataSource = ref(createDataSource({
-    database: "bav_demo",
-    collectionName: "Подстанции подг"
+    database: "bav_test_report",
+    collectionName: "report_temp"
 }));
 const props = defineProps({
     params: {
@@ -77,15 +77,15 @@ const onExporting = (e: DxDataGridTypes.ExportingEvent) => {
 
 <style scoped>
 .rep-table {
-    position: absolute;
+    position: relative;
     inset: 0;
-    /* height: 100px; */
+
 }
 
 .rep-table>.dx-widget {
     position: absolute;
     inset: 0;
-    /* height: 100px; */
+
 }
 
 .form {
