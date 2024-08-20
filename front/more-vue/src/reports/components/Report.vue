@@ -2,7 +2,7 @@
     <div class="main" v-if="reportConfig">
         <DxSplitter id="rep-splitter2">
             <DxItem :resizable="true" :collapsible="true" size="300px">
-               
+
                 <ParamsForm :formConfig="reportConfig?.paramsForm" v-model:values="formValues" />
                 <DxToolbar class="toolbar">
                     <TbItem :options="{
@@ -10,11 +10,11 @@
                         onClick: () => {
                             // notify('Save option has been clicked!');
                         },
-                    }" widget="dxButton"  />
+                    }" widget="dxButton" />
                 </DxToolbar>
             </DxItem>
             <DxItem :resizable="true" :collapsible="true" min-size="70px">
-                {{ JSON.stringify(formValues) }}
+                <ReportView :params="formValues" :report-config="reportConfig" />
             </DxItem>
         </DxSplitter>
 
@@ -28,6 +28,7 @@ import DxToolbar, { DxItem as TbItem } from 'devextreme-vue/toolbar';
 import ParamsForm from './ParamsForm.vue';
 import { ref } from 'vue';
 import { Report } from '../types/Report';
+import ReportView from './ReportView.vue';
 
 defineProps({
     reportConfig: {
