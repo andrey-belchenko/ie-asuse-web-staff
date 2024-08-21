@@ -1,6 +1,5 @@
 <template>
-    <div>
-        <DxButton id="button" :width="180" :height="40" :on-click="handleClick">
+        <DxButton id="button" :on-click="handleClick">
             <template #content>
                 <span>
                     <DxLoadIndicator :width="25" :height="25" :visible="loading ?? false" />
@@ -8,8 +7,6 @@
                 </span>
             </template>
         </DxButton>
-    </div>
-
 </template>
 <script setup lang="ts">
 import { DxButton } from 'devextreme-vue/button';
@@ -28,11 +25,11 @@ defineProps({
 });
 
 const emit = defineEmits<{
-    (event: 'click'): void
+    (event: 'press'): void
 }>()
 
 function handleClick() {
-    emit('click');
+    emit('press');
 }
 </script>
 <style></style>

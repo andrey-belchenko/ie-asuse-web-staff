@@ -6,7 +6,7 @@
                 <ParamsForm :formConfig="reportConfig?.paramsForm" v-model:values="formValues" />
                 <DxToolbar class="toolbar">
                     <TbItem>
-                        <ActionButton text="Сформировать отчет" @click="onSubmit" :loading="executing" />
+                        <ActionButton text="Сформировать отчет" @press="onSubmit" :loading="executing" :width="180" :height="30"  />
                     </TbItem>
                 </DxToolbar>
 
