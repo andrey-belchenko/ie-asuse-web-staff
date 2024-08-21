@@ -6,7 +6,7 @@
                 <ParamsForm :formConfig="reportConfig?.paramsForm" v-model:values="formValues" />
                 <DxToolbar class="toolbar">
                     <TbItem>
-                        <ActionButton text="Сформировать отчет" @press="onSubmit" />
+                        <ActionButton text="Сформировать отчет" @click="onSubmit" :loading="executing" />
                     </TbItem>
                 </DxToolbar>
 
@@ -41,10 +41,14 @@ defineProps({
 
 const formValues = ref({});
 const execId = ref<string>();
+const executing = ref(false);
 
 const onSubmit = () => {
     execId.value = uuidv4();
-    notify(execId.value);
+    executing.value = true;
+    setTimeout(() => {
+        executing.value = false;
+    }, 2000);
 }
 
 watch(formValues, (newVal, oldVal) => {
