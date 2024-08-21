@@ -3,7 +3,7 @@
         <DxDataGrid :data-source="dataSource" :show-borders="false" :focused-row-enabled="true"
             :default-focused-row-index="0" :column-auto-width="true" :column-hiding-enabled="false"
             :show-column-lines="true" :show-row-lines="true" :hover-state-enabled="true" :allow-column-resizing="true"
-            @exporting="onExporting" column-resizing-mode="widget">
+            @exporting="onExporting" column-resizing-mode="widget" @initialized="saveGridInstance">
             <DxRemoteOperations :filtering="true" :sorting="true" :group-paging="true" :summary="true" :grouping="true">
             </DxRemoteOperations>
             <DxPaging :enabled="false" />
@@ -39,10 +39,11 @@ import { saveAs } from 'file-saver-es';
 import { exportDataGrid } from 'devextreme/excel_exporter';
 import notify from 'devextreme/ui/notify';
 
-const dataSource = ref(createDataSource({
-    database: "bav_test_report",
-    collectionName: "report_temp"
-}));
+const dataSource = ref();
+// const dataSource = ref(createDataSource({
+//     database: "bav_test_report",
+//     collectionName: "report_temp"
+// }));
 const props = defineProps({
     params: {
         type: Object,
@@ -55,6 +56,16 @@ const props = defineProps({
         type: String,
     }
 });
+
+let dataGridInstance: any = null;
+
+const saveGridInstance = (e: any) => {
+    dataGridInstance = e.component;
+}
+
+const refresh = () => {
+    dataGridInstance.refresh();
+}
 
 const data = ref(null)
 const loading = ref(false)
@@ -79,12 +90,31 @@ const fetchData = async () => {
     // }
 }
 
-onMounted(fetchData)
+// onMounted(fetchData)
 
-// watch(() => props.execId, (newVal, oldVal) => {
-//     let funcPars = props.reportConfig.dataSource?.getFuncParams(props.params)
-//     notify(JSON.stringify(funcPars));
-// });
+watch(() => props.execId, (newVal, oldVal) => {
+    let funcPars = props.reportConfig.dataSource?.getFuncParams(props.params)
+    if (dataGridInstance) {
+        dataGridInstance.beginCustomLoading()
+        setTimeout(() => {
+            if (!dataSource.value) {
+                dataSource.value = createDataSource({
+                    database: "bav_test_report",
+                    collectionName: "report_temp"
+                })
+            } else {
+                dataGridInstance.refresh()
+            }
+            dataGridInstance.endCustomLoading()
+        }, 5000)
+    }
+    // notify(JSON.stringify(funcPars));
+});
+
+
+
+
+
 const onExporting = (e: DxDataGridTypes.ExportingEvent) => {
     const workbook = new Workbook();
     const worksheet = workbook.addWorksheet("Отчет");

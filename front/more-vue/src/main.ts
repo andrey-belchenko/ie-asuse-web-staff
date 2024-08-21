@@ -1,5 +1,5 @@
 import './assets/main.css'
-import 'devextreme/dist/css/dx.light.css';
+import 'devextreme/dist/css/dx.material.blue.light.compact.css';
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 

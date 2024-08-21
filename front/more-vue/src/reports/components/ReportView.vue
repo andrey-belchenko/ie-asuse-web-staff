@@ -1,5 +1,5 @@
 <template>
-     <ReportTable  :params="params" :report-config="reportConfig" :exec-id="execId" :key="execId"/>
+     <ReportTable  :params="params" :report-config="reportConfig" :exec-id="execId"/>
 </template>
 
 <script setup lang="ts">
