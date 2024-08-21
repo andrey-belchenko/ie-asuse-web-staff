@@ -4,18 +4,9 @@
             <DxItem :resizable="true" :collapsible="true" size="300px">
 
                 <ParamsForm :formConfig="reportConfig?.paramsForm" v-model:values="formValues" />
-
-                <DxToolbar class="toolbar">
-                    <TbItem :options="{
-                        text: 'Сформировать отчет',
-                        onClick: () => {
-                            execId = uuidv4();
-                        },
-                    }" widget="dxButton" />
-                </DxToolbar>
                 <DxToolbar class="toolbar">
                     <TbItem>
-                        <ActionButton text="Сформировать отчет" :on-click="onSubmit" />
+                        <ActionButton text="Сформировать отчет" @press="onSubmit" />
                     </TbItem>
                 </DxToolbar>
 
@@ -46,12 +37,15 @@ defineProps({
     }
 });
 
-const onSubmit = () => {
-    execId.value = uuidv4();
-}
+
 
 const formValues = ref({});
 const execId = ref<string>();
+
+const onSubmit = () => {
+    execId.value = uuidv4();
+    notify(execId.value);
+}
 
 watch(formValues, (newVal, oldVal) => {
     notify(JSON.stringify(newVal));

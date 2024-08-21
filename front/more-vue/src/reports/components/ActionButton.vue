@@ -28,13 +28,14 @@ const loadIndicatorVisible = ref(false);
 const buttonText = ref(props.text);
 
 const emit = defineEmits<{
-    (event: 'click'): void
+    (event: 'press'): void
 }>()
+
 
 function handleClick() {
     loadIndicatorVisible.value = true;
     buttonText.value = props.loadingText;
-    // emit('click');
+    emit('press');
     setTimeout(() => {
         loadIndicatorVisible.value = false;
         buttonText.value = props.text;
