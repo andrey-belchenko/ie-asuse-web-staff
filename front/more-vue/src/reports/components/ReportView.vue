@@ -1,5 +1,5 @@
 <template>
-     <ReportTable :params="params" :report-config="reportConfig"/>
+     <ReportTable  :params="params" :report-config="reportConfig" :exec-id="execId"/>
 </template>
 
 <script setup lang="ts">
@@ -12,11 +12,13 @@ import ReportTable from './ReportTable.vue';
 const props = defineProps({
     params: {
         type: Object,
-        required: false
     },
     reportConfig: {
         type: Object as () => Report,
         required: true
+    },
+    execId: {
+        type: String,
     }
 });
 

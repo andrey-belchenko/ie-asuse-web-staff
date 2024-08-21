@@ -4,7 +4,7 @@
             <ReportList @report-select="handleReportSelect" />
         </DxItem>
         <DxItem :resizable="true" :collapsible="true" min-size="70px">
-            <Report :report-config="selectedReport" />
+            <Report :report-config="selectedReport" :key="selectedReport?.title"/>
         </DxItem>
     </DxSplitter>
 </template>

@@ -1,10 +1,9 @@
 <template>
-    <div class="rep-table">
+    <div v-if="execId" class="rep-table">
         <DxDataGrid :data-source="dataSource" :show-borders="false" :focused-row-enabled="true"
             :default-focused-row-index="0" :column-auto-width="true" :column-hiding-enabled="false"
             :show-column-lines="true" :show-row-lines="true" :hover-state-enabled="true" :allow-column-resizing="true"
-            @exporting="onExporting"
-            column-resizing-mode="widget">
+            @exporting="onExporting" column-resizing-mode="widget">
             <DxRemoteOperations :filtering="true" :sorting="true" :group-paging="true" :summary="true" :grouping="true">
             </DxRemoteOperations>
             <DxPaging :enabled="false" />
@@ -18,14 +17,14 @@
             <DxGroupPanel :visible="true" />
             <DxGrouping :auto-expand-all="true" />
             <DxExport :enabled="true" :allow-export-selected-data="false" />
-            <DxSelection mode="single"/>
+            <DxSelection mode="single" />
         </DxDataGrid>
     </div>
 
 </template>
 
 <script setup lang="ts">
-import { reactive, ref, watchEffect } from 'vue';
+import { reactive, ref, watch, watchEffect } from 'vue';
 import { getEditorComponent } from './ParamsForm';
 import type { Form } from '../types/Form';
 import {
@@ -38,6 +37,7 @@ import { createDataSource } from "../../api-client/query/query.js";
 import { Workbook } from 'exceljs';
 import { saveAs } from 'file-saver-es';
 import { exportDataGrid } from 'devextreme/excel_exporter';
+import notify from 'devextreme/ui/notify';
 
 const dataSource = ref(createDataSource({
     database: "bav_test_report",
@@ -46,38 +46,39 @@ const dataSource = ref(createDataSource({
 const props = defineProps({
     params: {
         type: Object,
-        required: false
     },
     reportConfig: {
         type: Object as () => Report,
         required: true
+    },
+    execId: {
+        type: String,
     }
 });
 
-
-
-
-
+watch(() => props.execId, (newVal, oldVal) => {
+    notify(newVal);
+});
 const onExporting = (e: DxDataGridTypes.ExportingEvent) => {
-  const workbook = new Workbook();
-  const worksheet = workbook.addWorksheet("Отчет");
-  exportDataGrid({
-    component: e.component,
-    worksheet,
-    autoFilterEnabled: true,
-  }).then(() => {
-    workbook.xlsx.writeBuffer().then((buffer:any) => {
-      saveAs(new Blob([buffer], { type: 'application/octet-stream' }), `${props.reportConfig.title}.xlsx`);
+    const workbook = new Workbook();
+    const worksheet = workbook.addWorksheet("Отчет");
+    exportDataGrid({
+        component: e.component,
+        worksheet,
+        autoFilterEnabled: true,
+    }).then(() => {
+        workbook.xlsx.writeBuffer().then((buffer: any) => {
+            saveAs(new Blob([buffer], { type: 'application/octet-stream' }), `${props.reportConfig.title}.xlsx`);
+        });
     });
-  });
-  e.cancel = true;
+    e.cancel = true;
 };
 
 </script>
 
 <style scoped>
 .rep-table {
-    position: relative;
+    position: absolute;
     inset: 0;
 
 }

@@ -1,20 +1,22 @@
 <template>
-    <div class="main" v-if="reportConfig">
+    <div class="main" v-if="reportConfig" >
         <DxSplitter id="rep-splitter2">
             <DxItem :resizable="true" :collapsible="true" size="300px">
 
                 <ParamsForm :formConfig="reportConfig?.paramsForm" v-model:values="formValues" />
+               
                 <DxToolbar class="toolbar">
                     <TbItem :options="{
                         text: 'Сформировать отчет',
                         onClick: () => {
-                            // notify('Save option has been clicked!');
+                            let id = uuidv4();
+                            execId = id
                         },
                     }" widget="dxButton" />
                 </DxToolbar>
             </DxItem>
             <DxItem :resizable="true" :collapsible="true" min-size="70px">
-                <ReportView :params="formValues" :report-config="reportConfig" />
+                <ReportView :params="formValues" :report-config="reportConfig" :exec-id="execId" />
             </DxItem>
         </DxSplitter>
 
@@ -26,10 +28,11 @@
 import { DxSplitter, DxItem } from 'devextreme-vue/splitter';
 import DxToolbar, { DxItem as TbItem } from 'devextreme-vue/toolbar';
 import ParamsForm from './ParamsForm.vue';
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import { Report } from '../types/Report';
 import ReportView from './ReportView.vue';
-
+import notify from 'devextreme/ui/notify';
+import { v4 as uuidv4 } from 'uuid';
 defineProps({
     reportConfig: {
         type: Object as () => Report,
@@ -38,6 +41,9 @@ defineProps({
 });
 
 const formValues = ref({});
+const execId = ref<string>();
+
+
 </script>
 
 <style scoped>
