@@ -5,6 +5,7 @@
             <component :is="getEditorComponent(fieldConfig.editor)" :configuration="fieldConfig.editor"
                 v-model="values[fieldConfig.name]" />
         </div>
+        {{ JSON.stringify(values) }}
     </div>
 </template>
 

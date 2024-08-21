@@ -4,7 +4,7 @@ const query = require('devextreme-query-mongodb');
 const mongoDbUrl = 'mongodb://root:dpt-dev@dpt.dpt-dev.oastu.lan:27017';
 console.log(`mongoDbUrl: ${mongoDbUrl}`);
 
-function replaceDateStrings(obj: any) {
+export function replaceDateStrings(obj: any) {
   // Check if the input is an object
   if (typeof obj === 'object' && obj !== null) {
     // Iterate over each key-value pair in the object
