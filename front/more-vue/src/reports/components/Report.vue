@@ -9,8 +9,7 @@
                     <TbItem :options="{
                         text: 'Сформировать отчет',
                         onClick: () => {
-                            let id = uuidv4();
-                            execId = id
+                            execId = uuidv4();
                         },
                     }" widget="dxButton" />
                 </DxToolbar>
@@ -42,6 +41,10 @@ defineProps({
 
 const formValues = ref({});
 const execId = ref<string>();
+
+watch(formValues, (newVal, oldVal) => {
+    notify(JSON.stringify(newVal));
+});
 
 
 </script>

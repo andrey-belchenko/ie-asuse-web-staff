@@ -24,7 +24,7 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, ref, watch, watchEffect } from 'vue';
+import { onMounted, reactive, ref, watch, watchEffect } from 'vue';
 import { getEditorComponent } from './ParamsForm';
 import type { Form } from '../types/Form';
 import {
@@ -56,9 +56,35 @@ const props = defineProps({
     }
 });
 
-watch(() => props.execId, (newVal, oldVal) => {
-    notify(newVal);
-});
+const data = ref(null)
+const loading = ref(false)
+const error = ref(null)
+
+const fetchData = async () => {
+    if (props.execId) {
+        notify("FETCH")
+    }
+
+    // loading.value = true
+    // try {
+    //     const response = await fetch('https://api.example.com/data')
+    //     if (!response.ok) {
+    //         throw new Error('Failed to fetch data')
+    //     }
+    //     data.value = await response.json()
+    // } catch (err) {
+    //     error.value = err.message
+    // } finally {
+    //     loading.value = false
+    // }
+}
+
+onMounted(fetchData)
+
+// watch(() => props.execId, (newVal, oldVal) => {
+//     let funcPars = props.reportConfig.dataSource?.getFuncParams(props.params)
+//     notify(JSON.stringify(funcPars));
+// });
 const onExporting = (e: DxDataGridTypes.ExportingEvent) => {
     const workbook = new Workbook();
     const worksheet = workbook.addWorksheet("Отчет");
@@ -87,13 +113,5 @@ const onExporting = (e: DxDataGridTypes.ExportingEvent) => {
     position: absolute;
     inset: 0;
 
-}
-
-.form {
-    margin: 5px;
-}
-
-.label {
-    margin: 5px 0px 5px 0px;
 }
 </style>

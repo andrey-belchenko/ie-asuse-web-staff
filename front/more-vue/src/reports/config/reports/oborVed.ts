@@ -4,10 +4,10 @@ import { DateEditor } from "../../types/editors/system/DateEditor";
 import { Field } from "../../types/Field";
 import { Form } from "../../types/Form";
 import { Report } from "../../types/Report";
+import { DataSource } from "@/reports/types/DataSource";
 
 export default new Report({
   title: "Оборотная ведомость за энергию",
-  dataSource: "report_util.get_оборотная_ведомость",
   paramsForm: new Form({
     fields: [
       new Field({
@@ -26,5 +26,13 @@ export default new Report({
         editor: new DateEditor({}),
       }),
     ],
+  }),
+  dataSource: new DataSource({
+    functionName: "report_util.get_оборотная_ведомость",
+    paramsBinding: {
+      p_дата_с: "date1",
+      p_дата_по: "date2",
+      p_отделение_id: "dep",
+    },
   }),
 });

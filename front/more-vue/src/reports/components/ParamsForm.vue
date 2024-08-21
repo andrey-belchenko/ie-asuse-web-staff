@@ -25,16 +25,16 @@ const values = reactive<any>({});
 const emit = defineEmits(['update:values']);
 
 watchEffect(() => {
-    emit('update:values', values);
+    emit('update:values', { ...values });
 });
 
 </script>
 
 <style scoped>
-
 .form {
     margin: 5px;
 }
+
 .label {
     margin: 5px 0px 5px 0px;
 }

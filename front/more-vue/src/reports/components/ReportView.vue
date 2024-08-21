@@ -1,5 +1,5 @@
 <template>
-     <ReportTable  :params="params" :report-config="reportConfig" :exec-id="execId"/>
+     <ReportTable  :params="params" :report-config="reportConfig" :exec-id="execId" :key="execId"/>
 </template>
 
 <script setup lang="ts">
@@ -33,10 +33,4 @@ const props = defineProps({
 
 <style scoped>
 
-.form {
-    margin: 5px;
-}
-.label {
-    margin: 5px 0px 5px 0px;
-}
 </style>
