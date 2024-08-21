@@ -19,11 +19,13 @@ export default new Report({
         label: "Дата с",
         name: "date1",
         editor: new DateEditor({}),
+        defaultValue: () => new Date(2022, 2, 1),
       }),
       new Field({
         label: "Дата по",
         name: "date2",
         editor: new DateEditor({}),
+        defaultValue: () => new Date(2022, 2, 31),
       }),
     ],
   }),

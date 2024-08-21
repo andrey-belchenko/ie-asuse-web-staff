@@ -11,17 +11,17 @@
 
 <script setup lang="ts">
 import { reactive, watchEffect } from 'vue';
-import { getEditorComponent } from './ParamsForm';
+import { getDefaultValues, getEditorComponent } from './ParamsForm';
 import type { Form } from '../types/Form';
 
 const props = defineProps({
     formConfig: {
         type: Object as () => Form,
-        required: false
+        required: true
     }
 });
 
-const values = reactive<any>({});
+const values = reactive<any>(getDefaultValues(props.formConfig));
 const emit = defineEmits(['update:values']);
 
 watchEffect(() => {

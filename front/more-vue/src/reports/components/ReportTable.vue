@@ -33,7 +33,7 @@ import {
     type DxDataGridTypes,
 } from 'devextreme-vue/data-grid';
 import type { Report } from '../types/Report';
-import { createDataSource } from "../../api-client/query/query.js";
+import { createDataSource } from "../../api-client/query.js";
 import { Workbook } from 'exceljs';
 import { saveAs } from 'file-saver-es';
 import { exportDataGrid } from 'devextreme/excel_exporter';

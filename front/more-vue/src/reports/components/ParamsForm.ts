@@ -5,6 +5,7 @@ import type { Editor } from "../types/Editor";
 import { DateEditor } from "../types/editors/system/DateEditor";
 import { TextEditor } from "../types/editors/system/TextEditor";
 import { SelectEditor } from "../types/editors/system/SelectEditor";
+import type { Form } from "../types/Form";
 
 export const getEditorComponent = (editor: Editor) => {
   if (editor instanceof DateEditor) {
@@ -16,4 +17,14 @@ export const getEditorComponent = (editor: Editor) => {
   } else {
     throw new Error(`Invalid editor type: ${editor}`);
   }
+};
+
+export const getDefaultValues = (formConfig: Form) => {
+  const newValues: any = {};
+  for (let field of formConfig.fields) {
+    if (field.defaultValue) {
+      newValues[field.name] = field.defaultValue();
+    }
+  }
+  return newValues;
 };
