@@ -1,6 +1,6 @@
 import { Folder } from "../../types/Folder";
 import { Navigator } from "../../types/Navigator";
-import { Report } from "../../types/Report";
+import { RegularReport } from "../../types/reports/RegularReport";
 import { repBezuchet } from "../reports";
 import oborVed from "../reports/oborVed";
 import rep_25316 from "../reports/rep_25316";
@@ -16,7 +16,7 @@ export default new Navigator({
       title: "Оборотная ведомость",
       items: [
         oborVed,
-        new Report({ title: "Оборотная ведомость по полученным задаткам" }),
+        new RegularReport({ title: "Оборотная ведомость по полученным задаткам" }),
       ],
     }),
     new Folder({

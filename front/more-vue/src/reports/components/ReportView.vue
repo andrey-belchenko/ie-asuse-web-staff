@@ -3,7 +3,7 @@
 </template>
 
 <script setup lang="ts">
-import type { Report } from '../types/Report';
+import type { RegularReport } from '../types/reports/RegularReport';
 import ReportTable from './ReportTable.vue';
 import { defineExpose } from 'vue';
 import type { ReportViewComponent } from './ReportView';
@@ -14,7 +14,7 @@ const props = defineProps({
         type: Object,
     },
     reportConfig: {
-        type: Object as () => Report,
+        type: Object as () => RegularReport,
         required: true
     },
 });

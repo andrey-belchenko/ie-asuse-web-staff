@@ -2,11 +2,11 @@ import { DepSelectEditor } from "../../types/editors/custom/DepSelectEditor";
 import { DateEditor } from "../../types/editors/system/DateEditor";
 import { Field } from "../../types/Field";
 import { Form } from "../../types/Form";
-import { Report } from "../../types/Report";
+import { RegularReport } from "../../types/reports/RegularReport";
 import { DataSource } from "@/reports/types/DataSource";
 import { ReportTable } from "@/reports/types/views/ReportTable";
 
-export default new Report({
+export default new RegularReport({
   title: "Оборотная ведомость за энергию",
   paramsForm: new Form({
     fields: [

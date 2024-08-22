@@ -30,7 +30,7 @@ import {
     DxExport, DxSelection, DxGroupPanel, DxGrouping,
     type DxDataGridTypes,
 } from 'devextreme-vue/data-grid';
-import type { Report } from '../types/Report';
+import type { RegularReport } from '../types/reports/RegularReport';
 import { createDataSource } from "../../api-client/query.js";
 import { Workbook } from 'exceljs';
 import { saveAs } from 'file-saver-es';
@@ -45,7 +45,7 @@ const props = defineProps({
         type: Object,
     },
     reportConfig: {
-        type: Object as () => Report,
+        type: Object as () => RegularReport,
         required: true
     },
 });

@@ -15,7 +15,7 @@ import ReportList from './ReportList.vue';
 import Report from './Report.vue';
 import { ref } from 'vue';
 import type { NavigatorItem } from '../types/Folder';
-import { Report as ReportConfig } from '../types/Report';
+import { RegularReport as ReportConfig } from '../types/reports/RegularReport';
 const selectedReport = ref<ReportConfig>();
 const handleReportSelect = (item: NavigatorItem) => {
     if (item instanceof ReportConfig) {

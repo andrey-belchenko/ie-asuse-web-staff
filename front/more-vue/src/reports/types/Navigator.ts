@@ -1,7 +1,7 @@
 import type { DataSource } from "./DataSource";
 import type { NavigatorItem } from "./Folder";
 import type { Form } from "./Form";
-import { Report } from "./Report";
+import { RegularReport } from "./reports/RegularReport";
 
 export interface NavigatorProps {
   items: NavigatorItem[];

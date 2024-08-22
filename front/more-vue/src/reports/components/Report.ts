@@ -1,5 +1,5 @@
 import { execFunction } from "@/api-client/exec";
-import type { Report } from "../types/Report";
+import type { RegularReport } from "../types/reports/RegularReport";
 import notify from "devextreme/ui/notify";
 
 export interface RunReportResult {
@@ -7,7 +7,7 @@ export interface RunReportResult {
 }
 
 export async function runReport(
-  reportConfig: Report,
+  reportConfig: RegularReport,
   params: any
 ): Promise<RunReportResult> {
   const tempTableName = "report_temp";
