@@ -30,8 +30,8 @@ import {
     DxExport, DxSelection, DxGroupPanel, DxGrouping,
     type DxDataGridTypes,
 } from 'devextreme-vue/data-grid';
-import type { RegularReport } from '../types/reports/RegularReport';
-import { createDataSource } from "../../api-client/query.js";
+import type { RegularReport } from '../../types/reports/RegularReport';
+import { createDataSource } from "../../../api-client/query.js";
 import { Workbook } from 'exceljs';
 import { saveAs } from 'file-saver-es';
 import { exportDataGrid } from 'devextreme/excel_exporter';

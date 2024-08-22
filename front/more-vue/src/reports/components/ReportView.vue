@@ -4,7 +4,7 @@
 
 <script setup lang="ts">
 import type { RegularReport } from '../types/reports/RegularReport';
-import ReportTable from './ReportTable.vue';
+import ReportTable from './views/ReportTable.vue';
 import { defineExpose } from 'vue';
 import type { ReportViewComponent } from './ReportView';
 import notify from 'devextreme/ui/notify';
