@@ -11,17 +11,12 @@
                             :height="30" />
                     </TbItem>
                 </DxToolbar>
-                <DxToolbar class="toolbar">
-                    <TbItem>
-                        <ActionButton text="Refresh" @press="onRefresh" :width="180" :height="30" />
-                    </TbItem>
-                </DxToolbar>
             </DxItem>
             <DxItem :resizable="true" :collapsible="true" min-size="70px">
                 <!-- <ReportView v-if="ready" :params="formValues" :report-config="reportConfig" :exec-id="execId" /> -->
                 <div class="view-container">
-                    <ReportView ref="reportViewRef" v-if="ready" :params="formValues" :report-config="reportConfig" :key="execId"
-                        :exec-id="execId" />
+                    <ReportView ref="reportViewRef" v-if="ready" :params="formValues" :report-config="reportConfig"
+                        :key="execId" :exec-id="execId" />
                 </div>
             </DxItem>
         </DxSplitter>
@@ -66,15 +61,6 @@ const onSubmit = () => {
     }
     action();
 }
-
-const onRefresh = () => {
-    reportViewRef.value!.refresh()
-}
-
-// watch(formValues, (newVal, oldVal) => {
-//     notify(JSON.stringify(newVal));
-// });
-
 
 </script>
 

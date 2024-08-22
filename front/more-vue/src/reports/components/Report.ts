@@ -12,13 +12,10 @@ export async function runReport(
 ): Promise<RunReportResult> {
   const tempTableName = "report_temp";
   const funcPars = reportConfig.dataSource!.getFuncParams(params);
-
-  // notify(JSON.stringify(params))
   await execFunction({
     tempTableName: tempTableName,
     functionName: reportConfig.dataSource!.functionName,
     params: funcPars,
   });
-
   return { tempTableName: tempTableName };
 }

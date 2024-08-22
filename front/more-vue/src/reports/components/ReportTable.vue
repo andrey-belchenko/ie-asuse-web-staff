@@ -23,11 +23,9 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, reactive, ref, watch, watchEffect } from 'vue';
-import { getEditorComponent } from './ParamsForm';
-import type { Form } from '../types/Form';
+import { ref } from 'vue';
 import {
-    DxDataGrid, DxColumn, DxPaging, DxFilterRow, DxScrolling, DxHeaderFilter, DxFilterPanel, DxRemoteOperations, DxSummary, DxTotalItem,
+    DxDataGrid, DxPaging, DxFilterRow, DxScrolling, DxHeaderFilter, DxFilterPanel, DxRemoteOperations, DxSummary, DxTotalItem,
     DxExport, DxSelection, DxGroupPanel, DxGrouping,
     type DxDataGridTypes,
 } from 'devextreme-vue/data-grid';
@@ -36,16 +34,11 @@ import { createDataSource } from "../../api-client/query.js";
 import { Workbook } from 'exceljs';
 import { saveAs } from 'file-saver-es';
 import { exportDataGrid } from 'devextreme/excel_exporter';
-import notify from 'devextreme/ui/notify';
 
 const dataSource = ref(createDataSource({
     database: "bav_test_report",
     collectionName: "report_temp"
 }));
-// const dataSource = ref(createDataSource({
-//     database: "bav_test_report",
-//     collectionName: "report_temp"
-// }));
 const props = defineProps({
     params: {
         type: Object,
@@ -65,32 +58,6 @@ const saveGridInstance = (e: any) => {
 const refresh = () => {
     dataGridInstance.refresh();
 }
-
-
-
-
-
-// watch(() => props.execId, (newVal, oldVal) => {
-//     let funcPars = props.reportConfig.dataSource?.getFuncParams(props.params)
-//     if (dataGridInstance) {
-//         dataGridInstance.beginCustomLoading()
-//         setTimeout(() => {
-//             if (!dataSource.value) {
-//                 dataSource.value = createDataSource({
-//                     database: "bav_test_report",
-//                     collectionName: "report_temp"
-//                 })
-//             } else {
-//                 dataGridInstance.refresh()
-//             }
-//             dataGridInstance.endCustomLoading()
-//         }, 5000)
-//     }
-//     // notify(JSON.stringify(funcPars));
-// });
-
-
-
 
 
 const onExporting = (e: DxDataGridTypes.ExportingEvent) => {
