@@ -4,7 +4,10 @@
             <ReportList @report-select="handleReportSelect" />
         </DxItem>
         <DxItem :resizable="true" :collapsible="true" min-size="70px">
-            <Report :report-config="selectedReport" :key="selectedReport?.title"/>
+            <div class="report-container">
+                <Report v-if="selectedReport" :report-config="selectedReport" :key="selectedReport?.title" />
+            </div>
+
         </DxItem>
     </DxSplitter>
 </template>
@@ -12,19 +15,23 @@
 <script setup lang="ts">
 import { DxSplitter, DxItem } from 'devextreme-vue/splitter';
 import ReportList from './ReportList.vue';
-import Report from './reports/RegularReport.vue';
+import Report from './Report.vue';
 import { ref } from 'vue';
 import type { NavigatorItem } from '../types/Folder';
-import { RegularReport as ReportConfig } from '../types/reports/RegularReport';
+import { Report as ReportConfig } from '../types/Report';
 const selectedReport = ref<ReportConfig>();
 const handleReportSelect = (item: NavigatorItem) => {
     if (item instanceof ReportConfig) {
         selectedReport.value = item
-    }else{
+    } else {
         selectedReport.value = undefined
     }
 }
 
 </script>
-
-
+<style scoped>
+/* .report-container {
+    position: absolute;
+    inset: 0;
+} */
+</style>

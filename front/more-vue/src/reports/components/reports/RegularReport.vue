@@ -1,5 +1,5 @@
 <template>
-    <div class="main" v-if="reportConfig">
+    <div class="main">
         <DxSplitter id="rep-splitter2">
             <DxItem :resizable="true" :collapsible="true" size="300px">
 
@@ -40,7 +40,7 @@ import type { ReportViewComponent } from '../ReportView';
 const props = defineProps({
     reportConfig: {
         type: Object as () => RegularReport,
-        required: false
+        required: true
     }
 });
 
