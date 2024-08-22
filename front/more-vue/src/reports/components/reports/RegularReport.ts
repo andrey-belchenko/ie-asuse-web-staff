@@ -1,5 +1,5 @@
 import { execFunction } from "@/api-client/exec";
-import type { RegularReport } from "../types/reports/RegularReport";
+import type { RegularReport } from "../../types/reports/RegularReport";
 import notify from "devextreme/ui/notify";
 
 export interface RunReportResult {

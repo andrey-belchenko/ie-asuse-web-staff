@@ -28,15 +28,15 @@
 <script setup lang="ts">
 import { DxSplitter, DxItem } from 'devextreme-vue/splitter';
 import DxToolbar, { DxItem as TbItem } from 'devextreme-vue/toolbar';
-import ParamsForm from './ParamsForm.vue';
+import ParamsForm from '../ParamsForm.vue';
 import { ref, watch } from 'vue';
-import { RegularReport } from '../types/reports/RegularReport';
-import ReportView from './ReportView.vue';
+import { RegularReport } from '../../types/reports/RegularReport';
+import ReportView from '../ReportView.vue';
 import notify from 'devextreme/ui/notify';
 import { v4 as uuidv4 } from 'uuid';
-import ActionButton from './ActionButton.vue';
-import { runReport } from './Report';
-import type { ReportViewComponent } from './ReportView';
+import ActionButton from '../ActionButton.vue';
+import { runReport } from './RegularReport';
+import type { ReportViewComponent } from '../ReportView';
 const props = defineProps({
     reportConfig: {
         type: Object as () => RegularReport,

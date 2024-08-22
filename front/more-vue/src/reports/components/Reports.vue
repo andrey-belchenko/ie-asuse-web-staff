@@ -12,7 +12,7 @@
 <script setup lang="ts">
 import { DxSplitter, DxItem } from 'devextreme-vue/splitter';
 import ReportList from './ReportList.vue';
-import Report from './Report.vue';
+import Report from './reports/RegularReport.vue';
 import { ref } from 'vue';
 import type { NavigatorItem } from '../types/Folder';
 import { RegularReport as ReportConfig } from '../types/reports/RegularReport';
