@@ -11,10 +11,18 @@
                             :height="30" />
                     </TbItem>
                 </DxToolbar>
-
+                <DxToolbar class="toolbar">
+                    <TbItem>
+                        <ActionButton text="Refresh" @press="onRefresh" :width="180" :height="30" />
+                    </TbItem>
+                </DxToolbar>
             </DxItem>
             <DxItem :resizable="true" :collapsible="true" min-size="70px">
-                <ReportView :params="formValues" :report-config="reportConfig" :exec-id="execId" />
+                <!-- <ReportView v-if="ready" :params="formValues" :report-config="reportConfig" :exec-id="execId" /> -->
+                <div class="view-container">
+                    <ReportView ref="reportViewRef" v-if="ready" :params="formValues" :report-config="reportConfig" :key="execId"
+                        :exec-id="execId" />
+                </div>
             </DxItem>
         </DxSplitter>
 
@@ -33,6 +41,7 @@ import notify from 'devextreme/ui/notify';
 import { v4 as uuidv4 } from 'uuid';
 import ActionButton from './ActionButton.vue';
 import { runReport } from './Report';
+import type { ReportViewComponent } from './ReportView';
 const props = defineProps({
     reportConfig: {
         type: Object as () => Report,
@@ -41,22 +50,25 @@ const props = defineProps({
 });
 
 
-
+const reportViewRef = ref<ReportViewComponent>();
 const formValues = ref({});
 const execId = ref<string>();
 const executing = ref(false);
-
+const ready = ref(false);
 const onSubmit = () => {
     const action = async () => {
         execId.value = uuidv4();
         executing.value = true;
+        ready.value = false;
         await runReport(props.reportConfig!, formValues.value);
         executing.value = false;
+        ready.value = true;
     }
     action();
-    // setTimeout(() => {
+}
 
-    // }, 2000);
+const onRefresh = () => {
+    reportViewRef.value!.refresh()
 }
 
 // watch(formValues, (newVal, oldVal) => {
@@ -74,5 +86,10 @@ const onSubmit = () => {
 
 .toolbar {
     margin: 20px 0px;
+}
+
+.view-container {
+    position: absolute;
+    inset: 0;
 }
 </style>

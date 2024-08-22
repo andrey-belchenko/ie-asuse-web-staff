@@ -1,5 +1,5 @@
 <template>
-    <div v-if="execId" class="rep-table">
+    <div class="rep-table">
         <DxDataGrid :data-source="dataSource" :show-borders="false" :focused-row-enabled="true"
             :default-focused-row-index="0" :column-auto-width="true" :column-hiding-enabled="false"
             :show-column-lines="true" :show-row-lines="true" :hover-state-enabled="true" :allow-column-resizing="true"
@@ -20,7 +20,6 @@
             <DxSelection mode="single" />
         </DxDataGrid>
     </div>
-
 </template>
 
 <script setup lang="ts">
@@ -39,7 +38,10 @@ import { saveAs } from 'file-saver-es';
 import { exportDataGrid } from 'devextreme/excel_exporter';
 import notify from 'devextreme/ui/notify';
 
-const dataSource = ref();
+const dataSource = ref(createDataSource({
+    database: "bav_test_report",
+    collectionName: "report_temp"
+}));
 // const dataSource = ref(createDataSource({
 //     database: "bav_test_report",
 //     collectionName: "report_temp"
@@ -52,9 +54,6 @@ const props = defineProps({
         type: Object as () => Report,
         required: true
     },
-    execId: {
-        type: String,
-    }
 });
 
 let dataGridInstance: any = null;
@@ -67,49 +66,28 @@ const refresh = () => {
     dataGridInstance.refresh();
 }
 
-const data = ref(null)
-const loading = ref(false)
-const error = ref(null)
 
-const fetchData = async () => {
-    if (props.execId) {
-        notify("FETCH")
-    }
 
-    // loading.value = true
-    // try {
-    //     const response = await fetch('https://api.example.com/data')
-    //     if (!response.ok) {
-    //         throw new Error('Failed to fetch data')
-    //     }
-    //     data.value = await response.json()
-    // } catch (err) {
-    //     error.value = err.message
-    // } finally {
-    //     loading.value = false
-    // }
-}
 
-// onMounted(fetchData)
 
-watch(() => props.execId, (newVal, oldVal) => {
-    let funcPars = props.reportConfig.dataSource?.getFuncParams(props.params)
-    if (dataGridInstance) {
-        dataGridInstance.beginCustomLoading()
-        setTimeout(() => {
-            if (!dataSource.value) {
-                dataSource.value = createDataSource({
-                    database: "bav_test_report",
-                    collectionName: "report_temp"
-                })
-            } else {
-                dataGridInstance.refresh()
-            }
-            dataGridInstance.endCustomLoading()
-        }, 5000)
-    }
-    // notify(JSON.stringify(funcPars));
-});
+// watch(() => props.execId, (newVal, oldVal) => {
+//     let funcPars = props.reportConfig.dataSource?.getFuncParams(props.params)
+//     if (dataGridInstance) {
+//         dataGridInstance.beginCustomLoading()
+//         setTimeout(() => {
+//             if (!dataSource.value) {
+//                 dataSource.value = createDataSource({
+//                     database: "bav_test_report",
+//                     collectionName: "report_temp"
+//                 })
+//             } else {
+//                 dataGridInstance.refresh()
+//             }
+//             dataGridInstance.endCustomLoading()
+//         }, 5000)
+//     }
+//     // notify(JSON.stringify(funcPars));
+// });
 
 
 
@@ -142,6 +120,5 @@ const onExporting = (e: DxDataGridTypes.ExportingEvent) => {
 .rep-table>.dx-widget {
     position: absolute;
     inset: 0;
-
 }
 </style>

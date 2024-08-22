@@ -36,6 +36,5 @@ export function getTreeItems() {
     }
   };
   getNext(navigator.items);
-  debugger;
   return treeItems;
 }

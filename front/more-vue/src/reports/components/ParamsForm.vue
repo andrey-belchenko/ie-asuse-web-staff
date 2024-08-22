@@ -5,7 +5,7 @@
             <component :is="getEditorComponent(fieldConfig.editor)" :configuration="fieldConfig.editor"
                 v-model="values[fieldConfig.name]" />
         </div>
-        {{ JSON.stringify(values) }}
+        <!-- {{ JSON.stringify(values) }} -->
     </div>
 </template>
 
@@ -32,7 +32,7 @@ watchEffect(() => {
 
 <style scoped>
 .form {
-    margin: 5px;
+    margin: 10px 3px;
 }
 
 .label {

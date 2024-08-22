@@ -1,10 +1,13 @@
 <template>
-     <ReportTable  :params="params" :report-config="reportConfig" :exec-id="execId"/>
+    <ReportTable :params="params" :report-config="reportConfig" />
 </template>
 
 <script setup lang="ts">
 import type { Report } from '../types/Report';
 import ReportTable from './ReportTable.vue';
+import { defineExpose } from 'vue';
+import type { ReportViewComponent } from './ReportView';
+import notify from 'devextreme/ui/notify';
 
 const props = defineProps({
     params: {
@@ -14,9 +17,16 @@ const props = defineProps({
         type: Object as () => Report,
         required: true
     },
-    execId: {
-        type: String,
-    }
+});
+
+
+
+const refresh = () => {
+    notify("refresh")
+};
+
+defineExpose<ReportViewComponent>({
+    refresh
 });
 
 </script>

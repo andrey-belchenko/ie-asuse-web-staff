@@ -23,6 +23,6 @@ function selectItem({ itemData }: { itemData: TreeItem }) {
 
 <style scoped>
 .main {
-    margin: 5px;
+    margin: 0px 3px 0px 3px;
 }
 </style>

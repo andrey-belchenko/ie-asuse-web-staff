@@ -21,7 +21,7 @@ export class AppController {
   @Post('call')
   async call(@Body() request: any): Promise<void> {
     const data = await execFunction(request.functionName, request.params);
-    putDataToTemp(data, request.tempTableName);
+    await putDataToTemp(data, request.tempTableName);
     // return data;
   }
 }
