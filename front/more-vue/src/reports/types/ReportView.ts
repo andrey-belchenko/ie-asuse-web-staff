@@ -1,3 +1,5 @@
-import type { ReportTable } from "./views/ReportTable";
+export interface ReportViewProps {}
 
-export type ReportView =  ReportTable
+export class ReportView {
+  constructor(props: ReportViewProps) {}
+}

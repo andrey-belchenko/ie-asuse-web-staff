@@ -6,6 +6,7 @@ import { repBezuchet } from "../reports";
 import oborVed from "../reports/oborVed";
 import rep_25316 from "../reports/rep_25316";
 import rep_25316_dog from "../reports/rep_25316_dog";
+import oborVedFr from "../reports/oborVedFr";
 
 export default new Navigator({
   items: [
@@ -17,6 +18,7 @@ export default new Navigator({
       title: "Оборотная ведомость",
       items: [
         oborVed,
+        oborVedFr,
         new RegularReport({
           title: "Оборотная ведомость по полученным задаткам",
         }),

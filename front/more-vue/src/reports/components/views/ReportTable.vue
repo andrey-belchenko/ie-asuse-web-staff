@@ -3,7 +3,7 @@
         <DxDataGrid :data-source="dataSource" :show-borders="false" :focused-row-enabled="true"
             :default-focused-row-index="0" :column-auto-width="true" :column-hiding-enabled="false"
             :show-column-lines="true" :show-row-lines="true" :hover-state-enabled="true" :allow-column-resizing="true"
-            @exporting="onExporting" column-resizing-mode="widget" :columns="reportConfig.view.columns"
+            @exporting="onExporting" column-resizing-mode="widget" :columns="reportTableConfig.columns"
             @initialized="saveGridInstance">
             <DxRemoteOperations :filtering="true" :sorting="true" :group-paging="true" :summary="true" :grouping="true">
             </DxRemoteOperations>
@@ -35,6 +35,7 @@ import { createDataSource } from "../../../api-client/query.js";
 import { Workbook } from 'exceljs';
 import { saveAs } from 'file-saver-es';
 import { exportDataGrid } from 'devextreme/excel_exporter';
+import type { ReportTable } from '@/reports/types/views/ReportTable';
 
 const dataSource = ref(createDataSource({
     database: "bav_test_report",
@@ -51,6 +52,8 @@ const props = defineProps({
 });
 
 let dataGridInstance: any = null;
+
+const reportTableConfig = ref(props.reportConfig.view as ReportTable);
 
 const saveGridInstance = (e: any) => {
     dataGridInstance = e.component;
