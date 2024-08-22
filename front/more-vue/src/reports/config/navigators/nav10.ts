@@ -1,3 +1,4 @@
+import { GeneratorReport } from "@/reports/types/reports/GeneratorReport";
 import { Folder } from "../../types/Folder";
 import { Navigator } from "../../types/Navigator";
 import { RegularReport } from "../../types/reports/RegularReport";
@@ -16,12 +17,18 @@ export default new Navigator({
       title: "Оборотная ведомость",
       items: [
         oborVed,
-        new RegularReport({ title: "Оборотная ведомость по полученным задаткам" }),
+        new RegularReport({
+          title: "Оборотная ведомость по полученным задаткам",
+        }),
       ],
     }),
     new Folder({
       title: "Отчеты по оплатам",
       items: [rep_25316, rep_25316_dog],
+    }),
+    new Folder({
+      title: "Отчеты генератора отчетов",
+      items: [new GeneratorReport({ title: "Отчет 1", reportId: "1" })],
     }),
   ],
 });
