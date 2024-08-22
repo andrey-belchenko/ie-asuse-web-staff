@@ -1,10 +1,10 @@
-import { TextEditor } from "@/reports/types/editors/system/TextEditor";
 import { DepSelectEditor } from "../../types/editors/custom/DepSelectEditor";
 import { DateEditor } from "../../types/editors/system/DateEditor";
 import { Field } from "../../types/Field";
 import { Form } from "../../types/Form";
 import { Report } from "../../types/Report";
 import { DataSource } from "@/reports/types/DataSource";
+import { ReportTable } from "@/reports/types/views/ReportTable";
 
 export default new Report({
   title: "Оборотная ведомость за энергию",
@@ -36,5 +36,20 @@ export default new Report({
       p_дата_по: "date2",
       p_отделение_id: "dep",
     },
+  }),
+  view: new ReportTable({
+    columns: [
+      {
+        caption: "Договор",
+        dataField: "договор_id",
+      },
+      {
+        caption: "Долг на начало",
+        columns: [
+          { caption: "Дебет", dataField: "долг_деб_нач" },
+          { caption: "Кредит", dataField: "долг_кред_нач" },
+        ],
+      },
+    ],
   }),
 });

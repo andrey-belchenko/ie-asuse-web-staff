@@ -3,7 +3,8 @@
         <DxDataGrid :data-source="dataSource" :show-borders="false" :focused-row-enabled="true"
             :default-focused-row-index="0" :column-auto-width="true" :column-hiding-enabled="false"
             :show-column-lines="true" :show-row-lines="true" :hover-state-enabled="true" :allow-column-resizing="true"
-            @exporting="onExporting" column-resizing-mode="widget" @initialized="saveGridInstance">
+            @exporting="onExporting" column-resizing-mode="widget" :columns="reportConfig.view.columns"
+            @initialized="saveGridInstance">
             <DxRemoteOperations :filtering="true" :sorting="true" :group-paging="true" :summary="true" :grouping="true">
             </DxRemoteOperations>
             <DxPaging :enabled="false" />
@@ -77,7 +78,7 @@ const onExporting = (e: DxDataGridTypes.ExportingEvent) => {
 
 </script>
 
-<style scoped>
+<style>
 .rep-table {
     position: absolute;
     inset: 0;
@@ -88,4 +89,12 @@ const onExporting = (e: DxDataGridTypes.ExportingEvent) => {
     position: absolute;
     inset: 0;
 }
+
+.rep-table td[role=columnheader] {  
+  text-align: center!important  
+}
+
+/* .dx-datagrid-headers.dx-header-multi-row .dx-datagrid-content .dx-datagrid-table .dx-row.dx-header-row>td:last-child {
+    text-align: center !important;
+} */
 </style>
