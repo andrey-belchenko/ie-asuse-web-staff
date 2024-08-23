@@ -40,8 +40,12 @@ export default new RegularReport({
   view: new ReportTable({
     columns: [
       {
+        caption: "Отделение",
+        dataField: "отделение_наименование",
+      },
+      {
         caption: "Договор",
-        dataField: "договор_id",
+        dataField: "договор_номер",
       },
       {
         caption: "Долг на начало",
@@ -50,6 +54,93 @@ export default new RegularReport({
           { caption: "Кредит", dataField: "долг_кред_нач" },
         ],
       },
+      {
+        caption: "Обороты",
+        columns: [
+          { caption: "Начислено", dataField: "начисл" },
+          { caption: "Оплачено", dataField: "погаш_оплатой" },
+          { caption: "Погашение за счет кредита", dataField: "погаш_из_кред" },
+          { caption: "Оплата аванса", dataField: "опл_кред_аванс" },
+          { caption: "Переплата", dataField: "опл_кред_перепл" },
+        ],
+      },
+      {
+        caption: "Долг на конец",
+        columns: [
+          { caption: "Дебет", dataField: "долг_деб_кон" },
+          { caption: "Кредит", dataField: "долг_кред_кон" },
+        ],
+      },
     ],
+
+    // totalItems: [
+    //   {
+    //     column: "отделение_наименование",
+    //     summaryType: "count",
+    //   },
+    //   {
+    //     column: "долг_деб_нач",
+    //     summaryType: "sum",
+    //   },
+    //   {
+    //     column: "долг_кред_нач",
+    //     summaryType: "sum",
+    //   },
+    //   {
+    //     column: "начисл",
+    //     summaryType: "sum",
+    //   },
+    //   {
+    //     column: "погаш_оплатой",
+    //     summaryType: "sum",
+    //   },
+    //   {
+    //     column: "погаш_из_кред",
+    //     summaryType: "sum",
+    //   },
+    //   {
+    //     column: "опл_кред_аванс",
+    //     summaryType: "sum",
+    //   },
+    //   {
+    //     column: "опл_кред_перепл",
+    //     summaryType: "sum",
+    //   },
+    //   {
+    //     column: "долг_деб_кон",
+    //     summaryType: "sum",
+    //   },
+    //   {
+    //     column: "долг_кред_кон",
+    //     summaryType: "sum",
+    //   },
+    // ],
+    summary: {
+      totalItems: [
+        {
+          column: "отделение_наименование",
+          summaryType: "count",
+        },
+        ...[
+          "долг_деб_нач",
+          "долг_кред_нач",
+          "начисл",
+          "погаш_оплатой",
+          "погаш_из_кред",
+          "опл_кред_аванс",
+          "опл_кред_перепл",
+          "долг_деб_кон",
+          "долг_кред_кон",
+        ].map((it) => ({
+          column: it,
+          summaryType: "sum",
+          valueFormat: {
+            type: "fixedPoint",
+            precision: 2,
+          },
+          displayFormat: "{0}",
+        })),
+      ],
+    },
   }),
 });

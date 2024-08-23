@@ -161,4 +161,4 @@ x2 as (
         left join report_dm.dim_отделение o on d.отделение_id = o.отделение_id
 )
 select *
-from x1
+from x2

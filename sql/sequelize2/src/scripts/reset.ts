@@ -32,8 +32,8 @@ const run = async () => {
     // fill_фин_начисл,
     // fill_фин_опл
     // get_лицевая_карта
-    // ...report_util
-    dim_отделение
+    ...report_util
+    // dim_отделение
   ]);
   console.log("done");
 };

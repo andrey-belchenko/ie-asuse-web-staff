@@ -3,7 +3,7 @@
         <DxDataGrid :data-source="dataSource" :show-borders="false" :focused-row-enabled="true"
             :default-focused-row-index="0" :column-auto-width="true" :column-hiding-enabled="false"
             :show-column-lines="true" :show-row-lines="true" :hover-state-enabled="true" :allow-column-resizing="true"
-            @exporting="onExporting" column-resizing-mode="widget" :columns="reportTableConfig.columns"
+            @exporting="onExporting" column-resizing-mode="widget" :columns="reportTableConfig.columns" :summary="reportTableConfig.summary"
             @initialized="saveGridInstance">
             <DxRemoteOperations :filtering="true" :sorting="true" :group-paging="true" :summary="true" :grouping="true">
             </DxRemoteOperations>
@@ -12,9 +12,6 @@
             <DxScrolling :useNative="false" mode="virtual" />
             <DxHeaderFilter :visible="true" />
             <DxFilterPanel :visible="true" />
-            <DxSummary>
-                <DxTotalItem column="_id" summary-type="count" />
-            </DxSummary>
             <DxGroupPanel :visible="true" />
             <DxGrouping :auto-expand-all="true" />
             <DxExport :enabled="true" :allow-export-selected-data="false" />

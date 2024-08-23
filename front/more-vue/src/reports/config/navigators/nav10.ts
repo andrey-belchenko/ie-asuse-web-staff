@@ -7,12 +7,13 @@ import oborVed from "../reports/oborVed";
 import rep_25316 from "../reports/rep_25316";
 import rep_25316_dog from "../reports/rep_25316_dog";
 import oborVedFr from "../reports/oborVedFr";
+import { getGeneratorReports } from "../reports/externalReports";
 
 export default new Navigator({
   items: [
     new Folder({
       title: "Отчеты по безучетному потреблению",
-      items: [...repBezuchet],
+      items: repBezuchet,
     }),
     new Folder({
       title: "Оборотная ведомость",
@@ -30,7 +31,7 @@ export default new Navigator({
     }),
     new Folder({
       title: "Отчеты генератора отчетов",
-      items: [new GeneratorReport({ title: "Отчет 1", reportId: "1" })],
+      items: getGeneratorReports(),
     }),
   ],
 });

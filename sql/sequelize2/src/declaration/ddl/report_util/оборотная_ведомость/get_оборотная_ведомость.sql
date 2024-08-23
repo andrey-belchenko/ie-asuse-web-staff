@@ -4,17 +4,22 @@ CREATE OR REPLACE FUNCTION report_util.get_оборотная_ведомость
         p_отделение_id integer []
     ) RETURNS TABLE (
         договор_id int4 ,
-        долг_деб_нач numeric ,
-        долг_кред_нач numeric ,
-        начисл numeric ,
-        погаш_оплатой numeric ,
-        погаш_из_кред numeric ,
-        опл_кред_перепл numeric ,
-        опл_кред_аванс numeric ,
-        долг_деб_кон numeric ,
-        долг_кред_кон numeric 
+	отделение_наименование varchar ,
+	договор_номер varchar ,
+	долг_деб_нач numeric ,
+	долг_кред_нач numeric ,
+	начисл numeric ,
+	погаш_оплатой numeric ,
+	погаш_из_кред numeric ,
+	опл_кред_перепл numeric ,
+	опл_кред_аванс numeric ,
+	долг_деб_кон numeric ,
+	долг_кред_кон numeric 
     ) LANGUAGE plpgsql AS $$ BEGIN 
-    CREATE TEMP TABLE result ON COMMIT DROP AS with p as (
+    
+    
+    RETURN QUERY 
+    with p as (
         select p_дата_с дата_с,
             p_дата_по дата_по
     ),
@@ -35,7 +40,7 @@ CREATE OR REPLACE FUNCTION report_util.get_оборотная_ведомость
             join p on a.дата between p.дата_с and p.дата_по
             left join report_dm.dim_договор d on d.договор_id = a.договор_id
             join p_отд o on d.отделение_id = o.отделение_id
-        where a.вид_реал_id = 2 
+        where a.вид_реал_id = 2
     ),
     -- 1.2 факты по оплате счетов
     op as (
@@ -46,7 +51,7 @@ CREATE OR REPLACE FUNCTION report_util.get_оборотная_ведомость
             join p on a.дата between p.дата_с and p.дата_по
             left join report_dm.dim_договор d on d.договор_id = a.договор_id
             join p_отд o on d.отделение_id = o.отделение_id
-        where a.вид_реал_id = 2 
+        where a.вид_реал_id = 2
     ),
     -- 1.3 факты обороты по кредиту
     ok as (
@@ -57,7 +62,7 @@ CREATE OR REPLACE FUNCTION report_util.get_оборотная_ведомость
             join p on a.дата between p.дата_с and p.дата_по
             left join report_dm.dim_договор d on d.договор_id = a.договор_id
             join p_отд o on d.отделение_id = o.отделение_id
-        where a.вид_реал_id = 2 
+        where a.вид_реал_id = 2
     ),
     -- 1.4 факты сальдо на начало
     sn as (
@@ -68,7 +73,7 @@ CREATE OR REPLACE FUNCTION report_util.get_оборотная_ведомость
             join p on p.дата_с between a.акт_с and a.акт_по
             left join report_dm.dim_договор d on d.договор_id = a.договор_id
             join p_отд o on d.отделение_id = o.отделение_id
-        where a.вид_реал_id = 2 
+        where a.вид_реал_id = 2
     ),
     -- 1.5 факты сальдо на конец
     sk as (
@@ -79,7 +84,7 @@ CREATE OR REPLACE FUNCTION report_util.get_оборотная_ведомость
             join p on p.дата_по between a.акт_с and a.акт_по
             left join report_dm.dim_договор d on d.договор_id = a.договор_id
             join p_отд o on d.отделение_id = o.отделение_id
-        where a.вид_реал_id = 2 
+        where a.вид_реал_id = 2
     ),
     -- 2. ОБЪЕДИНЕНИЕ ВСЕХ СОБРАННЫХ ФАКТОВ В ОБЩУЮ ТАБЛИЦУ
     x as (
@@ -177,9 +182,6 @@ CREATE OR REPLACE FUNCTION report_util.get_оборотная_ведомость
             left join report_dm.dim_отделение o on d.отделение_id = o.отделение_id
     )
 select *
-from x1;
-RETURN QUERY
-select *
-from result;
+from x2;
 END;
 $$;
