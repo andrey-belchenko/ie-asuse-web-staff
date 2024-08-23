@@ -2,9 +2,9 @@ import FieldDate from "./editors/DateEditor.vue";
 import FieldText from "./editors/TextEditor.vue";
 import FieldSelect from "./editors/SelectEditor.vue";
 import type { Editor } from "../types/Editor";
-import { DateEditor } from "../types/editors/system/DateEditor";
-import { TextEditor } from "../types/editors/system/TextEditor";
-import { SelectEditor } from "../types/editors/system/SelectEditor";
+import { DateEditor } from "../types/editors/DateEditor";
+import { TextEditor } from "../types/editors/TextEditor";
+import { SelectEditor } from "../types/editors/SelectEditor";
 import type { Form } from "../types/Form";
 
 export const getEditorComponent = (editor: Editor) => {

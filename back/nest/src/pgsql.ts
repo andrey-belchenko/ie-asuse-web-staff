@@ -33,7 +33,6 @@ const pool = new Pool({
 export const execFunction = async (functionName: string, params: any) => {
   const client = await pool.connect();
   try {
-    let v = [{ qq: '1' }];
     params = replaceDateStrings(params);
     let paramsStr = '';
     let q = '';
@@ -53,7 +52,18 @@ export const execFunction = async (functionName: string, params: any) => {
     const query = `select * from ${functionName}(${paramsStr})`;
     const res = await client.query(query, paramsArray);
     return res.rows as any[];
-    return v;
+  } finally {
+    client.release();
+  }
+};
+
+
+export const queryTable = async (tableName: string) => {
+  const client = await pool.connect();
+  try {
+    const query = `select * from ${tableName}`;
+    const res = await client.query(query);
+    return res.rows as any[];
   } finally {
     client.release();
   }

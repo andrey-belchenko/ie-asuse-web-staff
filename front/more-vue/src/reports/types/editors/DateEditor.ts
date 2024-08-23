@@ -1,4 +1,4 @@
-import { Editor, type EditorProps } from "../../Editor";
+import { Editor, type EditorProps } from "../Editor";
 
 export interface DateEditorProps extends EditorProps {}
 

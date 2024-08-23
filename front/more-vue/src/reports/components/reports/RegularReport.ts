@@ -1,4 +1,4 @@
-import { execFunction } from "@/api-client/exec";
+import { execFunction, queryTable } from "@/api-client/pg";
 import type { RegularReport } from "../../types/reports/RegularReport";
 import notify from "devextreme/ui/notify";
 

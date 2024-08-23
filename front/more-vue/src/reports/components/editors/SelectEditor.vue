@@ -3,8 +3,8 @@
         :drop-down-options="{ resizeEnabled: true }" :data-source="gridDataSource"
         :display-expr="configuration?.displayField" :value-expr="configuration?.keyField">
         <template #content="{ data }">
-            <DxDataGrid :height="345" :data-source="gridDataSource" :columns="gridColumns" :hover-state-enabled="true" :column-auto-width="true"
-                v-model:selected-row-keys="gridBoxValue">
+            <DxDataGrid :height="345" :data-source="gridDataSource" :columns="gridColumns" :hover-state-enabled="true"
+                :column-auto-width="true" v-model:selected-row-keys="gridBoxValue">
                 <DxSelection mode="multiple" show-check-boxes-mode="always" />
                 <DxFilterRow :visible="true" />
                 <DxScrolling mode="virtual" />
@@ -19,9 +19,8 @@ import {
     DxDataGrid, DxSelection, DxPaging, DxFilterRow, DxScrolling,
 } from 'devextreme-vue/data-grid';
 import CustomStore from 'devextreme/data/custom_store';
-import type { SelectEditor } from '@/reports/types/editors/system/SelectEditor';
-
-
+import type { SelectEditor as SelectEditorConfig } from '@/reports/types/editors/SelectEditor';
+import { queryTable } from '@/api-client/pg';
 
 const props = defineProps({
     modelValue: {
@@ -29,14 +28,14 @@ const props = defineProps({
         required: false
     },
     configuration: {
-        type: Object as () => SelectEditor,
+        type: Object as () => SelectEditorConfig,
         required: false
     }
 });
 
 const gridColumns = ref(props.configuration?.columns);
 
-const gridDataSource = makeAsyncDataSource(props.configuration?.data, props.configuration?.keyField);
+const gridDataSource = makeDataSource(props.configuration!);
 
 const gridBoxValue = ref(props.modelValue);
 
@@ -46,12 +45,12 @@ watch(gridBoxValue, (newValue, oldValue) => {
 });
 
 
-function makeAsyncDataSource(data: any[] | undefined, idField?: string) {
+function makeDataSource(config: SelectEditorConfig) {
     return new CustomStore({
         loadMode: 'raw',
-        key: idField,
+        key: config.keyField,
         load() {
-            return data ?? [];
+            return config.data ?? queryTable({ tableName: config.tableName! })
         },
     });
 }

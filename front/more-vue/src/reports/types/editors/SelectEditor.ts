@@ -1,8 +1,9 @@
-import { Editor, type EditorProps } from "../../Editor";
+import { Editor, type EditorProps } from "../Editor";
 
 export interface SelectEditorProps extends EditorProps {
   columns: string[];
   data?: any[];
+  tableName?: string;
   keyField: string;
   displayField: string;
 }
@@ -10,6 +11,7 @@ export interface SelectEditorProps extends EditorProps {
 export class SelectEditor extends Editor {
   columns: string[];
   data?: any[];
+  tableName?: string;
   keyField: string;
   displayField: string;
   constructor(props: SelectEditorProps) {
@@ -18,5 +20,6 @@ export class SelectEditor extends Editor {
     this.data = props.data;
     this.keyField = props.keyField;
     this.displayField = props.displayField;
+    this.tableName= props.tableName;
   }
 }
