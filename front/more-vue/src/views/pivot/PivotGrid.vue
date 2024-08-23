@@ -1,8 +1,5 @@
 <template>
-    <div>
-        <div class="long-title">
-            <h3>Sales Amount by Region</h3>
-        </div>
+    <div class="rep-table">
         <DxPivotGrid id="sales" :allow-sorting-by-summary="true" :allow-sorting="true" :allow-filtering="true"
             :allow-expand-all="true" :height="440" :show-borders="true" :data-source="dataSource">
           
@@ -68,22 +65,23 @@ const dataSource = new PivotGridDataSource({
 
 
 </script>
-<style scoped>
-#sales {
-    margin-top: 80px;
+<style>
+.rep-table {
+    position: absolute;
+    inset: 0;
+
 }
 
-.long-title h3 {
-    font-family:
-        "Segoe UI Light",
-        "Helvetica Neue Light",
-        "Segoe UI",
-        "Helvetica Neue",
-        "Trebuchet MS",
-        Verdana;
-    font-weight: 200;
-    font-size: 28px;
-    text-align: center;
-    margin-bottom: 20px;
+.rep-table>.dx-widget {
+    position: absolute;
+    inset: 0;
 }
+
+.rep-table td[role=columnheader] {  
+  text-align: center!important  
+}
+
+/* .dx-datagrid-headers.dx-header-multi-row .dx-datagrid-content .dx-datagrid-table .dx-row.dx-header-row>td:last-child {
+    text-align: center !important;
+} */
 </style>

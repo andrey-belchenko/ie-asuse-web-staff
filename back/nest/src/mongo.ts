@@ -40,7 +40,7 @@ export async function execQuery(req: any): Promise<any> {
     // console.log(JSON.stringify({ loadOptions: req.pipeline }));
     results = await query(collection, loadOptions);
     console.log('Response');
-    // console.log(JSON.stringify(results));
+    console.log(JSON.stringify(results));
   });
   return results;
 }
