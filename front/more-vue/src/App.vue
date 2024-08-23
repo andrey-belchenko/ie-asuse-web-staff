@@ -1,6 +1,12 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+import { onMounted } from 'vue';
+import messages from "devextreme/localization/messages/ru.json";
+import { locale, loadMessages } from "devextreme/localization";
+onMounted(() => {
+  loadMessages(messages);
+  locale(navigator.language);
+})
 </script>
 
 <template>
@@ -19,14 +25,16 @@ import HelloWorld from './components/HelloWorld.vue'
   <div class="main">
     <RouterView />
   </div>
- 
+
 </template>
+
 
 <style scoped>
 .main {
   position: absolute;
   inset: 0;
 }
+
 header {
   line-height: 1.5;
   max-height: 100vh;
