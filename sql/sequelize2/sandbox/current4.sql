@@ -1,1 +1,0 @@
-select count(*) from report_stg.фин_закрытие_кред
