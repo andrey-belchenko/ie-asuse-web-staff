@@ -1,17 +1,17 @@
 ﻿<template>
- <div>
- <div id="app">
- <select v-model="report">
- <option>Matrix</option>
- <option>Master-Detail</option>
- <option>Barcode</option>
- </select>
- </div>
- <button v-on:click="Clicked">Show Report</button>
- <div v-if="show">
- <iframe :id="report" height="1000" width="1000" :src="url"></iframe>
- </div>
- </div>
-</template>
- 
+    <div>
+        <div id="app">
+            <select v-model="report">
+                <option>Matrix</option>
+                <option>Master-Detail</option>
+                <option>Barcode</option>
+            </select>
+        </div>
+        <button v-on:click="Clicked">Show Report</button>
+        <div v-if="show">
+            <iframe :id="report" height="1000" width="1000" :src="url"></iframe>
+        </div>
+    </div>
+</template>WebApplication1
+
 <script src="./report.ts"></script>
