@@ -13,6 +13,7 @@ export default defineConfig({
     lib: {
       entry: fileURLToPath(new URL('./src/index.ts', import.meta.url)),
       name: 'VueNpm',
+      formats: ['es'],
       fileName: format => `vue-npm.${format}.js`,
     },
     rollupOptions: {

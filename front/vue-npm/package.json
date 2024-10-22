@@ -1,8 +1,8 @@
 {
   "name": "il-reports",
-  "version": "0.0.0",
+  "version": "0.0.4",
   "type": "module",
-  "main": "dist/vue-npm.umd.js",
+  "main": "dist/vue-npm.es.js",
   "files": [
     "dist",
     "src"
@@ -17,7 +17,7 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
-    "vue": "^3.5.12"
+    "vue": "^3.4.26"
   },
   "devDependencies": {
     "@tsconfig/node20": "^20.1.4",
