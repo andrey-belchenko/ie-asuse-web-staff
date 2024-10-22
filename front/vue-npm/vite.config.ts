@@ -11,13 +11,4 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
   },
-  // build: {
-  //   lib: {
-  //     entry: 'src/index.ts',
-  //     name: 'il-reports',
-  //   },
-  //   rollupOptions: {
-  //     external: ['vue'],
-  //   },
-  // },
 })
