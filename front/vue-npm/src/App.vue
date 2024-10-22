@@ -1,4 +1,13 @@
 <script setup lang="ts">
+import ParentComponent from './components/ParentComponent.vue';
+</script>
+
+<template>
+  <ParentComponent />
+</template>
+
+
+<!-- <script setup lang="ts">
 
 import HelloWorld from './components/HelloWorld.vue'
 import TheWelcome from './components/TheWelcome.vue'
@@ -45,4 +54,4 @@ header {
     flex-wrap: wrap;
   }
 }
-</style>
+</style> -->
